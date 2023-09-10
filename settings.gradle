@@ -17,3 +17,4 @@ rootProject.name = "DroidLibs"
 include ':app'
 include ':common'
 include ':compose'
+include ':base'
