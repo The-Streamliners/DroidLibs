@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.streamliners.base.BaseActivity
 //import com.airbnb.lottie.compose.LottieAnimation
 //import com.airbnb.lottie.compose.LottieCompositionSpec
 //import com.airbnb.lottie.compose.LottieConstants
@@ -30,7 +31,7 @@ import com.streamliners.base.uiEvent.UiEvent
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
 @Composable
-fun LoadingDialog(
+fun BaseActivity.LoadingDialog(
     state: UiEvent.ShowLoadingDialog,
     hide: () -> Unit
 ) {
@@ -49,34 +50,6 @@ fun LoadingDialog(
             }
         }
     )
-}
-
-@Composable
-private fun GeneralLoadingDialog() {
-
-    // TODO : Support for Lottie Loading Dialog
-//    val composition by rememberLottieComposition(
-//        LottieCompositionSpec.RawRes(R.raw.loading)
-//    )
-
-    val size = 150.dp
-
-    Box(
-        Modifier.size(size)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
-
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center)
-        )
-
-//        LottieAnimation(
-//            modifier = Modifier.size(size),
-//            composition = composition,
-//            iterations = LottieConstants.IterateForever
-//        )
-    }
 }
 
 @Composable
