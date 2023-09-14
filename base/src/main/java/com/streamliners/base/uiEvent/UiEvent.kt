@@ -1,9 +1,9 @@
 package com.streamliners.base.uiEvent
 
-import com.streamliners.base.BusinessException
-import com.streamliners.base.BusinessExceptionLevel
-import com.streamliners.base.LoggedOutException
-import com.streamliners.base.OfflineException
+import com.streamliners.base.exception.BusinessException
+import com.streamliners.base.exception.BusinessException.Level
+import com.streamliners.base.exception.LoggedOutException
+import com.streamliners.base.exception.OfflineException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -49,7 +49,8 @@ sealed class UiEvent {
         fun forException(
             throwable: Throwable,
             retryLambda: (() -> Unit)? = null,
-            showDescriptiveErrorDialogs: Boolean
+            showDescriptiveErrorDialogs: Boolean,
+            onExceptionOccurred: (Throwable) -> Unit
         ): UiEvent {
 
             var error = throwable
@@ -70,23 +71,20 @@ sealed class UiEvent {
                 }
 
                 error is BusinessException -> {
-                    if (error.level == BusinessExceptionLevel.LOW) {
+                    if (error.level == Level.LOW) {
                         ShowToast("Failure: ${error.message}")
                     } else {
                         ShowErrorDialog(
                             title = "Failure",
                             message = error.message,
-                            isCritical = error.level == BusinessExceptionLevel.HIGH,
+                            isCritical = error.level == Level.HIGH,
                             showCopyButton = false,
                             onRetryClick = retryLambda
                         )
                     }
                 }
 
-                // TODO : Access app build type from library and branch out accordingly
-//                BuildConfig.DEBUG -> {
-                else -> {
-                    error.printStackTrace()
+                showDescriptiveErrorDialogs -> {
                     ShowErrorDialog(
                         title = "Internal Failure",
                         message = "${error.message}\n\n${error.stackTraceToString()}",
@@ -96,16 +94,16 @@ sealed class UiEvent {
                     )
                 }
 
-//                else -> {
-//                    recordException(error)
-//                    ShowErrorDialog(
-//                        title = "Failure",
-//                        message = "Unexpected error occurred!",
-//                        isCritical = false,
-//                        showCopyButton = false,
-//                        onRetryClick = retryLambda
-//                    )
-//                }
+                else -> {
+                    onExceptionOccurred(error)
+                    ShowErrorDialog(
+                        title = "Failure",
+                        message = "Unexpected error occurred!",
+                        isCritical = false,
+                        showCopyButton = false,
+                        onRetryClick = retryLambda
+                    )
+                }
             }
         }
     }
