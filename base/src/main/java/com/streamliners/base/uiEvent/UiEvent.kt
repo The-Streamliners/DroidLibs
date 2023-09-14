@@ -4,7 +4,6 @@ import com.streamliners.base.BusinessException
 import com.streamliners.base.BusinessExceptionLevel
 import com.streamliners.base.LoggedOutException
 import com.streamliners.base.OfflineException
-import com.streamliners.base.recordException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -49,7 +48,8 @@ sealed class UiEvent {
 
         fun forException(
             throwable: Throwable,
-            retryLambda: (() -> Unit)? = null
+            retryLambda: (() -> Unit)? = null,
+            showDescriptiveErrorDialogs: Boolean
         ): UiEvent {
 
             var error = throwable
