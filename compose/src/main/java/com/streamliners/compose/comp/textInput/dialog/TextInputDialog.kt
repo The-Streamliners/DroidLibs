@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.streamliners.compose.comp.textInput.TextInputLayout
-import com.streamliners.compose.comp.textInput.TextInputState
 import com.streamliners.compose.comp.textInput.dialog.TextInputDialogState.Hidden
-import com.streamliners.compose.comp.textInput.value
+import com.streamliners.compose.comp.textInput.state.isValid
+import com.streamliners.compose.comp.textInput.state.value
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterialApi
@@ -48,18 +48,13 @@ fun TextInputDialog(
         text = {
             TextInputLayout(
                 modifier = Modifier.fillMaxWidth(),
-                state = data.input,
-                maxLength = data.maxLength
+                state = data.input
             )
         },
         confirmButton = {
             TextButton(
                 onClick = {
-                    val isValid = TextInputState.validateAll(
-                        data.input
-                    )
-
-                    if (!isValid) return@TextButton
+                    if (!data.input.isValid()) return@TextButton
 
                     val input = data.input.value()
                     data.submit(input)

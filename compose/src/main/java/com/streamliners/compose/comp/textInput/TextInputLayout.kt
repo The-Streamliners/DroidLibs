@@ -11,31 +11,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.streamliners.compose.comp.textInput.InputType.*
-import com.streamliners.compose.ext.noRippleClickable
-import com.streamliners.compose.ext.outlinedTextFieldNormalColors
+import com.streamliners.compose.comp.textInput.state.TextInputState
+import com.streamliners.compose.comp.textInput.state.isError
+import com.streamliners.compose.comp.textInput.state.preValidateAndUpdate
 
 @ExperimentalMaterial3Api
 @Composable
 fun TextInputLayout(
-    modifier: Modifier = Modifier,
-    maxLength: Int = 100,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     state: MutableState<TextInputState>,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
-    trailingIconButton: @Composable (() -> Unit)? = null,
+    trailingIconButton: @Composable() (() -> Unit)? = null,
     enabled: Boolean = true,
     readOnly: Boolean = false,
     showLabel: Boolean = true,
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(),
     keyboardOptions: KeyboardOptions? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = false,
+    singleLine: Boolean = true,
     imeAction: ImeAction = ImeAction.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onTextChanged: () -> Unit = {}
@@ -44,12 +44,25 @@ fun TextInputLayout(
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            label = if(!showLabel) null else {
-                { Text(text = state.value.label) }
+            label = if (!showLabel) null else {
+                {
+                    Text(
+                        text = buildAnnotatedString {
+                            append(state.value.label)
+                            if (!state.value.inputConfig.optional) {
+                                withStyle(
+                                    SpanStyle(color = MaterialTheme.colorScheme.error)
+                                ) {
+                                    " *"
+                                }
+                            }
+                        }
+                    )
+                }
             },
             value = state.value.value,
             onValueChange = {
-                state.value = state.value.validate(it, maxLength)
+                state.preValidateAndUpdate(it)
                 onTextChanged()
             },
             leadingIcon = if (leadingIcon == null) null else {
@@ -76,11 +89,10 @@ fun TextInputLayout(
             readOnly = readOnly,
             colors = colors,
             isError = state.value.isError(),
-            keyboardOptions = keyboardOptions
-                ?: if (state.value.inputType in listOf(MOBILE_NUMBER, NUMBER))
-                    KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone, imeAction = imeAction)
-                else
-                    KeyboardOptions.Default.copy(capitalization = KeyboardCapitalization.Sentences, imeAction = imeAction),
+            keyboardOptions = (keyboardOptions ?: KeyboardOptions.Default).copy(
+                keyboardType = state.value.inputConfig.keyboardType,
+                imeAction = imeAction
+            ),
             singleLine = singleLine,
             keyboardActions = keyboardActions,
             visualTransformation = visualTransformation,
@@ -89,7 +101,11 @@ fun TextInputLayout(
 
         state.value.error?.let {
             Spacer(modifier = Modifier.size(4.dp))
-            Text(text = it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.labelMedium)
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.labelMedium
+            )
         }
     }
 

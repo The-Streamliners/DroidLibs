@@ -1,4 +1,4 @@
-package com.streamliners.compose.comp
+package com.streamliners.compose.comp.select
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

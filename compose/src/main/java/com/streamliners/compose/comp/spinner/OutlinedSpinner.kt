@@ -18,9 +18,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.streamliners.compose.comp.spinner.state.SpinnerState
+import com.streamliners.compose.comp.spinner.state.value
 import com.streamliners.compose.comp.textInput.TextInputLayout
-import com.streamliners.compose.comp.textInput.TextInputState
-import com.streamliners.compose.comp.textInput.update
+import com.streamliners.compose.comp.textInput.state.TextInputState
+import com.streamliners.compose.comp.textInput.state.update
 
 @ExperimentalMaterialApi
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,13 +50,13 @@ fun OutlinedSpinner(
 
             TextInputLayout(
                 modifier = Modifier.fillMaxWidth(),
+                state = state,
                 leadingIcon = icon,
                 trailingIconButton = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
                         expanded = expanded
                     )
                 },
-                state = state,
                 readOnly = true
             )
         }
@@ -89,7 +91,7 @@ fun <T> OutlinedSpinner(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     options: List<T>,
-    state: SelectedSuggestion<T>,
+    state: SpinnerState<T>,
     parentScrollState: ScrollState? = null,
     onStateChanged: (T) -> Unit = {  }
 ) {
@@ -108,13 +110,13 @@ fun <T> OutlinedSpinner(
 
             TextInputLayout(
                 modifier = Modifier.fillMaxWidth(),
+                state = state.textInputState,
                 leadingIcon = icon,
                 trailingIconButton = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
                         expanded = expanded
                     )
                 },
-                state = state.textInputState,
                 readOnly = true
             )
         }

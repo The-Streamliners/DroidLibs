@@ -14,6 +14,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.streamliners.compose.comp.textInput.state.TextInputState
+import com.streamliners.compose.comp.textInput.state.isError
+import com.streamliners.compose.comp.textInput.state.update
 import com.streamliners.compose.ext.noRippleClickable
 import com.streamliners.compose.ext.outlinedTextFieldNormalColors
 
@@ -37,7 +40,7 @@ fun TextInputLayoutReadOnly(
             label = { Text(text = state.value.label) },
             value = state.value.value,
             onValueChange = {
-                state.value = state.value.validate(it, maxLength)
+                state.update(it)
             },
             leadingIcon = if (leadingIcon == null) null else {
                 {
