@@ -14,7 +14,7 @@ fun TextInputLayoutScreen(
 ) {
 
     TitleBarScaffold(
-        title = "DroidLibs Sample",
+        title = "TextInputLayout Sample",
         navigateUp = { navController.navigateUp() }
     ) { paddingValues ->
 
