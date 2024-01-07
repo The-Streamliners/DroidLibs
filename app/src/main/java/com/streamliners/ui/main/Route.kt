@@ -5,6 +5,8 @@ sealed class Route(
 ) {
 
     object HomeScreen: Route("home")
+
     object ComposeScreen: Route("compose")
+    object TextInputLayoutScreen: Route("compose/textInputLayout")
 
 }

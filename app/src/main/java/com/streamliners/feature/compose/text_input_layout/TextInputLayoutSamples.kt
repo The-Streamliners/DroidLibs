@@ -1,4 +1,4 @@
-package com.streamliners.feature.compose.comp
+package com.streamliners.feature.compose.text_input_layout
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.config.InputConfig
-import com.streamliners.compose.comp.textInput.config.InputConfig.RegexValidation
 import com.streamliners.compose.comp.textInput.config.email
 import com.streamliners.compose.comp.textInput.config.fixedLengthNumber
 import com.streamliners.compose.comp.textInput.config.number
@@ -24,8 +23,9 @@ import com.streamliners.compose.comp.textInput.state.areAllValid
 
 @ExperimentalMaterial3Api
 @Composable
-fun TextInputSamples() {
-
+fun TextInputLayoutSamples(
+    modifier: Modifier = Modifier
+) {
     val name = remember {
         mutableStateOf(
             TextInputState("Name")
@@ -77,7 +77,7 @@ fun TextInputSamples() {
                 inputConfig = InputConfig.text {
                     maxLength = 10
                     strictMaxLengthCheck = true
-                    regexValidation = RegexValidation(
+                    regexValidation = InputConfig.RegexValidation(
                         Regex("^[A-Z]{5}\\d{4}[A-Z]{1}$")
                     )
                 }
@@ -86,7 +86,7 @@ fun TextInputSamples() {
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
 
