@@ -14,7 +14,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "DroidLibs"
-include ':app'
-include ':common'
-include ':compose'
-include ':base'
+include(":app")
+include(":compose")
+include(":base")

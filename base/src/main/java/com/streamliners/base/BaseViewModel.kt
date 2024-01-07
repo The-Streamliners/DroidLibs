@@ -1,22 +1,13 @@
 package com.streamliners.base
 
-import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streamliners.base.exception.OfflineException
 import com.streamliners.base.uiEvent.UiEvent
-import com.streamliners.base.uiEvent.UiEvent.DialogButton
 import com.streamliners.base.uiEvent.UiEvent.HideLoadingDialog
-import com.streamliners.base.uiEvent.UiEvent.ShowLoadingDialog
-import com.streamliners.base.uiEvent.UiEvent.ShowMessageDialog
-import com.streamliners.base.uiEvent.UiEvent.ShowToast
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 open class BaseViewModel : ViewModel() {
 
