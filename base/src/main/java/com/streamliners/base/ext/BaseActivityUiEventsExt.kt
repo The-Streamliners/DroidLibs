@@ -16,10 +16,10 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
             hideLoadingDialog()
         }
         is UiEvent.ShowMessageDialog -> {
-            otherUiEventsState.add(event)
+            showMessageDialog(event)
         }
         is UiEvent.ShowErrorDialog -> {
-            otherUiEventsState.add(
+            showMessageDialog(
                 UiEvent.ShowMessageDialog(
                     title = event.title,
                     message = event.message,
@@ -30,12 +30,8 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
                     negativeButton = event.onRetryClick?.let {
                         UiEvent.DialogButton(
                             label = "RETRY",
-                            handler = {
-                                otherUiEventsState.removeAt(
-                                    otherUiEventsState.lastIndex
-                                )
-                                it()
-                            }
+                            dismissOnClick = true,
+                            handler = it
                         )
                     },
                     neutralButton = if (event.showCopyButton) UiEvent.DialogButton("COPY") {
@@ -45,11 +41,7 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
             )
         }
         is UiEvent.ShowToast -> {
-            lastToast?.cancel()
-            Toast.makeText(this, event.message, Toast.LENGTH_SHORT).apply {
-                lastToast = this
-                show()
-            }
+            showToast(event.message)
         }
         is UiEvent.LoggedOut -> {
             showMessageDialog("Login required", "You have been logged out, please login again!")
@@ -59,7 +51,11 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
 }
 
 fun BaseActivity.showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    lastToast?.cancel()
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).apply {
+        lastToast = this
+        show()
+    }
 }
 
 fun BaseActivity.showMessageDialog(event: UiEvent.ShowMessageDialog) {

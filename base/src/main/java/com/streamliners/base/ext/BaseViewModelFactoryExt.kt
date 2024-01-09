@@ -10,7 +10,7 @@ import org.koin.androidx.compose.koinViewModel
 inline fun <reified T : BaseViewModel> BaseActivity.hiltBaseViewModel(): T {
     return hiltViewModel<T>().apply {
         this.uiEventFlow = this@hiltBaseViewModel.uiEventFlow
-        this.showDescriptiveErrorDialogs = this@hiltBaseViewModel.showDescriptiveErrorDialogs
+        this.showDescriptiveErrorDialogs = this@hiltBaseViewModel.debugMode
         onExceptionOccurred = this@hiltBaseViewModel::onExceptionOccurred
         isConnected = ::isConnected
     }
@@ -20,7 +20,7 @@ inline fun <reified T : BaseViewModel> BaseActivity.hiltBaseViewModel(): T {
 inline fun <reified T : BaseViewModel> BaseActivity.koinBaseViewModel(): T {
     return koinViewModel<T>().apply {
         this.uiEventFlow = this@koinBaseViewModel.uiEventFlow
-        this.showDescriptiveErrorDialogs = this@koinBaseViewModel.showDescriptiveErrorDialogs
+        this.showDescriptiveErrorDialogs = this@koinBaseViewModel.debugMode
         onExceptionOccurred = this@koinBaseViewModel::onExceptionOccurred
         isConnected = ::isConnected
     }

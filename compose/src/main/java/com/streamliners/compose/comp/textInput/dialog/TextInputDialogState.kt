@@ -12,7 +12,6 @@ sealed class TextInputDialogState {
     class Visible(
         val title: String,
         val input: MutableState<TextInputState>,
-        val maxLength: Int,
         val submitButtonLabel: String,
         val submit: (String) -> Unit
     ): TextInputDialogState()

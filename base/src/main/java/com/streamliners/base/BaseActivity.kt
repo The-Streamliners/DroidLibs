@@ -37,17 +37,19 @@ open class BaseActivity: FragmentActivity() {
         CoroutineExceptionHandler { _, throwable ->
             lifecycleScope.launch(Dispatchers.Main) {
                 hideLoadingDialog()
-                this@BaseActivity.handleException(throwable)
+                handleException(throwable)
             }
         }
     }
 
     private fun handleException(e: Throwable) {
-        e.printStackTrace()
+        if (debugMode) e.printStackTrace()
+        onExceptionOccurred(e)
+
         handleUiEvent(
             UiEvent.forException(
                 throwable = e,
-                showDescriptiveErrorDialogs = showDescriptiveErrorDialogs,
+                showDescriptiveErrorDialogs = debugMode,
                 onExceptionOccurred = ::onExceptionOccurred
             )
         )
@@ -68,7 +70,7 @@ open class BaseActivity: FragmentActivity() {
 
     // Extendable -----------------------------------------
 
-    var showDescriptiveErrorDialogs = false
+    var debugMode = false
 
     open fun logout() {}
     open fun onExceptionOccurred(e: Throwable) {}
@@ -97,9 +99,7 @@ open class BaseActivity: FragmentActivity() {
 
     init {
         lifecycleScope.launch {
-            uiEventFlow.collect { event ->
-                handleUiEvent(event)
-            }
+            uiEventFlow.collect(::handleUiEvent)
         }
     }
 

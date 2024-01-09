@@ -15,7 +15,7 @@ sealed class UiEvent {
 
     class ShowLoadingDialog(val message: String? = null): UiEvent()
 
-    object HideLoadingDialog: UiEvent()
+    data object HideLoadingDialog: UiEvent()
 
     class ShowMessageDialog(
         val title: String,

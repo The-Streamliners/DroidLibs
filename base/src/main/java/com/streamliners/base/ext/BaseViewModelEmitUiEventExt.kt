@@ -20,11 +20,15 @@ fun BaseViewModel.showToast(message: String) {
 }
 
 fun BaseViewModel.showLoader(message: String? = null) {
-    viewModelScope.launch { uiEventFlow.emit(UiEvent.ShowLoadingDialog(message)) }
+    emitUiEvent(
+        UiEvent.ShowLoadingDialog(message)
+    )
 }
 
 fun BaseViewModel.hideLoader() {
-    viewModelScope.launch { uiEventFlow.emit(UiEvent.HideLoadingDialog) }
+    emitUiEvent(
+        UiEvent.HideLoadingDialog
+    )
 }
 
 fun BaseViewModel.showMessageDialog(title: String, message: String) {
