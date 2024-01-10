@@ -9,7 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-fun BaseViewModel.executeShowingLoadingDialogAndHandlingError(
+fun BaseViewModel.execute(
+    showLoadingDialog: Boolean = true,
     networkCheck: Boolean = true,
     allowRetry: Boolean = networkCheck,
     postExecution: (suspend CoroutineScope.() -> Unit)? = null,
@@ -23,7 +24,8 @@ fun BaseViewModel.executeShowingLoadingDialogAndHandlingError(
         }
 
         retryLambda = if (allowRetry) fun () {
-            executeShowingLoadingDialogAndHandlingError(
+            execute(
+                showLoadingDialog = showLoadingDialog,
                 networkCheck = networkCheck,
                 allowRetry = true,
                 postExecution = postExecution,
@@ -31,21 +33,20 @@ fun BaseViewModel.executeShowingLoadingDialogAndHandlingError(
             )
         } else null
 
-        uiEventFlow.emit(UiEvent.ShowLoadingDialog())
+        if (showLoadingDialog) uiEventFlow.emit(UiEvent.ShowLoadingDialog())
         lambda()
-        uiEventFlow.emit(UiEvent.HideLoadingDialog)
+        if (showLoadingDialog) uiEventFlow.emit(UiEvent.HideLoadingDialog)
 
         if (postExecution != null) postExecution()
     }
 }
 
-fun BaseViewModel.executeHandlingError(lambda: suspend () -> Unit) {
-    retryLambda = null
-    viewModelScope.launch(customContext) {
-        lambda()
-    }
-}
-
 suspend fun BaseViewModel.executeOnMain(lambda: suspend () -> Unit) {
     withContext(Dispatchers.Main) { lambda() }
+}
+
+suspend fun BaseViewModel.showingLoader(lambda: suspend () -> Unit) {
+    showLoader()
+    lambda()
+    hideLoader()
 }
