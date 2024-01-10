@@ -5,50 +5,50 @@ import androidx.compose.runtime.mutableStateOf
 
 // Factory functions ----------------------------------
 
-fun <T> uiStateOf(): MutableState<UiState<T>> {
-    return mutableStateOf(UiState.New())
+fun <T> taskStateOf(): MutableState<TaskState<T>> {
+    return mutableStateOf(TaskState.New())
 }
 
-fun <T> loadingUiStateOf(): MutableState<UiState<T>> {
-    return mutableStateOf(UiState.New())
+fun <T> loadingUiStateOf(): MutableState<TaskState<T>> {
+    return mutableStateOf(TaskState.New())
 }
 
 
 // Data loading functions -----------------------------
 
-fun <T> MutableState<UiState<T>>.update(data: T) {
-    value = UiState.Data(data)
+fun <T> MutableState<TaskState<T>>.update(data: T) {
+    value = TaskState.Data(data)
 }
 
-fun <T> MutableState<UiState<T>>.ifNotLoaded(
+fun <T> MutableState<TaskState<T>>.ifNotLoaded(
     lambda: () -> Unit
 ) {
-    if (value is UiState.New) lambda()
+    if (value is TaskState.New) lambda()
 }
 
-suspend fun <T> MutableState<UiState<T>>.load(
+suspend fun <T> MutableState<TaskState<T>>.load(
     lambda: suspend () -> T
 ) {
-    if (value is UiState.New) {
-        value = UiState.Loading()
+    if (value is TaskState.New) {
+        value = TaskState.Loading()
         update(lambda())
     }
 }
 
-suspend fun <T> MutableState<UiState<T>>.reLoad(
+suspend fun <T> MutableState<TaskState<T>>.reLoad(
     lambda: suspend () -> T
 ) {
-    value = UiState.Loading()
+    value = TaskState.Loading()
     update(lambda())
 }
 
 
 // Data access functions ------------------------------
 
-fun <T> MutableState<UiState<T>>.value(): T {
-    return (value as UiState.Data<T>).data
+fun <T> MutableState<TaskState<T>>.value(): T {
+    return (value as TaskState.Data<T>).data
 }
 
-fun <T> MutableState<UiState<T>>.valueNullable(): T? {
-    return (value as? UiState.Data<T>)?.data
+fun <T> MutableState<TaskState<T>>.valueNullable(): T? {
+    return (value as? TaskState.Data<T>)?.data
 }

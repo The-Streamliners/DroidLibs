@@ -4,50 +4,50 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 
 @Composable
-fun <T> MutableState<UiState<T>>.whenNotLoaded(
+fun <T> MutableState<TaskState<T>>.whenNotLoaded(
     content: @Composable () -> Unit
 ) {
-    if (value !is UiState.Data<T>) {
+    if (value !is TaskState.Data<T>) {
         content()
     }
 }
 
 @Composable
-fun <T> MutableState<UiState<T>>.whileLoading(
+fun <T> MutableState<TaskState<T>>.whileLoading(
     content: @Composable () -> Unit
 ) {
-    if (value is UiState.Loading<T>) {
+    if (value is TaskState.Loading<T>) {
         content()
     }
 }
 
 @Composable
-fun <T> MutableState<UiState<T>>.whenNew(
+fun <T> MutableState<TaskState<T>>.whenNew(
     content: @Composable () -> Unit
 ) {
-    if (value is UiState.New<T>) {
+    if (value is TaskState.New<T>) {
         content()
     }
 }
 
 @Composable
-fun <T> MutableState<UiState<T>>.whenLoaded(
+fun <T> MutableState<TaskState<T>>.whenLoaded(
     content: @Composable (data: T) -> Unit
 ) {
-    (value as? UiState.Data<T>)?.let {
+    (value as? TaskState.Data<T>)?.let {
         content(it.data)
     }
 }
 
 @Composable
-fun <T> MutableState<UiState<T>>.ui(
+fun <T> MutableState<TaskState<T>>.ui(
     whenNew: @Composable () -> Unit = { },
     whenLoading: @Composable () -> Unit = { },
     whenLoaded: @Composable (data: T) -> Unit = { }
 ) {
     when (val state = value) {
-        is UiState.New -> whenNew()
-        is UiState.Loading -> whenLoading()
-        is UiState.Data -> whenLoaded(state.data)
+        is TaskState.New -> whenNew()
+        is TaskState.Loading -> whenLoading()
+        is TaskState.Data -> whenLoaded(state.data)
     }
 }
