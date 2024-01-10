@@ -5,13 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.streamliners.base.BaseActivity
+import com.streamliners.base.ext.hiltBaseViewModel
 import com.streamliners.feature.compose.ComposeScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
 import com.streamliners.feature.home.HomeScreen
+import com.streamliners.feature.base_sample.BaseSampleScreen
 
 @ExperimentalMaterial3Api
 @Composable
-fun DroidLibsApp() {
+fun BaseActivity.DroidLibsApp() {
     val navController = rememberNavController()
 
     NavHost(
@@ -21,6 +24,13 @@ fun DroidLibsApp() {
 
         composable(Route.HomeScreen.route) {
             HomeScreen(navController = navController)
+        }
+
+        composable(Route.BaseSampleScreen.route) {
+            BaseSampleScreen(
+                navController = navController,
+                viewModel = hiltBaseViewModel()
+            )
         }
 
         composable(Route.ComposeScreen.route) {

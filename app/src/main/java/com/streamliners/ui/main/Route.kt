@@ -4,9 +4,11 @@ sealed class Route(
     val route: String
 ) {
 
-    object HomeScreen: Route("home")
+    data object HomeScreen: Route("home")
 
-    object ComposeScreen: Route("compose")
-    object TextInputLayoutScreen: Route("compose/textInputLayout")
+    data object ComposeScreen: Route("compose")
+    data object TextInputLayoutScreen: Route("compose/textInputLayout")
+
+    data object BaseSampleScreen: Route("base")
 
 }

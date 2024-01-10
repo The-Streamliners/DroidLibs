@@ -30,6 +30,14 @@ fun HomeScreen(
         ) {
             Button(
                 onClick = {
+                    navController.navigate(Route.BaseSampleScreen.route)
+                }
+            ) {
+                Text(text = "Base Sample")
+            }
+
+            Button(
+                onClick = {
                     navController.navigate(Route.ComposeScreen.route)
                 }
             ) {
