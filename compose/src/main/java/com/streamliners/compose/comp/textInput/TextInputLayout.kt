@@ -21,7 +21,6 @@ import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.isError
 import com.streamliners.compose.comp.textInput.state.preValidateAndUpdate
 
-@ExperimentalMaterial3Api
 @Composable
 fun TextInputLayout(
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -32,7 +31,7 @@ fun TextInputLayout(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     showLabel: Boolean = true,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(),
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     keyboardOptions: KeyboardOptions? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,

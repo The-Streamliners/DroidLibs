@@ -5,8 +5,10 @@ import com.streamliners.base.BaseViewModel
 import com.streamliners.base.exception.failure
 import com.streamliners.base.ext.execute
 import com.streamliners.base.ext.showingLoader
-import com.streamliners.base.uiState.taskStateOf
-import com.streamliners.base.uiState.update
+import com.streamliners.base.taskState.reLoad
+import com.streamliners.base.taskState.reLoad1
+import com.streamliners.base.taskState.taskStateOf
+import com.streamliners.base.taskState.update
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.value
 import com.streamliners.data.FactRepository
@@ -18,23 +20,46 @@ class BaseSampleViewModel @Inject constructor(
     private val factRepo: FactRepository
 ): BaseViewModel() {
 
-    val number = mutableStateOf(
+    val numberInput1 = mutableStateOf(
         TextInputState("Number")
     )
 
-    val fact = taskStateOf<String>()
+    val numberInput2 = mutableStateOf(
+        TextInputState("Number")
+    )
+
+    val numberInput3 = mutableStateOf(
+        TextInputState("Number")
+    )
+
+    val fetchFactTaskState1 = taskStateOf<String>()
+
+    val fetchFactTaskState2 = taskStateOf<String>()
+
+    val fetchFactTaskState3 = taskStateOf<String>()
 
     fun fetchFactUsingLoadingDialog() {
         execute(showLoadingDialog = false) {
 
-            val num = number.value().toIntOrNull()
-                ?: failure("Invalid input, please enter a number!")
-
             showingLoader {
-                fact.update(
-                    factRepo.getFact(num)
+                fetchFactTaskState1.update(
+                    factRepo.getFact(numberInput1.value())
                 )
             }
+        }
+    }
+
+    fun fetchFact() {
+        execute(showLoadingDialog = false) {
+            fetchFactTaskState2.reLoad1 {
+                factRepo.getFact(numberInput2.value())
+            }
+        }
+    }
+
+    fun fetchFactUsingTaskExecutor() {
+        execute(fetchFactTaskState3) {
+            factRepo.getFact(numberInput3.value())
         }
     }
 

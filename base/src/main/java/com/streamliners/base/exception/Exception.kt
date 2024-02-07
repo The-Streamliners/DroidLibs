@@ -22,6 +22,6 @@ fun failure(
     throw BusinessException(message, level)
 }
 
-class OfflineException: Exception()
+class OfflineException: Exception("Offline : Unable to connect to the Internet")
 class LoggedOutException: Exception()
 class ServerException(override val message: String?): Exception()

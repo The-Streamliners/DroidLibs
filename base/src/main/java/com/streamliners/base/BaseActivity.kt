@@ -70,7 +70,7 @@ open class BaseActivity: FragmentActivity() {
 
     // Extendable -----------------------------------------
 
-    var debugMode = false
+    open var debugMode = false
 
     open fun logout() {}
     open fun onExceptionOccurred(e: Throwable) {}
