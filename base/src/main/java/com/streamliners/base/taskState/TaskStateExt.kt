@@ -1,8 +1,6 @@
 package com.streamliners.base.taskState
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.streamliners.base.BaseViewModel
 
 // Factory functions ----------------------------------
 
@@ -30,20 +28,10 @@ suspend fun <T> Task<T>.ifNotLoaded(
 suspend fun <T> Task<T>.load(
     lambda: suspend () -> T
 ) {
-    ifNotLoaded {
-        value = TaskState.Loading()
-        update(lambda())
-    }
+    ifNotLoaded { reLoad(lambda) }
 }
 
 suspend fun <T> Task<T>.reLoad(
-    lambda: suspend () -> T
-) {
-    value = TaskState.Loading()
-    update(lambda())
-}
-
-suspend fun <T> Task<T>.reLoad1(
     lambda: suspend () -> T
 ) {
     value = TaskState.Loading()

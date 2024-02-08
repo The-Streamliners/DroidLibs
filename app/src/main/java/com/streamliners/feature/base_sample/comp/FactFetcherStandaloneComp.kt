@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.streamliners.base.taskState.Task
+import com.streamliners.base.taskState.TaskState
 import com.streamliners.base.taskState.comp.TaskLoadingButton
 import com.streamliners.base.taskState.comp.whenError
 import com.streamliners.base.taskState.comp.whenLoaded
@@ -68,20 +69,25 @@ fun FactFetcherStandaloneComp(
                 )
             }
 
+            val state = fetchFactTask.value
+            if (state is TaskState.Data) {
+                state.data // Use the data
+            }
+
             // Fact
-            fetchFactTask.whenLoaded {
+            fetchFactTask.whenLoaded { fact ->
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.labelLarge,
-                    text = it
+                    text = fact
                 )
             }
 
             // Error
-            fetchFactTask.whenError {
+            fetchFactTask.whenError { error ->
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -89,7 +95,7 @@ fun FactFetcherStandaloneComp(
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.error,
-                    text = it
+                    text = error
                 )
             }
         }

@@ -2,11 +2,9 @@ package com.streamliners.feature.base_sample
 
 import androidx.compose.runtime.mutableStateOf
 import com.streamliners.base.BaseViewModel
-import com.streamliners.base.exception.failure
 import com.streamliners.base.ext.execute
 import com.streamliners.base.ext.showingLoader
 import com.streamliners.base.taskState.reLoad
-import com.streamliners.base.taskState.reLoad1
 import com.streamliners.base.taskState.taskStateOf
 import com.streamliners.base.taskState.update
 import com.streamliners.compose.comp.textInput.state.TextInputState
@@ -39,19 +37,16 @@ class BaseSampleViewModel @Inject constructor(
     val fetchFactTaskState3 = taskStateOf<String>()
 
     fun fetchFactUsingLoadingDialog() {
-        execute(showLoadingDialog = false) {
-
-            showingLoader {
-                fetchFactTaskState1.update(
-                    factRepo.getFact(numberInput1.value())
-                )
-            }
+        execute {
+            fetchFactTaskState1.update(
+                factRepo.getFact(numberInput1.value())
+            )
         }
     }
 
     fun fetchFact() {
         execute(showLoadingDialog = false) {
-            fetchFactTaskState2.reLoad1 {
+            fetchFactTaskState2.reLoad {
                 factRepo.getFact(numberInput2.value())
             }
         }
