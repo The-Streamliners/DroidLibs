@@ -55,7 +55,7 @@ In this type of execution, the main composable related to the task is responsibl
 
 The final output looks like this :
 
-![](/Users/lavishswarnkar/Code/Projects/DroidLibs/docs/assets/Approach-1.gif)
+![](assets/Approach-1.gif)
 
 Here is the composable for this :
 
@@ -107,7 +107,7 @@ fun FactFetcherStandaloneComp(
 
 Notice that in the demo, the *Fetch* button itself displays the Circular Progress Indicator while loading, thanks to the pre-defined `TaskLoadingButton` composable. 
 
-<img title="" src="file:///Users/lavishswarnkar/Code/Projects/DroidLibs/docs/assets/TaskLoadingButton.png" alt="" data-align="center" width="340">
+<img title="" src="assets/TaskLoadingButton.png" alt="" data-align="center" width="340">
 
 Here is its signature :
 
@@ -222,7 +222,7 @@ fun <T> BaseViewModel.executeIfNotLoaded(
 
 ## Approach 2 : Delegate error handling
 
-<img src="file:///Users/lavishswarnkar/Code/Projects/DroidLibs/docs/assets/Approach-2.gif" title="" alt="" width="299">
+<img src="assets/Approach-2.gif" title="" alt="" width="299">
 
 If you are using `BaseViewModel`'s general `execute()` functions for error handling or have your own error handling mechanism, you can remove the `fetchFactTask.whenError()` composable invocation. Post that you should not use the `execute(task)` function because it will silently update the task state to `TaskState.Error()` and won't be re-throwing the error for your error handling mechanism to notice. 
 
@@ -252,7 +252,7 @@ fun fetchFact() {
 
 ## Approach 3 : Delegate progress indicator also
 
-<img title="" src="file:///Users/lavishswarnkar/Code/Projects/DroidLibs/docs/assets/Approach-3.gif" alt="" width="359">
+<img title="" src="assets/Approach-3.gif" alt="" width="359">
 
 BaseViewModel provides the functionality of displaying a loading dialog. You can use that generic one while execution of the Task. Or you can implement your own mechanism for indicating progress.
 
