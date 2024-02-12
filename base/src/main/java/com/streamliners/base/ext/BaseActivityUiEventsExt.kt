@@ -12,7 +12,7 @@ import com.streamliners.base.uiEvent.UiEvent.ShowToast.Duration.Short
 internal fun BaseActivity.handleUiEvent(event: UiEvent) {
     when(event) {
         is UiEvent.ShowLoadingDialog -> {
-            showLoader(event)
+            showLoadingDialog(event)
         }
         UiEvent.HideLoadingDialog -> {
             hideLoader()
@@ -51,6 +51,9 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
         }
     }
 }
+
+fun BaseActivity.showLoader(message: String? = null) =
+    showLoadingDialog(UiEvent.ShowLoadingDialog(message))
 
 fun BaseActivity.showToast(
     message: String,

@@ -70,7 +70,7 @@ fun BaseViewModel.showConfirmationDialog(
             title = title,
             message = message,
             positiveButton = UiEvent.DialogButton(confirmButtonLabel, handler = onConfirm),
-            negativeButton = UiEvent.DialogButton("CANCEL") {}
+            negativeButton = UiEvent.DialogButton("CANCEL", true) {}
         )
     )
 }
