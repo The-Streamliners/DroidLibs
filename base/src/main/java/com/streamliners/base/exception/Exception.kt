@@ -11,7 +11,7 @@ class BusinessException(
     enum class Level {
         LOW,    // Toast is shown
         MEDIUM, // Cancellable dialog is shown
-        HIGH    // Non-Cancellable dialog is shown
+        HIGH    // Non-Cancellable dialog is shown, closes app on button click
     }
 }
 

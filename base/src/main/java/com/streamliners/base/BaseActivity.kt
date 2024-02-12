@@ -16,9 +16,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.streamliners.base.exception.OfflineException
 import com.streamliners.base.ext.handleUiEvent
-import com.streamliners.base.ext.hideLoadingDialog
-import com.streamliners.base.ext.showLoadingDialog
+import com.streamliners.base.ext.hideLoader
+import com.streamliners.base.ext.isConnected
+import com.streamliners.base.ext.showLoader
 import com.streamliners.base.uiEvent.UiEvent
 import com.streamliners.base.uiEvent.UiEvent.ShowLoadingDialog
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -36,7 +38,7 @@ open class BaseActivity: FragmentActivity() {
     private val defaultExceptionHandler by lazy {
         CoroutineExceptionHandler { _, throwable ->
             lifecycleScope.launch(Dispatchers.Main) {
-                hideLoadingDialog()
+                hideLoader()
                 handleException(throwable)
             }
         }
@@ -55,15 +57,22 @@ open class BaseActivity: FragmentActivity() {
         )
     }
 
-    fun executeHandlingError(
-        showLoadingDialog: Boolean = false,
+    fun execute(
+        showLoadingDialog: Boolean = true,
+        networkCheck: Boolean = true,
         dispatchers: CoroutineContext = Dispatchers.IO,
         lambda: suspend CoroutineScope.() -> Unit
     ) {
+
         lifecycleScope.launch(dispatchers + defaultExceptionHandler) {
-            if(showLoadingDialog) showLoadingDialog()
+
+            if (networkCheck && !isConnected()) {
+                throw OfflineException()
+            }
+
+            if (showLoadingDialog) showLoader()
             lambda()
-            if(showLoadingDialog) hideLoadingDialog()
+            if (showLoadingDialog) hideLoader()
         }
     }
 

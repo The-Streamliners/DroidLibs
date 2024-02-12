@@ -4,6 +4,7 @@ import com.streamliners.base.exception.BusinessException
 import com.streamliners.base.exception.BusinessException.Level
 import com.streamliners.base.exception.LoggedOutException
 import com.streamliners.base.exception.OfflineException
+import com.streamliners.base.uiEvent.UiEvent.ShowToast.Duration.Short
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -11,7 +12,12 @@ import java.nio.channels.UnresolvedAddressException
 
 sealed class UiEvent {
 
-    class ShowToast(val message: String): UiEvent()
+    class ShowToast(
+        val message: String,
+        val duration: Duration = Short
+    ): UiEvent() {
+        enum class Duration { Short, Long }
+    }
 
     class ShowLoadingDialog(val message: String? = null): UiEvent()
 
@@ -29,7 +35,7 @@ sealed class UiEvent {
     class DialogButton(
         val label: String,
         val dismissOnClick: Boolean = false,
-        val handler: () -> Unit
+        val handler: () -> Unit = {}
     )
 
     class ShowErrorDialog(

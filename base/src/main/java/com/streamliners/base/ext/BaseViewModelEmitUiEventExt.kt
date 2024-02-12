@@ -3,6 +3,8 @@ package com.streamliners.base.ext
 import androidx.lifecycle.viewModelScope
 import com.streamliners.base.BaseViewModel
 import com.streamliners.base.uiEvent.UiEvent
+import com.streamliners.base.uiEvent.UiEvent.ShowToast.Duration
+import com.streamliners.base.uiEvent.UiEvent.ShowToast.Duration.Short
 import kotlinx.coroutines.launch
 
 fun BaseViewModel.emitUiEvent(uiEvent: UiEvent) {
@@ -11,11 +13,12 @@ fun BaseViewModel.emitUiEvent(uiEvent: UiEvent) {
     }
 }
 
-fun BaseViewModel.showToast(message: String) {
+fun BaseViewModel.showToast(
+    message: String,
+    duration: Duration = Short
+) {
     emitUiEvent(
-        UiEvent.ShowToast(
-            message = message
-        )
+        UiEvent.ShowToast(message, duration)
     )
 }
 
@@ -31,7 +34,16 @@ fun BaseViewModel.hideLoader() {
     )
 }
 
-fun BaseViewModel.showMessageDialog(title: String, message: String) {
+fun BaseViewModel.showMessageDialog(
+    event: UiEvent.ShowMessageDialog
+) {
+    emitUiEvent(event)
+}
+
+fun BaseViewModel.showMessageDialog(
+    title: String,
+    message: String
+) {
     emitUiEvent(
         UiEvent.ShowMessageDialog(
             title = title,
@@ -47,12 +59,17 @@ fun BaseViewModel.showFailureMessage(message: String) {
     )
 }
 
-fun BaseViewModel.showConfirmationDialog(title: String, message: String, onConfirm: () -> Unit) {
+fun BaseViewModel.showConfirmationDialog(
+    title: String,
+    message: String,
+    confirmButtonLabel: String = "YES",
+    onConfirm: () -> Unit
+) {
     emitUiEvent(
         UiEvent.ShowMessageDialog(
             title = title,
             message = message,
-            positiveButton = UiEvent.DialogButton("YES", handler = onConfirm),
+            positiveButton = UiEvent.DialogButton(confirmButtonLabel, handler = onConfirm),
             negativeButton = UiEvent.DialogButton("CANCEL") {}
         )
     )

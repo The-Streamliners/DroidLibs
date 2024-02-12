@@ -3,10 +3,13 @@ package com.streamliners.feature.base_sample
 import androidx.compose.runtime.mutableStateOf
 import com.streamliners.base.BaseViewModel
 import com.streamliners.base.ext.execute
+import com.streamliners.base.ext.showMessageDialog
 import com.streamliners.base.ext.showingLoader
 import com.streamliners.base.taskState.reLoad
 import com.streamliners.base.taskState.taskStateOf
 import com.streamliners.base.taskState.update
+import com.streamliners.base.uiEvent.UiEvent
+import com.streamliners.base.uiEvent.UiEvent.DialogButton
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.value
 import com.streamliners.data.FactRepository

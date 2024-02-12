@@ -6,14 +6,16 @@ import android.content.Context
 import android.widget.Toast
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.uiEvent.UiEvent
+import com.streamliners.base.uiEvent.UiEvent.ShowToast.Duration
+import com.streamliners.base.uiEvent.UiEvent.ShowToast.Duration.Short
 
 internal fun BaseActivity.handleUiEvent(event: UiEvent) {
     when(event) {
         is UiEvent.ShowLoadingDialog -> {
-            showLoadingDialog(event)
+            showLoader(event)
         }
         UiEvent.HideLoadingDialog -> {
-            hideLoadingDialog()
+            hideLoader()
         }
         is UiEvent.ShowMessageDialog -> {
             showMessageDialog(event)
@@ -41,7 +43,7 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
             )
         }
         is UiEvent.ShowToast -> {
-            showToast(event.message)
+            showToast(event.message, event.duration)
         }
         is UiEvent.LoggedOut -> {
             showMessageDialog("Login required", "You have been logged out, please login again!")
@@ -50,9 +52,16 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
     }
 }
 
-fun BaseActivity.showToast(message: String) {
+fun BaseActivity.showToast(
+    message: String,
+    duration: Duration = Short
+) {
     lastToast?.cancel()
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).apply {
+    val length = when (duration) {
+        Short -> Toast.LENGTH_SHORT
+        Duration.Long -> Toast.LENGTH_LONG
+    }
+    Toast.makeText(this, message, length).apply {
         lastToast = this
         show()
     }
