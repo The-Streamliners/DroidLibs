@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -18,22 +20,40 @@ import com.streamliners.compose.comp.textInput.config.InputConfig
 import com.streamliners.compose.comp.textInput.config.email
 import com.streamliners.compose.comp.textInput.config.fixedLengthNumber
 import com.streamliners.compose.comp.textInput.config.number
+import com.streamliners.compose.comp.textInput.config.password
 import com.streamliners.compose.comp.textInput.config.text
 import com.streamliners.compose.comp.textInput.state.TextInputState
-import com.streamliners.compose.comp.textInput.state.areAllValid
+import com.streamliners.compose.comp.textInput.state.allAreValid
+import com.streamliners.compose.comp.textInput.state.value
 
 @ExperimentalMaterial3Api
 @Composable
 fun TextInputLayoutSamples(
     modifier: Modifier = Modifier
 ) {
-    val name = remember {
+    val nameInput = remember {
         mutableStateOf(
-            TextInputState("Name")
+            TextInputState(
+                label = "Name",
+                inputConfig = InputConfig.text {
+                    optional = true
+                    minLength = 5
+                    maxLength = 30
+                }
+            )
         )
     }
 
-    val age = remember {
+    val passwordInput = remember {
+        mutableStateOf(
+            TextInputState(
+                label = "Password",
+                inputConfig = InputConfig.password()
+            )
+        )
+    }
+
+    val ageInput = remember {
         mutableStateOf(
             TextInputState(
                 label = "Age",
@@ -44,7 +64,7 @@ fun TextInputLayoutSamples(
         )
     }
 
-    val contactNo = remember {
+    val contactNoInput = remember {
         mutableStateOf(
             TextInputState(
                 label = "Contact number",
@@ -53,16 +73,18 @@ fun TextInputLayoutSamples(
         )
     }
 
-    val email = remember {
+    val emailInput = remember {
         mutableStateOf(
             TextInputState(
                 label = "Email Address",
-                inputConfig = InputConfig.email()
+                inputConfig = InputConfig.email {
+                    minLength = 10
+                }
             )
         )
     }
 
-    val aadhar = remember {
+    val aadharNoInput = remember {
         mutableStateOf(
             TextInputState(
                 label = "Aadhar number",
@@ -71,7 +93,7 @@ fun TextInputLayoutSamples(
         )
     }
 
-    val pan = remember {
+    val panNoInput = remember {
         mutableStateOf(
             TextInputState(
                 label = "PAN number",
@@ -87,32 +109,45 @@ fun TextInputLayoutSamples(
     }
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
 
-        TextInputLayout(state = name)
+        TextInputLayout(state = nameInput)
 
-        TextInputLayout(state = age)
+        TextInputLayout(state = ageInput)
 
-        TextInputLayout(state = contactNo)
+        TextInputLayout(state = contactNoInput)
 
-        TextInputLayout(state = email)
+        TextInputLayout(state = emailInput)
 
-        TextInputLayout(state = aadhar)
+        TextInputLayout(state = aadharNoInput)
 
-        TextInputLayout(state = pan)
+        TextInputLayout(state = panNoInput)
+
+        TextInputLayout(state = passwordInput)
 
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                val valid = TextInputState.areAllValid(
-                    name, age, contactNo, email, aadhar, pan
-                )
-
-                if (valid) {
-
+                if (
+                    TextInputState.allAreValid(
+                        nameInput, ageInput, contactNoInput, emailInput, aadharNoInput, panNoInput, passwordInput
+                    )
+                ) {
+//                    viewModel.registerUser(
+//                        User(
+//                            name = nameInput.value(),
+//                            age = ageInput.value().toInt(),
+//                            contactNo = contactNoInput.value(),
+//                            email = emailInput.value(),
+//                            aadharNo = aadharNoInput.value(),
+//                            panNo = panNoInput.value()
+//                        )
+//                    )
                 }
             }
         ) {
