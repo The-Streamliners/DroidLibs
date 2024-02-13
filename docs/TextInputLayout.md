@@ -2,7 +2,7 @@
 
 `TextInputLayout` is a wrapper around the `OutlinedTextField` composable of Material library. It provides a very useful but important feature - **<u>Input validation</u>**, which is absent in the base composable.
 
-<video loop src="assets/TextInputLayoutDemo.mp4"></video>
+https://github.com/The-Streamliners/DroidLibs/assets/24524454/1d65edce-3c32-4888-99a9-a4874d7f37f7
 
 ## Basic usage
 
@@ -215,11 +215,11 @@ Sample :
 
 - maxLength set to 3
 
-- when true, allows entering more than 3 characters but displays error message :
+- when true, prevents entering more than 3 characters :
   
   <img title="" src="assets/strictMaxLengthCheckTrue.gif" alt="" width="262">
 
-- when false, prevents entering more than 3 characters :
+- when false, allows entering more than 3 characters but displays error message :
   
   <img title="" src="assets/strictMaxLengthCheckFalse.gif" alt="" width="260">
 
