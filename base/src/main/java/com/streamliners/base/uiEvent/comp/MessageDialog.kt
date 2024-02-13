@@ -1,5 +1,7 @@
 package com.streamliners.base.uiEvent.comp
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -47,32 +49,61 @@ fun MessageDialog(
             )
         },
         confirmButton = {
-            TextButton(
-                onClick = {
-                    state.positiveButton.apply {
-                        handler()
-                        if (state.isCancellable || dismissOnClick) dismiss()
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Row(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    if (state.neutralButton != null) {
+                        TextButton(
+                            onClick = {
+                                state.neutralButton.apply {
+                                    handler()
+                                    if (dismissOnClick) dismiss()
+                                }
+                            }
+                        ) {
+                            Text(
+                                state.neutralButton.label,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier.weight(1f))
+
+                    if (state.negativeButton != null) {
+                        TextButton(
+                            onClick = {
+                                state.negativeButton.apply {
+                                    handler()
+                                    if (dismissOnClick) dismiss()
+                                }
+                            }
+                        ) {
+                            Text(
+                                state.negativeButton.label,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
                     }
                 }
-            ) {
-                Text(state.positiveButton.label, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-            }
-        },
-        dismissButton = if (state.negativeButton != null) { {
-            TextButton(
-                onClick = {
-                    state.negativeButton.apply {
-                        handler()
-                        if (dismissOnClick) dismiss()
+
+                TextButton(
+                    onClick = {
+                        state.positiveButton.apply {
+                            handler()
+                            if (state.isCancellable || dismissOnClick) dismiss()
+                        }
                     }
+                ) {
+                    Text(state.positiveButton.label, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                 }
-            ) {
-                Text(
-                    state.negativeButton.label,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
             }
-        } } else null
+        }
     )
 }
