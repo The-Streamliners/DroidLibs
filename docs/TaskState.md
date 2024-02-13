@@ -270,4 +270,4 @@ This way, you should replace the TaskLoadingButton with a simple button because 
 
 ## Sample code
 
-Sample code for all three approaches can be found [here](../app/src/main/java/com/streamliners/feature/base_sample). 
+Sample code for all three approaches can be found [here](../app/src/main/java/com/streamliners/feature/task_state_sample). 

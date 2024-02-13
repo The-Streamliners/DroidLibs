@@ -36,7 +36,10 @@ internal fun BaseActivity.handleUiEvent(event: UiEvent) {
                             handler = it
                         )
                     },
-                    neutralButton = if (event.showCopyButton) UiEvent.DialogButton("COPY") {
+                    neutralButton = if (event.showCopyButton) UiEvent.DialogButton(
+                        label = "COPY",
+                        dismissOnClick = true
+                    ) {
                         copyText(event.message, "ERROR")
                     } else null
                 )

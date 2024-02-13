@@ -1,4 +1,4 @@
-package com.streamliners.feature.base_sample.comp
+package com.streamliners.feature.task_state_sample.comp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

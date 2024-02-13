@@ -10,5 +10,6 @@ sealed class Route(
     data object TextInputLayoutScreen: Route("compose/textInputLayout")
 
     data object BaseSampleScreen: Route("base")
+    data object TaskStateSampleScreen: Route("taskState")
 
 }

@@ -6,14 +6,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.streamliners.base.ext.execute
+import com.streamliners.base.ext.hideLoader
+import com.streamliners.base.ext.showConfirmationDialog
+import com.streamliners.base.ext.showLoader
+import com.streamliners.base.ext.showMessageDialog
+import com.streamliners.base.uiEvent.UiEvent
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
-import com.streamliners.feature.base_sample.comp.FactFetcherComp
-import com.streamliners.feature.base_sample.comp.FactFetcherStandaloneComp
-import com.streamliners.feature.base_sample.comp.FactFetcherWithLoadingButtonComp
+import kotlinx.coroutines.delay
 
 @Composable
 fun BaseSampleScreen(
@@ -31,26 +38,66 @@ fun BaseSampleScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Button(
+                onClick = {
+                    viewModel.execute {
+                        viewModel.showLoader()
+                        delay(3000)
+                        viewModel.hideLoader()
+                    }
+                }
+            ) {
+                Text(text = "General loading dialog")
+            }
 
-            FactFetcherComp(
-                number = viewModel.numberInput1,
-                fetchFactTask = viewModel.fetchFactTaskState1,
-                fetchFact = viewModel::fetchFactUsingLoadingDialog
-            )
+            Button(
+                onClick = {
+                    viewModel.execute {
+                        viewModel.showLoader("Launching rocket")
+                        delay(3000)
+                        viewModel.hideLoader()
+                    }
+                }
+            ) {
+                Text(text = "Message loading dialog")
+            }
 
-            FactFetcherWithLoadingButtonComp(
-                number = viewModel.numberInput2,
-                fetchFactTask = viewModel.fetchFactTaskState2,
-                fetchFact = viewModel::fetchFact
-            )
+            Button(
+                onClick = {
+                    viewModel.showMessageDialog(
+                        UiEvent.ShowMessageDialog(
+                            title = "Unsaved changes",
+                            message = "Changes made will be discarded. Sure to exit?",
+                            isCancellable = false,
+                            positiveButton = UiEvent.DialogButton(
+                                label = "YES",
+                                dismissOnClick = true
+                            ),
+                            negativeButton = UiEvent.DialogButton(
+                                label = "NO",
+                                dismissOnClick = true
+                            )
+                        )
+                    )
+                }
+            ) {
+                Text(text = "Message dialog")
+            }
 
-            FactFetcherStandaloneComp(
-                number = viewModel.numberInput3,
-                fetchFactTask = viewModel.fetchFactTaskState3,
-                fetchFact = viewModel::fetchFactUsingTaskExecutor
-            )
+            Button(
+                onClick = {
+                    viewModel.showConfirmationDialog(
+                        title = "Confirm delete",
+                        message = "Are you sure? This can't be undone!",
+                        onConfirm = {}
+                    )
+                }
+            ) {
+                Text(text = "Confirmation dialog")
+            }
         }
     }
 }

@@ -7,10 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.hiltBaseViewModel
+import com.streamliners.feature.base_sample.BaseSampleScreen
 import com.streamliners.feature.compose.ComposeScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
 import com.streamliners.feature.home.HomeScreen
-import com.streamliners.feature.base_sample.BaseSampleScreen
+import com.streamliners.feature.task_state_sample.TaskStateSampleScreen
 
 @ExperimentalMaterial3Api
 @Composable
@@ -19,11 +20,18 @@ fun BaseActivity.DroidLibsApp() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.BaseSampleScreen.route
+        startDestination = Route.TaskStateSampleScreen.route
     ) {
 
         composable(Route.HomeScreen.route) {
             HomeScreen(navController = navController)
+        }
+
+        composable(Route.TaskStateSampleScreen.route) {
+            TaskStateSampleScreen(
+                navController = navController,
+                viewModel = hiltBaseViewModel()
+            )
         }
 
         composable(Route.BaseSampleScreen.route) {
