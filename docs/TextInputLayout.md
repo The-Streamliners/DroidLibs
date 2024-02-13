@@ -311,7 +311,7 @@ fun TextInputState.Companion.getErrors(
 
 ## Complete example
 
-Complete example can be found in the sample app [here]().
+Complete example can be found in the sample app [here](../app/src/main/java/com/streamliners/feature/compose/text_input_layout/TextInputLayoutSamples.kt).
 
 ---
 
