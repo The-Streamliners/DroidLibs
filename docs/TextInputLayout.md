@@ -4,6 +4,16 @@
 
 https://github.com/The-Streamliners/DroidLibs/assets/24524454/1d65edce-3c32-4888-99a9-a4874d7f37f7
 
+Edge cases handled :
+
+- Start with no errors initially
+
+- Validate length and required checks as and when input changes
+
+- Optionally prevent further input after maxLength limit is reached
+
+- Hide "Required!" error as soon a input is added 
+
 ## Basic usage
 
 Usually you would define a `MutableState<String>` for an `OutlinedTextField`, but for a `TextInputLayout`, define a `MutableState<TextInputState>` :
