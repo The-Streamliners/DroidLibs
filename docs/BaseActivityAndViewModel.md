@@ -392,7 +392,7 @@ open fun logout()
 
 Overriding this you can clear local data and navigate the user to LoginScreen.
 
-#### Other features
+### Other features
 
 - You can check whether the device is connected to the internet simply by calling the function `isConnected()` (accessible from both `Activity` & `ViewModel`) :
   
@@ -443,5 +443,3 @@ Overriding this you can clear local data and navigate the user to LoginScreen.
       }
   }
   ```
-
-- sasa
