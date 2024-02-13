@@ -41,7 +41,7 @@ To solve for this use case, we came up with `BaseActivity` & `BaseViewModel` whi
 1. Make your `Activity` inherit from `BaseActivity` :
    
    ```kotlin
-   class MainActivity : BaseActivity() { ... }
+   class MainActivity : BaseActivity() { /*...*/ }
    ```
 
 2. In the `setContent()` function, invoke the `UiEventDialogs()` composable :
@@ -61,7 +61,7 @@ To solve for this use case, we came up with `BaseActivity` & `BaseViewModel` whi
 3. Make your `ViewModel` inherit from `BaseViewModel` :
    
    ```kotlin
-   class MainViewModel : BaseViewModel() { ... }
+   class MainViewModel : BaseViewModel() { /*...*/ }
    ```
 
 4. Whenever creating an instance of the `ViewModel`, use our pre-defined functions :
@@ -110,7 +110,7 @@ fun BaseActivity.YourAmazingApp() {
 
 That's it! That's all you need to do for unlocking some very helpful functions. Let's now see what all you can achieve from this.
 
-## Emiting UI events
+## Emitting UI events
 
 From any `BaseViewModel` inheriting `ViewModel`, you can use the following functions to emit UI events :
 
@@ -135,11 +135,11 @@ From any `BaseViewModel` inheriting `ViewModel`, you can use the following funct
    
    When a message is passed, a blocking dialog with circular progress indicator (CPI) and a message is displayed :
    
-   <mark>//MessageLoadingDialog demo</mark>
+   <img title="" src="assets/MessageLoadingDialog.gif" alt="" width="257">
    
    Otherwise only the CPI is displayed :
    
-   <mark>//General LoadingDialog demo</mark>
+   <img src="assets/SimpleLoadingDialog.gif" title="" alt="" width="257">
    
    You can customize the general CPI LoadingDialog UI by overriding this composable in your `Activity` class :
    
@@ -158,6 +158,8 @@ From any `BaseViewModel` inheriting `ViewModel`, you can use the following funct
    // or for a failure where title is always "Failure" :
    fun BaseViewModel.showFailureMessage(message: String)
    ```
+   
+   <img src="assets/MessageDialog.gif" title="" alt="" width="267">
    
    If you need more control on the message dialog i.e. isCancellable, it's buttons, their labels and handlers, consider calling this overloaded function by passing in an instance of `UiEvent.ShowMessageDialog` class :
    
@@ -218,6 +220,8 @@ From any `BaseViewModel` inheriting `ViewModel`, you can use the following funct
    )
    ```
    
+   <img src="assets/ConfirmationDialog.gif" title="" alt="" width="263">
+   
    Sample usage :
    
    ```kotlin
@@ -265,7 +269,7 @@ Sample usage :
 ```kotlin
 class MainViewModel : BaseViewModel() {
 
-    fun likePost(id: Int) {
+    fun likePost(id: Int) {
         execute {
             postRepo.likePost(id)
         }
@@ -291,14 +295,22 @@ fun BaseActivity.execute(
 Following are the possibilities, when an exception is thrown :
 
 - If any of [`SocketTimeoutException`, `ConnectException`, `UnresolvedAddressException`, `UnknownHostException`, `OfflineException`] is thrown, then a failure message dialog is shown with the message : "Slow / No internet connection detected. Please try again later!".
+  
+  <img title="" src="assets/OfflineError.png" alt="" width="271">
 
 - If a `BusinessException` occurs (defined below), the error message of the exception is displayed as is, in a message dialog.
+  
+  <img title="" src="assets/BusinessExecption.png" alt="" width="269">
 
 - For any other exception that occurs, 
   
   - if it's a DEBUG build, exception message & stacktrace is displayed in a message dialog along with an optional copy button.
+    
+    <img src="assets/OtherExceptionDebugMode.gif" title="" alt="" width="289">
   
   - otherwise (RELEASE build), a general message "Something went wrong!" is displayed.
+    
+    <img title="" src="assets/OtherExceptionReleaseMode.png" alt="" width="284">
 
 #### Business Exception
 
@@ -398,7 +410,7 @@ Overriding this you can clear local data and navigate the user to LoginScreen.
   
   ```kotlin
   suspend fun BaseViewModel.executeOnMain(
-      lambda: suspend () -> Unit
+    lambda: suspend () -> Unit
   )
   ```
   
@@ -408,7 +420,7 @@ Overriding this you can clear local data and navigate the user to LoginScreen.
   
   ```kotlin
   suspend fun BaseViewModel.showingLoader(
-      lambda: suspend () -> Unit
+    lambda: suspend () -> Unit
   )
   ```
   
