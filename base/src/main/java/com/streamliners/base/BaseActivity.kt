@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlin.coroutines.CoroutineContext
 
-open class BaseActivity: FragmentActivity() {
+abstract class BaseActivity: FragmentActivity() {
 
     // Executors ------------------------------------------
 
@@ -79,7 +79,9 @@ open class BaseActivity: FragmentActivity() {
 
     // Extendable -----------------------------------------
 
-    open var debugMode = false
+    abstract var buildType: String
+    val debugMode
+        get() = buildType == "debug"
 
     open fun logout() {}
     open fun onExceptionOccurred(e: Throwable) {}
@@ -90,7 +92,8 @@ open class BaseActivity: FragmentActivity() {
         val size = 150.dp
 
         Box(
-            Modifier.size(size)
+            Modifier
+                .size(size)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surface)
         ) {

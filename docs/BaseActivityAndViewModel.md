@@ -100,13 +100,15 @@ fun BaseActivity.YourAmazingApp() {
 }
 ```
 
-5. Override the debug variable in BaseActivity to inform the library about the build variant i.e. DEBUG or RELEASE :
+5. Override the buildType property in `BaseActivity` to inform the library about the build variant i.e. `DEBUG` or `RELEASE` :
    
    ```kotlin
    class MainActivity : BaseActivity() { 
-       override var debugMode: Boolean = BuildConfig.BUILD_TYPE == "debug"
+       override var buildType: String = BuildConfig.BUILD_TYPE
    }
    ```
+
+> If `BuildConfig` class is not resolved, set `android.buildFeatures.buildConfig` to `true` in your app's Gradle file and rebuild the project.
 
 That's it! That's all you need to do for unlocking some very helpful functions. Let's now see what all you can achieve from this.
 

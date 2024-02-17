@@ -20,7 +20,7 @@ fun BaseActivity.DroidLibsApp() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.TextInputLayoutScreen.route
+        startDestination = Route.ComposeScreen.route
     ) {
 
         composable(Route.HomeScreen.route) {

@@ -23,6 +23,5 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override var debugMode: Boolean =
-        BuildConfig.BUILD_TYPE == "debug"
+    override var buildType: String = BuildConfig.BUILD_TYPE
 }

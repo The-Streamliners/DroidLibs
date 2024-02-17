@@ -7,11 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-fun debugLog(
+fun log(
     message: String,
     tag: String? = null,
-    isError: Boolean = false
+    isError: Boolean = false,
+    buildType: String
 ) {
+    if (buildType != "debug") return
     val prefix = tag?.let { "$tag -> " } ?: ""
     if (isError) {
         Log.e("DroidLibs", "$prefix $message")
@@ -20,24 +22,27 @@ fun debugLog(
     }
 }
 
-fun defaultScope(
+fun defaultContext(
     tag: String? = null,
-    onExceptionOccurred: (Throwable) -> Unit = {}
+    onExceptionOccurred: (Throwable) -> Unit = {},
+    buildType: String
 ): CoroutineContext {
-    return Dispatchers.IO + defaultExceptionHandler(tag, onExceptionOccurred)
+    return Dispatchers.IO + defaultExceptionHandler(tag, onExceptionOccurred, buildType)
 }
 
 fun defaultExceptionHandler(
     tag: String? = null,
-    onExceptionOccurred: (Throwable) -> Unit = {}
+    onExceptionOccurred: (Throwable) -> Unit = {},
+    buildType: String
 ): CoroutineExceptionHandler {
     return CoroutineExceptionHandler { _, throwable ->
-        debugLog(
+        log(
             message = "ERROR - ${throwable.message}",
             tag = tag,
-            isError = true
+            isError = true,
+            buildType = buildType
         )
-        throwable.printStackTrace()
+        if (buildType != "debug") throwable.printStackTrace()
         onExceptionOccurred(throwable)
     }
 }
@@ -45,10 +50,11 @@ fun defaultExceptionHandler(
 fun defaultExecuteHandlingError(
     tag: String? = null,
     onExceptionOccurred: (Throwable) -> Unit = {},
-    lambda: suspend CoroutineScope.() -> Unit
+    lambda: suspend CoroutineScope.() -> Unit,
+    buildType: String
 ) {
     CoroutineScope(
-        defaultScope(tag, onExceptionOccurred)
+        defaultContext(tag, onExceptionOccurred, buildType)
     ).launch {
         lambda()
     }
