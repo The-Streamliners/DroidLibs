@@ -2,7 +2,7 @@
 
 TextInputDialog is well, a dialog built using the TextInputLayout (TIL) for the purpose of simple text input. 
 
-
+https://github.com/The-Streamliners/DroidLibs/assets/24524454/e69729af-b6d3-44af-b584-4856d4b2b315
 
 You can use it in 3 simple steps :
 
