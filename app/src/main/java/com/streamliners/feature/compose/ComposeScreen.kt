@@ -25,6 +25,7 @@ import com.streamliners.compose.comp.appBar.TitleBarScaffold
 import com.streamliners.compose.comp.select.LabelledCheckBox
 import com.streamliners.feature.compose.sample.LabelledCheckBoxSample
 import com.streamliners.feature.compose.sample.LabelledRadioButtonSample
+import com.streamliners.feature.compose.sample.OutlinedSpinnerSample
 import com.streamliners.feature.compose.sample.RadioGroupSample
 import com.streamliners.feature.compose.sample.TextInputDialogSample
 import com.streamliners.ui.main.Route
@@ -48,19 +49,21 @@ fun BaseActivity.ComposeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                onClick = { navController.navigate(Route.TextInputLayoutScreen.route) }
-            ) {
-                Text(text = "Text Input Layout")
-            }
+//            Button(
+//                onClick = { navController.navigate(Route.TextInputLayoutScreen.route) }
+//            ) {
+//                Text(text = "Text Input Layout")
+//            }
+//
+//            TextInputDialogSample()
+//
+//            LabelledCheckBoxSample()
+//
+//            RadioGroupSample()
+//
+//            LabelledRadioButtonSample()
 
-            TextInputDialogSample()
-
-            LabelledCheckBoxSample()
-
-            RadioGroupSample()
-
-            LabelledRadioButtonSample()
+            OutlinedSpinnerSample()
         }
     }
 }

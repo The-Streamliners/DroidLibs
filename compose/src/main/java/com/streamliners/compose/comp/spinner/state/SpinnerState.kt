@@ -12,4 +12,10 @@ class SpinnerState<T>(
     val labelExtractor: (T) -> String
 ) {
     companion object
+
+    fun ifSelected(
+        lambda: (T) -> Unit
+    ) {
+        state.value?.let(lambda)
+    }
 }

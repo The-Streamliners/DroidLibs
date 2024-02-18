@@ -24,68 +24,34 @@ import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.update
 
-@ExperimentalMaterialApi
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedSpinner(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     options: List<String>,
-    parentScrollState: ScrollableState? = null,
+    parentScrollState: ScrollState? = null,
     state: MutableState<TextInputState>,
-    onStateChanged: () -> Unit = {}
+    onStateChanged: (String) -> Unit = {}
 ) {
-
-    var expanded by remember { mutableStateOf(false) }
-
-    ExposedDropdownMenuBox(
-        modifier = modifier.fillMaxWidth(),
-        expanded = expanded,
-        onExpandedChange = { if(parentScrollState?.isScrollInProgress != true) expanded = it }
-    ) {
-
-        Row(
-            Modifier.fillMaxWidth()
-        ) {
-
-            TextInputLayout(
-                modifier = Modifier.fillMaxWidth(),
-                state = state,
-                leadingIcon = icon,
-                trailingIconButton = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(
-                        expanded = expanded
-                    )
-                },
-                readOnly = true
-            )
-        }
-
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-
-            options.forEach {
-                DropdownMenuItem(
-                    onClick = {
-                        state.update(it)
-                        onStateChanged()
-                        expanded = false
-                    },
-                    content = {
-                        Text(text = it)
-                    }
-                )
-            }
-        }
+    val spinnerState = remember {
+        SpinnerState(
+            state = mutableStateOf<String?>(null),
+            textInputState = state,
+            labelExtractor = { it }
+        )
     }
 
-
+    OutlinedSpinner(
+        modifier = modifier,
+        icon = icon,
+        options = options,
+        state = spinnerState,
+        parentScrollState = parentScrollState,
+        onStateChanged = onStateChanged
+    )
 }
 
-@ExperimentalMaterialApi
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> OutlinedSpinner(
     modifier: Modifier = Modifier,
@@ -144,6 +110,4 @@ fun <T> OutlinedSpinner(
             }
         }
     }
-
-
 }
