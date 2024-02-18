@@ -1,6 +1,5 @@
 package com.streamliners.compose.comp.select
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,72 +19,48 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-@ExperimentalMaterial3Api
 @Composable
 fun LabelledCheckBox(
     modifier: Modifier = Modifier,
     state: MutableState<Boolean>,
     label: String,
     labelStyle: TextStyle = MaterialTheme.typography.bodyLarge,
-    background: Color? = null,
-    padding: Dp = 8.dp,
+    enabled: Boolean = true,
     onCheckChanged: (Boolean) -> Unit = {}
 ) {
-
-    var _modifier = modifier.clip(RoundedCornerShape(16.dp))
-    background?.let { _modifier = _modifier.background(it) }
-
-    Row(
-        _modifier
-            .clickable {
-                state.value = !state.value
-                onCheckChanged(state.value)
-            }
-            .padding(start = 4.dp, end = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-
-        Checkbox(
-            checked = state.value,
-            onCheckedChange = {
-                state.value = it
-                onCheckChanged(it)
-            }
-        )
-        Spacer(modifier = Modifier.size(padding))
-        Text(text = label, style = labelStyle)
-    }
-
+    LabelledCheckBox(
+        modifier = modifier,
+        checked = state.value,
+        onToggle = { state.value = it; onCheckChanged(it) },
+        label = label,
+        enabled = enabled,
+        labelStyle = labelStyle
+    )
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun LabelledCheckBox(
-    state: Boolean,
+    modifier: Modifier = Modifier,
+    checked: Boolean,
     onToggle: (Boolean) -> Unit,
     label: String,
     enabled: Boolean = true,
-    textStyle: TextStyle = MaterialTheme.typography.bodyLarge
+    labelStyle: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
-    var modifier = Modifier
-        .clip(RoundedCornerShape(4.dp))
-
-    if (enabled) {
-        modifier = modifier.clickable {
-            onToggle(!state)
-        }
-    }
-
-    modifier = modifier.padding(8.dp)
 
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .clip(RoundedCornerShape(4.dp))
+            .run {
+                if (enabled) clickable { onToggle(!checked) } else this
+            }
+            .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
             modifier = Modifier.size(20.dp),
-            checked = state,
-            onCheckedChange = { onToggle(!state) },
+            checked = checked,
+            onCheckedChange = { onToggle(!checked) },
             enabled = enabled
         )
         Spacer(modifier = Modifier.size(12.dp))
@@ -94,7 +69,7 @@ fun LabelledCheckBox(
                 if (enabled) 1f else ContentAlpha.disabled
             ),
             text = label,
-            style = textStyle,
+            style = labelStyle,
             color = Color.Black
         )
     }

@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
-@ExperimentalMaterial3Api
 @Composable
 fun LabelledRadioButton(
     label: String,
