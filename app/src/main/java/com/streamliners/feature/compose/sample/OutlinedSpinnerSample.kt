@@ -40,7 +40,7 @@ fun BaseActivity.OutlinedSpinnerSample() {
                 style = MaterialTheme.typography.titleLarge
             )
 
-//            StringOutlinedSpinnerSample()
+            StringOutlinedSpinnerSample()
 
             CustomOutlinedSpinnerSample()
         }
@@ -101,7 +101,8 @@ fun CustomOutlinedSpinnerSample() {
             Person(3, "Dr. Vikram Sarabhai"),
             Person(4, "Dr. APJ Abdul Kalam")
         ),
-        state = state
+        state = state,
+        allowInput = true
     )
 
     Button(
