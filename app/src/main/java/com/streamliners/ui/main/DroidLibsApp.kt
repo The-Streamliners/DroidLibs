@@ -9,6 +9,7 @@ import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.hiltBaseViewModel
 import com.streamliners.feature.base_sample.BaseSampleScreen
 import com.streamliners.feature.compose.ComposeScreen
+import com.streamliners.feature.compose.search_bar.SearchBarSampleScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
 import com.streamliners.feature.home.HomeScreen
 import com.streamliners.feature.task_state_sample.TaskStateSampleScreen
@@ -20,7 +21,7 @@ fun BaseActivity.DroidLibsApp() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.ComposeScreen.route
+        startDestination = Route.SearchBarSampleScreen.route
     ) {
 
         composable(Route.HomeScreen.route) {
@@ -47,6 +48,13 @@ fun BaseActivity.DroidLibsApp() {
 
         composable(Route.TextInputLayoutScreen.route) {
             TextInputLayoutScreen(navController = navController)
+        }
+
+        composable(Route.SearchBarSampleScreen.route) {
+            SearchBarSampleScreen(
+                navController = navController,
+                viewModel = hiltBaseViewModel()
+            )
         }
     }
 }

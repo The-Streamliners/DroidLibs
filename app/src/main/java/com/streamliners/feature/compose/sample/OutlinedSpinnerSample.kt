@@ -40,7 +40,7 @@ fun BaseActivity.OutlinedSpinnerSample() {
 
             StringOutlinedSpinnerSample()
 
-//            CustomOutlinedSpinnerSample()
+            CustomOutlinedSpinnerSample()
         }
     }
 }

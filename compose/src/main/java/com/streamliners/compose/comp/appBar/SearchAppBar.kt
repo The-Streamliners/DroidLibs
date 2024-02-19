@@ -16,6 +16,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -28,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,10 +40,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.streamliners.compose.comp.appBar.SearchAppBarState.*
 
 sealed class SearchAppBarState {
-    object Closed: SearchAppBarState()
+    data object Closed: SearchAppBarState()
     data class Opened(
         val query: String = ""
     ): SearchAppBarState()
@@ -51,7 +54,15 @@ sealed class SearchAppBarState {
     fun query() = (this as? Opened)?.query ?: ""
 }
 
-@ExperimentalMaterial3Api
+@Composable
+fun rememberSearchAppBarState(): MutableState<SearchAppBarState> {
+    return remember { mutableStateOf(Closed) }
+}
+
+fun ViewModel.searchAppBarState(): MutableState<SearchAppBarState> {
+    return mutableStateOf(Closed)
+}
+
 @Composable
 fun SearchAppBarScaffold(
     title: String,
@@ -71,7 +82,6 @@ fun SearchAppBarScaffold(
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun SearchAppBar(
     title: String,
@@ -90,14 +100,15 @@ fun SearchAppBar(
                 title = title,
                 navigateUp = navigateUp,
                 actions = {
-                    Icon(
-                        modifier = Modifier.clickable {
-                            searchAppBarState.value = Opened()
-                        },
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "",
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
+                    IconButton(
+                        onClick = { searchAppBarState.value = Opened() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "",
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
 
                     actions()
                 }
@@ -130,7 +141,6 @@ fun SearchAppBar(
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 private fun OpenedSearchAppBar(
     state: Opened,

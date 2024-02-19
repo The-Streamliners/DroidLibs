@@ -24,6 +24,8 @@ open class BaseViewModel : ViewModel() {
 
     val customContext = Dispatchers.IO + exceptionHandler
 
+    open fun init() { }
+
     private fun handleException(throwable: Throwable) {
         viewModelScope.launch {
             throwable.printStackTrace()

@@ -1,6 +1,5 @@
 package com.streamliners.feature.compose
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,18 +10,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
-import com.streamliners.compose.comp.select.LabelledCheckBox
 import com.streamliners.feature.compose.sample.LabelledCheckBoxSample
 import com.streamliners.feature.compose.sample.LabelledRadioButtonSample
 import com.streamliners.feature.compose.sample.OutlinedSpinnerSample
@@ -49,19 +42,19 @@ fun BaseActivity.ComposeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            Button(
-//                onClick = { navController.navigate(Route.TextInputLayoutScreen.route) }
-//            ) {
-//                Text(text = "Text Input Layout")
-//            }
-//
-//            TextInputDialogSample()
-//
-//            LabelledCheckBoxSample()
-//
-//            RadioGroupSample()
-//
-//            LabelledRadioButtonSample()
+            Button(
+                onClick = { navController.navigate(Route.TextInputLayoutScreen.route) }
+            ) {
+                Text(text = "Text Input Layout")
+            }
+
+            TextInputDialogSample()
+
+            LabelledCheckBoxSample()
+
+            RadioGroupSample()
+
+            LabelledRadioButtonSample()
 
             OutlinedSpinnerSample()
         }

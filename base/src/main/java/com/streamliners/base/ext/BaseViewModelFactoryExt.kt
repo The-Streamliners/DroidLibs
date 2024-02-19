@@ -14,6 +14,7 @@ inline fun <reified T : BaseViewModel> BaseActivity.baseViewModel(): T {
         this.showDescriptiveErrorDialogs = this@baseViewModel.debugMode
         onExceptionOccurred = this@baseViewModel::onExceptionOccurred
         isConnected = ::isConnected
+        init()
     }
 }
 
@@ -24,6 +25,7 @@ inline fun <reified T : BaseViewModel> BaseActivity.hiltBaseViewModel(): T {
         this.showDescriptiveErrorDialogs = this@hiltBaseViewModel.debugMode
         onExceptionOccurred = this@hiltBaseViewModel::onExceptionOccurred
         isConnected = ::isConnected
+        init()
     }
 }
 
@@ -34,5 +36,6 @@ inline fun <reified T : BaseViewModel> BaseActivity.koinBaseViewModel(): T {
         this.showDescriptiveErrorDialogs = this@koinBaseViewModel.debugMode
         onExceptionOccurred = this@koinBaseViewModel::onExceptionOccurred
         isConnected = ::isConnected
+        init()
     }
 }
