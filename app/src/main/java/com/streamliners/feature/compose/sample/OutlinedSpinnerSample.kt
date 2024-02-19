@@ -19,10 +19,8 @@ import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.showMessageDialog
 import com.streamliners.compose.comp.spinner.OutlinedSpinner
 import com.streamliners.compose.comp.spinner.state.SpinnerState
-import com.streamliners.compose.comp.spinner.state.value
 import com.streamliners.compose.comp.textInput.state.TextInputState
-import com.streamliners.compose.comp.textInput.state.isValid
-import com.streamliners.compose.comp.textInput.state.validate
+import com.streamliners.compose.comp.textInput.state.hasValidInput
 import com.streamliners.compose.comp.textInput.state.value
 
 @Composable
@@ -42,7 +40,7 @@ fun BaseActivity.OutlinedSpinnerSample() {
 
             StringOutlinedSpinnerSample()
 
-            CustomOutlinedSpinnerSample()
+//            CustomOutlinedSpinnerSample()
         }
     }
 }
@@ -58,14 +56,14 @@ fun StringOutlinedSpinnerSample() {
 
     OutlinedSpinner(
         options = listOf("Bharat", "USA", "Russia", "China"),
-        state = state
+        state = state,
+        allowInput = true
     )
 
     Button(
         modifier = Modifier.align(Alignment.CenterHorizontally),
         onClick = {
-            state.validate()
-            if (state.isValid()) {
+            if (state.hasValidInput()) {
                 showMessageDialog(
                     title = "Confirm selection",
                     message = "You selected : ${state.value()}"
@@ -88,7 +86,7 @@ fun CustomOutlinedSpinnerSample() {
 
     val state = remember {
         SpinnerState<Person>(
-            state = mutableStateOf(null),
+            selection = mutableStateOf(null),
             textInputState = mutableStateOf(TextInputState("Person")),
             labelExtractor = { it.name }
         )
@@ -101,8 +99,7 @@ fun CustomOutlinedSpinnerSample() {
             Person(3, "Dr. Vikram Sarabhai"),
             Person(4, "Dr. APJ Abdul Kalam")
         ),
-        state = state,
-        allowInput = true
+        state = state
     )
 
     Button(

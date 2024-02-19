@@ -2,9 +2,7 @@ package com.streamliners.compose.comp.textInput.state
 
 import androidx.compose.runtime.MutableState
 
-fun TextInputState.isError() = error != null
-
-fun TextInputState.isValid() = error == null
+fun TextInputState.hasError() = error != null
 
 fun MutableState<TextInputState>.value(trim: Boolean = true): String {
     return if (trim)
@@ -15,8 +13,9 @@ fun MutableState<TextInputState>.value(trim: Boolean = true): String {
 
 fun MutableState<TextInputState>.nullableValue() = value.value.trim().ifBlank { null }
 
-fun MutableState<TextInputState>.isValid(): Boolean {
-    return value.isValid()
+fun MutableState<TextInputState>.hasValidInput(): Boolean {
+    validate()
+    return !value.hasError()
 }
 
 fun MutableState<TextInputState>.changeLabel(label: String) {

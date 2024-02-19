@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.streamliners.compose.comp.textInput.state.TextInputState
-import com.streamliners.compose.comp.textInput.state.isError
+import com.streamliners.compose.comp.textInput.state.hasError
 import com.streamliners.compose.comp.textInput.state.update
 import com.streamliners.compose.ext.noRippleClickable
 import com.streamliners.compose.ext.outlinedTextFieldNormalColors
@@ -64,7 +64,7 @@ fun TextInputLayoutReadOnly(
             },
             enabled = false,
             colors = outlinedTextFieldNormalColors(),
-            isError = state.value.isError()
+            isError = state.value.hasError()
         )
 
         state.value.error?.let {

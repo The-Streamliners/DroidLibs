@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.streamliners.compose.comp.textInput.state.TextInputState
-import com.streamliners.compose.comp.textInput.state.isError
+import com.streamliners.compose.comp.textInput.state.hasError
 import com.streamliners.compose.comp.textInput.state.preValidateAndUpdate
 
 @Composable
@@ -87,7 +87,7 @@ fun TextInputLayout(
             enabled = enabled,
             readOnly = readOnly,
             colors = colors,
-            isError = state.value.isError(),
+            isError = state.value.hasError(),
             keyboardOptions = (keyboardOptions ?: KeyboardOptions.Default).copy(
                 keyboardType = state.value.inputConfig.keyboardType,
                 imeAction = imeAction

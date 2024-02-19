@@ -1,6 +1,7 @@
 package com.streamliners.compose.comp.spinner
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.DropdownMenuItem
@@ -27,16 +28,15 @@ import com.streamliners.compose.comp.textInput.state.value
 @Composable
 fun OutlinedSpinner(
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
     options: List<String>,
-    parentScrollState: ScrollState? = null,
     state: MutableState<TextInputState>,
     onStateChanged: (String) -> Unit = {},
-    allowInput: Boolean = false
+    allowInput: Boolean = false,
+    leadingIcon: ImageVector? = null,
 ) {
     val spinnerState = remember {
         SpinnerState(
-            state = mutableStateOf<String?>(null),
+            selection = mutableStateOf<String?>(null),
             textInputState = state,
             labelExtractor = { it }
         )
@@ -44,10 +44,9 @@ fun OutlinedSpinner(
 
     OutlinedSpinner(
         modifier = modifier,
-        icon = icon,
+        leadingIcon = leadingIcon,
         options = options,
         state = spinnerState,
-        parentScrollState = parentScrollState,
         onStateChanged = onStateChanged,
         allowInput = allowInput
     )
@@ -57,12 +56,11 @@ fun OutlinedSpinner(
 @Composable
 fun <T> OutlinedSpinner(
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
     options: List<T>,
     state: SpinnerState<T>,
-    parentScrollState: ScrollState? = null,
     onStateChanged: (T) -> Unit = {  },
-    allowInput: Boolean = false
+    allowInput: Boolean = false,
+    leadingIcon: ImageVector? = null,
 ) {
 
     var expanded by remember { mutableStateOf(false) }
@@ -79,13 +77,13 @@ fun <T> OutlinedSpinner(
             }
 
         // TODO : Find correct solution for Dropdown menu hiding on keyboard clicks
-        expanded = true
+//        expanded = true
     }
 
     ExposedDropdownMenuBox(
         modifier = modifier.fillMaxWidth(),
         expanded = expanded,
-        onExpandedChange = { if(parentScrollState?.isScrollInProgress != true) expanded = it }
+        onExpandedChange = { expanded = it }
     ) {
 
         Row(
@@ -95,7 +93,7 @@ fun <T> OutlinedSpinner(
             TextInputLayout(
                 modifier = Modifier.fillMaxWidth(),
                 state = state.textInputState,
-                leadingIcon = icon,
+                leadingIcon = leadingIcon,
                 trailingIconButton = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
                         expanded = expanded,
@@ -116,7 +114,7 @@ fun <T> OutlinedSpinner(
                     onClick = {
                         state.textInputState.update(state.labelExtractor(it))
                         val previousValue = state.value()
-                        state.state.value = it
+                        state.selection.value = it
                         if (previousValue != it) {
                             onStateChanged(it)
                         }

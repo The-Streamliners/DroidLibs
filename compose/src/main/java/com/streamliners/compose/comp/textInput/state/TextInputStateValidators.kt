@@ -65,11 +65,11 @@ fun MutableState<TextInputState>.validate() {
 
 // Multiple TIS validators ---------------------------
 
-fun TextInputState.Companion.allAreValid(
+fun TextInputState.Companion.allHaveValidInputs(
     vararg states: MutableState<TextInputState>
 ): Boolean {
     states.forEach { it.validate() }
-    return states.all { it.value.isValid() }
+    return states.all { !it.value.hasError() }
 }
 
 fun TextInputState.Companion.getErrors(

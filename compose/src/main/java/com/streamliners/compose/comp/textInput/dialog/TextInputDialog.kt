@@ -14,8 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.dialog.TextInputDialogState.Hidden
-import com.streamliners.compose.comp.textInput.state.isValid
-import com.streamliners.compose.comp.textInput.state.validate
+import com.streamliners.compose.comp.textInput.state.hasValidInput
 import com.streamliners.compose.comp.textInput.state.value
 
 @Composable
@@ -49,12 +48,11 @@ fun TextInputDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    data.input.validate()
-                    if (!data.input.isValid()) return@TextButton
-
-                    val input = data.input.value()
-                    data.submit(input)
-                    dismiss()
+                    if (data.input.hasValidInput()) {
+                        val input = data.input.value()
+                        data.submit(input)
+                        dismiss()
+                    }
                 }
             ) {
                 Text(

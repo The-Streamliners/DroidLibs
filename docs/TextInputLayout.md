@@ -239,10 +239,10 @@ Sample :
 
 ### Single state validation
 
-To check whether a single TextInputState is valid, use the `isValid()` function :
+To check whether a single TextInputState is valid, use the `hasValidInput()` function :
 
 ```kotlin
-fun MutableState<TextInputState>.isValid(): Boolean
+fun MutableState<TextInputState>.hasValidInput(): Boolean
 ```
 
 Example :
@@ -274,10 +274,10 @@ fun MutableState<TextInputState>.value(
 
 ### Form / Multiple state validation
 
-A long form with several TextInputLayouts can be easily validated by invoking the `allAreValid()` function :
+A long form with several TextInputLayouts can be easily validated by invoking the `allHaveValidInputs()` extension function :
 
 ```kotlin
-fun TextInputState.Companion.allAreValid(
+fun TextInputState.Companion.allHaveValidInputs(
     vararg states: MutableState<TextInputState>
 ): Boolean
 ```
@@ -288,7 +288,7 @@ Example :
 Button(
     onClick = {
         if (
-            TextInputState.allAreValid(
+            TextInputState.allHaveValidInputs(
                 nameInput, ageInput, contactNoInput, emailInput, aadharNoInput, panNoInput
             )
         ) {
@@ -338,6 +338,8 @@ fun MutableState<TextInputState>.nullableValue(): String? // Returns null if bla
 ```kotlin
 fun MutableState<TextInputState>.update(newValue: String) // Can be used for prefilling the value
 ```
+
+> Note that invoking this function does not perform an pre-validations.
 
 #### changeLabel()
 

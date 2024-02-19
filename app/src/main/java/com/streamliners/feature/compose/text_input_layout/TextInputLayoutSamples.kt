@@ -23,8 +23,7 @@ import com.streamliners.compose.comp.textInput.config.number
 import com.streamliners.compose.comp.textInput.config.password
 import com.streamliners.compose.comp.textInput.config.text
 import com.streamliners.compose.comp.textInput.state.TextInputState
-import com.streamliners.compose.comp.textInput.state.allAreValid
-import com.streamliners.compose.comp.textInput.state.value
+import com.streamliners.compose.comp.textInput.state.allHaveValidInputs
 
 @ExperimentalMaterial3Api
 @Composable
@@ -134,7 +133,7 @@ fun TextInputLayoutSamples(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 if (
-                    TextInputState.allAreValid(
+                    TextInputState.allHaveValidInputs(
                         nameInput, ageInput, contactNoInput, emailInput, aadharNoInput, panNoInput, passwordInput
                     )
                 ) {
