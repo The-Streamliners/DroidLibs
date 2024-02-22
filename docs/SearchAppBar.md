@@ -130,7 +130,7 @@ Similarly for closing the widget, we have `close()` function too.
 
 You can provide a navigation icon to be displayed to the left of title in the `Closed` `SearchAppBar` using the navigationIcon composable. 
 
-<img src="file://assets/SearchAppBarWithNavIcon.png" title="" alt="" width="350">
+<img src="assets/SearchAppBarWithNavIcon.png" title="" alt="" width="350">
 
 Example :
 
@@ -153,7 +153,7 @@ SearchAppBarScaffold(
 
 Alternatively, if you want the up navigation feature, then define the `navigateUp` parameter. 
 
-<img src="file://assets/SearchAppBarWithUpNav.png" title="" alt="" width="350">
+<img src="assets/SearchAppBarWithUpNav.png" title="" alt="" width="350">
 
 Example :
 
@@ -171,7 +171,7 @@ If both are provided, priority will be given to the navigationIcon composable.
 
 You can provide one or more action buttons to be displayed at the end of `Closed` `SearchAppBar`. 
 
-<img src="file://assets/SearchAppBarWithActions.png" title="" alt="" width="350">
+<img src="assets/SearchAppBarWithActions.png" title="" alt="" width="350">
 
 Example :
 

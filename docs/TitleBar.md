@@ -1,6 +1,6 @@
 # TitleBar
 
-<img src="file://assets/TitleBar.png" title="" alt="" width="400">
+<img src="assets/TitleBar.png" title="" alt="" width="400">
 
 `TitleBar` is a wrapper around `TopAppBar` and a short replacement for the following code which is often repeated all over the app :
 
@@ -40,15 +40,15 @@ You can define the following :
 
 - `navigationIcon` composable to be displayed to the left of title
   
-  <img src="file://assets/TitleBarWithNavIcon.png" title="" alt="" width="400">
+  <img src="assets/TitleBarWithNavIcon.png" title="" alt="" width="400">
 
 - `navigateUp` lambda, when passed, displays Back `navigationIcon`, on click of which this lambda is executed
   
-  <img src="file://assets/TitleBarWithUpNav.png" title="" alt="" width="400">
+  <img src="assets/TitleBarWithUpNav.png" title="" alt="" width="400">
 
 - `actions` composable to be displayed at the end of the `TopAppBar`
   
-  <img src="file://assets/TitleBarWithActions.png" title="" alt="" width="400">
+  <img src="assets/TitleBarWithActions.png" title="" alt="" width="400">
 
 Example :
 
