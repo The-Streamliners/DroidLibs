@@ -10,7 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.streamliners.compose.comp.appBar.SearchAppBarScaffold
+import com.streamliners.compose.comp.appBar.SearchAppBarState
+import com.streamliners.compose.comp.appBar.open
 import com.streamliners.data.CountryRepository
 
 @Composable
@@ -33,9 +43,11 @@ fun SearchBarSampleScreen(
         navigateUp = { navController.navigateUp() },
         searchAppBarState = viewModel.searchAppBarState,
         onQueryChanged = viewModel::filter
-    ) {
+    ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             contentPadding = PaddingValues(12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -53,7 +65,8 @@ fun CountryCard(country: CountryRepository.Country) {
             .fillMaxSize()
     ) {
         Row(
-            Modifier.fillMaxWidth()
+            Modifier
+                .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -49,6 +49,8 @@ sealed class SearchAppBarState {
         val query: String = ""
     ): SearchAppBarState()
 
+    fun isOpened () = this is Opened
+
     fun isFilterActive() = this is Opened && this.query.isNotEmpty()
 
     fun query() = (this as? Opened)?.query ?: ""
@@ -63,19 +65,30 @@ fun ViewModel.searchAppBarState(): MutableState<SearchAppBarState> {
     return mutableStateOf(Closed)
 }
 
+fun MutableState<SearchAppBarState>.open() {
+    value = Opened()
+}
+
+fun MutableState<SearchAppBarState>.close() {
+    value = Closed
+}
+
 @Composable
 fun SearchAppBarScaffold(
     title: String,
-    searchHint: String = "",
+    searchHint: String = "Search here...",
     searchAppBarState: MutableState<SearchAppBarState>,
-    navigateUp: (() -> Unit)? = null,
     onQueryChanged: (String) -> Unit,
+    navigationIcon: (@Composable () -> Unit)? = null,
+    navigateUp: (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
+    showSearchActionButton: Boolean = true,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         Modifier.fillMaxSize(),
         topBar = {
-            SearchAppBar(title, searchHint, navigateUp, searchAppBarState, onQueryChanged)
+            SearchAppBar(title, searchHint, searchAppBarState, onQueryChanged, navigationIcon, navigateUp, actions, showSearchActionButton)
         }
     ) {
         content(it)
@@ -85,11 +98,13 @@ fun SearchAppBarScaffold(
 @Composable
 fun SearchAppBar(
     title: String,
-    searchHint: String = "",
-    navigateUp: (() -> Unit)? = null,
+    searchHint: String = "Search here...",
     searchAppBarState: MutableState<SearchAppBarState>,
     onQueryChanged: (String) -> Unit,
-    actions: @Composable RowScope.() -> Unit = {}
+    navigationIcon: (@Composable () -> Unit)? = null,
+    navigateUp: (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
+    showSearchActionButton: Boolean = true
 ) {
     val state = searchAppBarState.value
 
@@ -98,16 +113,19 @@ fun SearchAppBar(
         Closed -> {
             TitleBar(
                 title = title,
+                navigationIcon = navigationIcon,
                 navigateUp = navigateUp,
                 actions = {
-                    IconButton(
-                        onClick = { searchAppBarState.value = Opened() }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
+                    if (showSearchActionButton) {
+                        IconButton(
+                            onClick = { searchAppBarState.value = Opened() }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "",
+                                tint = MaterialTheme.colorScheme.onPrimary
+                            )
+                        }
                     }
 
                     actions()
@@ -144,7 +162,7 @@ fun SearchAppBar(
 @Composable
 private fun OpenedSearchAppBar(
     state: Opened,
-    searchHint: String = "Search here...",
+    searchHint: String,
     onQueryChanged: (String) -> Unit,
     close: () -> Unit
 ) {

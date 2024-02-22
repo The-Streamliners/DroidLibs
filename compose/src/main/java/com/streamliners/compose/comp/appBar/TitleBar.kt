@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun TitleBarScaffold(
     title: String,
+    navigationIcon: (@Composable () -> Unit)? = null,
     navigateUp: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
@@ -29,7 +30,7 @@ fun TitleBarScaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TitleBar(
-                title, navigateUp, actions
+                title, navigationIcon, navigateUp, actions
             )
         }
     ) { paddingValues ->
@@ -42,6 +43,7 @@ fun TitleBarScaffold(
 @Composable
 fun TitleBar(
     title: String,
+    navigationIcon: (@Composable () -> Unit)? = null,
     navigateUp: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
@@ -50,6 +52,7 @@ fun TitleBar(
             Text(title)
         },
         navigationIcon = {
+            navigationIcon?.invoke() ?:
             navigateUp?.let {
                 IconButton(onClick = navigateUp) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
