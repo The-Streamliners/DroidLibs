@@ -2,7 +2,37 @@
 
 DroidLibs is an Android Library consisting of several tools and ready to use UI components that ease in the development of modern Android apps. This library consists of multiple modules. You can selectively add the modules as your project's dependencies based on your needs.
 
-## Introduction
+# Setup
+
+1. Add `Jitpack` to your `setting.gradle.kts` :
+   
+   ```kotlin
+   dependencyResolutionManagement {
+       repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+       repositories {
+           google()
+           mavenCentral()
+           maven("https://jitpack.io") // <- Add this
+       }
+   }
+   ```
+
+2. Add dependencies of required modules in your `build.gradle.kts` :
+   
+   [![Release](https://jitpack.io/v/The-Streamliners/DroidLibs.svg)](https://jitpack.io/#The-Streamliners/DroidLibs.svg)
+   
+   ```kotlin
+   dependencies {
+      // base module
+      implementation("com.github.The-Streamliners.DroidLibs:base:<latest-version>")
+      // compose module
+      implementation("com.github.The-Streamliners.DroidLibs:compose:<latest-version>")
+   }
+   ```
+
+---
+
+# Introduction
 
 ## base module
 
@@ -50,6 +80,8 @@ class YourAmazingViewModel: BaseViewModel {
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/BaseActivityAndViewModel.md)
 
+---
+
 ### [TaskState](docs/TaskState.md)
 
 TaskState class and its related functions makes it easy to work with Asynchronous tasks. The result of which, can either be **Success** or **Failure**. It provides a generic class so you can define it based on your result class.
@@ -85,6 +117,8 @@ fun fetchFact() {
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TaskState.md)
 
+---
+
 ### [Error Handling](docs/BaseActivityAndViewModel.md#error-handling--execute-functions)
 
 Provides `execute()` functions with in-built error handling mechanisms.
@@ -104,6 +138,8 @@ class MainViewModel : BaseViewModel() {
 ```
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/BaseActivityAndViewModel.md#error-handling--execute-functions)
+
+---
 
 ### [Helper Functions](docs/SomeHelperFunctions.md)
 
@@ -194,6 +230,8 @@ https://github.com/The-Streamliners/DroidLibs/assets/24524454/1d65edce-3c32-4888
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TextInputLayout.md)
 
+---
+
 ### [TextInputDialog](docs/TextInputDialog.md)
 
 A dialog to input some text with strong validation mechanism.
@@ -219,6 +257,8 @@ textInputDialogState.value = TextInputDialogState.Visible(
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TextInputDialog.md)
 
+---
+
 ### [OutlinedSpinner](docs/OutlinedSpinner.md)
 
 TextField & Dropdown that allows user to select one of multiple options.
@@ -240,6 +280,8 @@ OutlinedSpinner(
 ```
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/OutlinedSpinner.md)
+
+---
 
 ### [SearchAppBar](docs/SearchAppBar.md)
 
@@ -267,6 +309,8 @@ fun filter(query: String) {
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/SearchAppBar.md)
 
+---
+
 ### [TitleBar](docs/TitleBar.md)
 
 <img src="docs/assets/TitleBar.png" title="" alt="" width="400">
@@ -282,6 +326,8 @@ TitleBarScaffold(
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TitleBar.md)
 
+---
+
 ### [LabelledCheckBox](docs/LabelledCheckBox.md)
 
   ![](docs/assets/LabelledCheckBoxDemo.gif)
@@ -296,6 +342,8 @@ LabelledCheckBox(
 ```
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/LabelledCheckBox.md)
+
+---
 
 ### [RadioGroup](docs/RadioGroup.md)
 
@@ -313,6 +361,8 @@ RadioGroup(
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/RadioGroup.md)
 
+---
+
 ### [LabelledRadioButton](docs/RadioGroup.md#labelledradiobutton)
 
 ![](docs/assets/LabelledRadioButtonSample.gif)
@@ -329,6 +379,8 @@ LabelledRadioButton(
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/RadioGroup.md#labelledradiobutton)
 
+---
+
 ### [BottomSheet](docs/BottomSheet.md)
 
 <img src="docs/assets/BottomSheet.png" title="" alt="" width="420">
@@ -344,11 +396,15 @@ BottomSheet(
 
 [<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/BottomSheet.md)
 
+---
+
 ### [Other](docs/Other.md)
 
 #### [FilledIconButtonSmall](docs/Other.md#fillediconbuttonsmall)
 
 <img src="docs/assets/FilledIconButtonSmall.png" title="" alt="" width="595">
+
+---
 
 #### [Center & CenterText](docs/Other.md#center--centertext)
 
@@ -363,6 +419,8 @@ Center {
     }
 }
 ```
+
+---
 
 #### [noRippleClickable](docs/Other.md#norippleclickable)
 
