@@ -4,16 +4,16 @@ DroidLibs is an Android Library consisting of several tools and ready to use UI 
 
 ## Introduction
 
-### base module
+## base module
 
 Base module consists of some very basic yet powerful constructs :
 
-##### [UiEvent, BaseActivity & BaseViewModel](docs/BaseActivityAndViewModel.md)
+### [UiEvent, BaseActivity & BaseViewModel](docs/BaseActivityAndViewModel.md)
 
 When implemented, these help in emitting UI events from ViewModel to Activity (View). UI events supported :
 
 | <img src="docs/assets/SimpleLoadingDialog.gif" title="" alt="" width="230"> | <img title="" src="docs/assets/MessageLoadingDialog.gif" alt="" width="230"> | <img src="docs/assets/ConfirmationDialog.gif" title="" alt="" width="230"> | <img src="docs/assets/MessageDialog.gif" title="" alt="" width="230"> |
-| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 
 - Showing Toast
 
@@ -48,9 +48,9 @@ class YourAmazingViewModel: BaseViewModel {
 }
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/BaseActivityAndViewModel.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/BaseActivityAndViewModel.md)
 
-##### [TaskState](docs/TaskState.md)
+### [TaskState](docs/TaskState.md)
 
 TaskState class and its related functions makes it easy to work with Asynchronous tasks. The result of which, can either be **Success** or **Failure**. It provides a generic class so you can define it based on your result class.
 
@@ -83,9 +83,9 @@ fun fetchFact() {
 }
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/TaskState.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TaskState.md)
 
-##### [Error Handling](docs/BaseActivityAndViewModel.md#error-handling--execute-functions)
+### [Error Handling](docs/BaseActivityAndViewModel.md#error-handling--execute-functions)
 
 Provides `execute()` functions with in-built error handling mechanisms.
 
@@ -103,9 +103,9 @@ class MainViewModel : BaseViewModel() {
 }
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/BaseActivityAndViewModel.md#error-handling--execute-functions)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/BaseActivityAndViewModel.md#error-handling--execute-functions)
 
-##### [Helper Functions](docs/SomeHelperFunctions.md)
+### [Helper Functions](docs/SomeHelperFunctions.md)
 
 Provides functions like :
 
@@ -117,15 +117,15 @@ Provides functions like :
 
 - Execute function - `defaultExecuteHandlingError()` with error handling support
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/SomeHelperFunctions.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/SomeHelperFunctions.md)
 
 ---
 
-### compose module
+## compose module
 
 Compose module consists of several commonly used Composables :
 
-#### [TextInputLayout](docs/TextInputLayout.md)
+### [TextInputLayout](docs/TextInputLayout.md)
 
 TextInputLayout is an advanced TextField with several validation options : 
 
@@ -192,9 +192,9 @@ https://github.com/The-Streamliners/DroidLibs/assets/24524454/1d65edce-3c32-4888
    }
    ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/TextInputLayout.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TextInputLayout.md)
 
-#### [TextInputDialog](docs/TextInputDialog.md)
+### [TextInputDialog](docs/TextInputDialog.md)
 
 A dialog to input some text with strong validation mechanism.
 
@@ -217,9 +217,9 @@ textInputDialogState.value = TextInputDialogState.Visible(
 )
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/TextInputDialog.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TextInputDialog.md)
 
-#### [OutlinedSpinner](docs/OutlinedSpinner.md)
+### [OutlinedSpinner](docs/OutlinedSpinner.md)
 
 TextField & Dropdown that allows user to select one of multiple options.
 
@@ -239,9 +239,9 @@ OutlinedSpinner(
 )
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/OutlinedSpinner.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/OutlinedSpinner.md)
 
-#### [SearchAppBar](docs/SearchAppBar.md)
+### [SearchAppBar](docs/SearchAppBar.md)
 
 Integrate Search functionality on your screen with minimal effort :
 
@@ -265,9 +265,9 @@ fun filter(query: String) {
 }
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/SearchAppBar.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/SearchAppBar.md)
 
-#### [TitleBar](docs/TitleBar.md)
+### [TitleBar](docs/TitleBar.md)
 
 <img src="docs/assets/TitleBar.png" title="" alt="" width="400">
 
@@ -280,9 +280,9 @@ TitleBarScaffold(
 }
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/TitleBar.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/TitleBar.md)
 
-#### [LabelledCheckBox](docs/LabelledCheckBox.md)
+### [LabelledCheckBox](docs/LabelledCheckBox.md)
 
   ![](docs/assets/LabelledCheckBoxDemo.gif)
 
@@ -295,9 +295,9 @@ LabelledCheckBox(
 )
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/LabelledCheckBox.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/LabelledCheckBox.md)
 
-#### [RadioGroup](docs/RadioGroup.md)
+### [RadioGroup](docs/RadioGroup.md)
 
 ![](docs/assets/RadioGroupSample.gif)
 
@@ -311,9 +311,9 @@ RadioGroup(
 )
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/RadioGroup.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/RadioGroup.md)
 
-#### [LabelledRadioButton](docs/RadioGroup.md#labelledradiobutton)
+### [LabelledRadioButton](docs/RadioGroup.md#labelledradiobutton)
 
 ![](docs/assets/LabelledRadioButtonSample.gif)
 
@@ -327,9 +327,9 @@ LabelledRadioButton(
 )
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/RadioGroup.md#labelledradiobutton)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/RadioGroup.md#labelledradiobutton)
 
-#### [BottomSheet](docs/BottomSheet.md)
+### [BottomSheet](docs/BottomSheet.md)
 
 <img src="docs/assets/BottomSheet.png" title="" alt="" width="420">
 
@@ -342,15 +342,15 @@ BottomSheet(
 }
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/BottomSheet.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/BottomSheet.md)
 
-#### [Other](docs/Other.md)
+### [Other](docs/Other.md)
 
-###### [FilledIconButtonSmall](docs/Other.md#fillediconbuttonsmall)
+#### [FilledIconButtonSmall](docs/Other.md#fillediconbuttonsmall)
 
 <img src="docs/assets/FilledIconButtonSmall.png" title="" alt="" width="595">
 
-###### [Center & CenterText](docs/Other.md#center--centertext)
+#### [Center & CenterText](docs/Other.md#center--centertext)
 
 <img title="" src="docs/assets/CenterSample.png" alt="" width="235">
 
@@ -364,7 +364,7 @@ Center {
 }
 ```
 
-##### [noRippleClickable](docs/Other.md#norippleclickable)
+#### [noRippleClickable](docs/Other.md#norippleclickable)
 
 ![](docs/assets/NoRippleClickableSample.gif)
 
@@ -378,4 +378,4 @@ Text(
 )
 ```
 
-[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="220">](docs/Other.md)
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/Other.md)
