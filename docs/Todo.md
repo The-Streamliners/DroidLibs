@@ -1,4 +1,2 @@
-- BottomSheet
 - Center
-- FilledIconButtonSmall
 - noRippleClickable

@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.compose.sample.BottomSheetSample
+import com.streamliners.feature.compose.sample.FilledIconButtonSmallSample
 import com.streamliners.feature.compose.sample.LabelledCheckBoxSample
 import com.streamliners.feature.compose.sample.LabelledRadioButtonSample
 import com.streamliners.feature.compose.sample.OutlinedSpinnerSample
@@ -68,6 +69,8 @@ fun BaseActivity.ComposeScreen(
             LabelledRadioButtonSample()
 
             OutlinedSpinnerSample()
+
+            FilledIconButtonSmallSample()
         }
 
         BottomSheetSample(bottomSheetState)
