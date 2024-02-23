@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.hiltBaseViewModel
 import com.streamliners.feature.base_sample.BaseSampleScreen
+import com.streamliners.feature.compose.CenterSampleScreen
 import com.streamliners.feature.compose.ComposeScreen
 import com.streamliners.feature.compose.search_bar.SearchBarSampleScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
@@ -54,6 +55,12 @@ fun BaseActivity.DroidLibsApp() {
             SearchBarSampleScreen(
                 navController = navController,
                 viewModel = hiltBaseViewModel()
+            )
+        }
+
+        composable(Route.CenterSampleScreen.route) {
+            CenterSampleScreen(
+                navController = navController
             )
         }
     }

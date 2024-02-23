@@ -1,2 +1,1 @@
-- Center
-- noRippleClickable
+- DrawingPad

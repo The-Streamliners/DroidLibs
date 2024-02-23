@@ -22,6 +22,7 @@ import com.streamliners.feature.compose.sample.BottomSheetSample
 import com.streamliners.feature.compose.sample.FilledIconButtonSmallSample
 import com.streamliners.feature.compose.sample.LabelledCheckBoxSample
 import com.streamliners.feature.compose.sample.LabelledRadioButtonSample
+import com.streamliners.feature.compose.sample.NoRippleClickableSample
 import com.streamliners.feature.compose.sample.OutlinedSpinnerSample
 import com.streamliners.feature.compose.sample.RadioGroupSample
 import com.streamliners.feature.compose.sample.TextInputDialogSample
@@ -33,7 +34,7 @@ fun BaseActivity.ComposeScreen(
     navController: NavController
 ) {
     TitleBarScaffold(
-        title = "DroidLibs Sample",
+        title = "DroidLibs Compose Samples",
         navigateUp = { navController.navigateUp() }
     ) { paddingValues ->
 
@@ -60,6 +61,12 @@ fun BaseActivity.ComposeScreen(
                 Text(text = "Bottom Sheet")
             }
 
+            Button(
+                onClick = { navController.navigate(Route.CenterSampleScreen.route) }
+            ) {
+                Text(text = "Center composable")
+            }
+
             TextInputDialogSample()
 
             LabelledCheckBoxSample()
@@ -71,6 +78,8 @@ fun BaseActivity.ComposeScreen(
             OutlinedSpinnerSample()
 
             FilledIconButtonSmallSample()
+
+            NoRippleClickableSample()
         }
 
         BottomSheetSample(bottomSheetState)

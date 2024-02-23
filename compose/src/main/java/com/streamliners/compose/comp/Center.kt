@@ -10,15 +10,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun Center(
-    modifier: Modifier = Modifier.fillMaxSize(),
+    modifier: Modifier = Modifier.fillMaxSize().padding(16.dp),
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
-        modifier.padding(16.dp),
+        modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -28,13 +29,14 @@ fun Center(
 
 @Composable
 fun CenterText(
+    modifier: Modifier = Modifier.fillMaxSize().padding(16.dp),
     text: String,
-    modifier: Modifier = Modifier.fillMaxSize()
+    style: TextStyle = MaterialTheme.typography.titleMedium
 ) {
     Center(modifier) {
         Text(
             text = text,
-            style = MaterialTheme.typography.titleMedium
+            style = style
         )
     }
 }
