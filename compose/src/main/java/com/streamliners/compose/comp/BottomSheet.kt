@@ -26,23 +26,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 
-@ExperimentalComposeUiApi
-@ExperimentalMaterial3Api
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheet(
     title: String,
     state: MutableState<Boolean>,
     content: @Composable () -> Unit
 ) {
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        confirmStateChange = {
-            if(it == ModalBottomSheetValue.Hidden)
-                state.value = false
-            true
-        }
-    )
+    val bottomSheetState =
+        rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            confirmValueChange = {
+                if(it == ModalBottomSheetValue.Hidden)
+                    state.value = false
+                true
+            }
+        )
 
     LaunchedEffect(key1 = state.value) {
         if (state.value) {
@@ -65,8 +64,7 @@ fun BottomSheet(
     )
 }
 
-@ExperimentalComposeUiApi
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     title: String,

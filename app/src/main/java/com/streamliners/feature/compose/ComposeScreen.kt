@@ -10,12 +10,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.feature.compose.sample.BottomSheetSample
 import com.streamliners.feature.compose.sample.LabelledCheckBoxSample
 import com.streamliners.feature.compose.sample.LabelledRadioButtonSample
 import com.streamliners.feature.compose.sample.OutlinedSpinnerSample
@@ -33,6 +36,8 @@ fun BaseActivity.ComposeScreen(
         navigateUp = { navController.navigateUp() }
     ) { paddingValues ->
 
+        val bottomSheetState = remember { mutableStateOf(false) }
+
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -48,6 +53,12 @@ fun BaseActivity.ComposeScreen(
                 Text(text = "Text Input Layout")
             }
 
+            Button(
+                onClick = { bottomSheetState.value = true }
+            ) {
+                Text(text = "Bottom Sheet")
+            }
+
             TextInputDialogSample()
 
             LabelledCheckBoxSample()
@@ -58,5 +69,8 @@ fun BaseActivity.ComposeScreen(
 
             OutlinedSpinnerSample()
         }
+
+        BottomSheetSample(bottomSheetState)
     }
+
 }
