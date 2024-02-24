@@ -1,4 +1,4 @@
-package com.streamliners.feature.compose.drawing_pad
+package com.streamliners.feature.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +20,7 @@ import com.streamliners.compose.comp.DrawingPad
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
 import com.streamliners.compose.comp.capture
 import com.streamliners.compose.comp.rememberCaptureState
+import com.streamliners.feature.compose.saveAndShareImage
 
 @Composable
 fun BaseActivity.DrawingPadSampleScreen(

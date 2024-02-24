@@ -26,7 +26,7 @@ fun MutableState<CaptureState?>.capture(callback: (Bitmap) -> Unit) {
 
 @Composable
 fun Capturable(
-    state: CaptureState?,
+    state: MutableState<CaptureState?>,
     content: @Composable () -> Unit
 ) {
 
@@ -34,10 +34,10 @@ fun Capturable(
 
     val composeView = remember { ComposeView(context) }
 
-    LaunchedEffect(state) {
-        state?.let {
+    LaunchedEffect(state.value) {
+        state.value?.let {
             composeView.post {
-                state.callback(
+                it.callback(
                     composeView.drawToBitmap()
                 )
             }

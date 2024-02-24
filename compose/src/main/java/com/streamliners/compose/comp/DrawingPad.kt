@@ -40,7 +40,7 @@ fun DrawingPad(
     ) {
         val movePath = remember { mutableStateOf<Offset?>(null) }
 
-        Capturable(captureState.value) {
+        Capturable(captureState) {
             DrawingCanvas(path, movePath)
         }
 

@@ -1,4 +1,4 @@
-package com.streamliners.feature.compose.drawing_pad
+package com.streamliners.feature.compose
 
 import android.content.Intent
 import android.graphics.Bitmap
