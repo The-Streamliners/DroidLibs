@@ -311,6 +311,66 @@ fun filter(query: String) {
 
 ---
 
+### [Capturable](docs/Capturable.md)
+
+`Capturable` is a composable that allows you to (capture / take snapshot of / take screenshot of) any composable.
+
+<img src="docs/assets/CapturableSample.gif" title="" alt="" width="270">
+
+```kotlin
+val captureState = rememberCaptureState()
+
+Capturable(state = captureState) {
+   // Place anything you wanna capture
+}
+
+Button(
+   onClick = {
+      captureState.capture { bitmap ->
+         saveAndShareImage(bitmap)
+      }
+   }
+) {
+   Text(text = "Capture & Share")
+}
+```
+
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/Capturable.md)
+
+---
+
+### [DrawingPad](docs/DrawingPad.md)
+
+DrawingPad is a composable that allows user to draw on it.
+
+<img src="docs/assets/DrawingPadSample.gif" title="" alt="" width="250">
+
+```kotlin
+val drawingPadState = rememberDrawingPadState()
+
+DrawingPad(
+   modifier = Modifier.fillMaxSize(),
+   state = drawingPadState
+)
+
+FloatingActionButton(
+   onClick = {
+      drawingPadState.capture { bitmap ->
+         saveAndShareImage(bitmap)
+      }
+   }
+) {
+   Icon(
+      imageVector = Icons.Default.Share,
+      contentDescription = "Capture & Share"
+   )
+}
+```
+
+[<img src="docs/assets/LearnMoreButton.png" title="" alt="" width="120">](docs/DrawingPad.md)
+
+---
+
 ### [TitleBar](docs/TitleBar.md)
 
 <img src="docs/assets/TitleBar.png" title="" alt="" width="400">
