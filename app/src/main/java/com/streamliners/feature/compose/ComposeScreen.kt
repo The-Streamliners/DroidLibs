@@ -67,6 +67,12 @@ fun BaseActivity.ComposeScreen(
                 Text(text = "Center composable")
             }
 
+            Button(
+                onClick = { navController.navigate(Route.DrawingPadSampleScreen.route) }
+            ) {
+                Text(text = "Drawing Pad")
+            }
+
             TextInputDialogSample()
 
             LabelledCheckBoxSample()

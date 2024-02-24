@@ -10,6 +10,7 @@ import com.streamliners.base.ext.hiltBaseViewModel
 import com.streamliners.feature.base_sample.BaseSampleScreen
 import com.streamliners.feature.compose.CenterSampleScreen
 import com.streamliners.feature.compose.ComposeScreen
+import com.streamliners.feature.compose.DrawingPadSampleScreen
 import com.streamliners.feature.compose.search_bar.SearchBarSampleScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
 import com.streamliners.feature.home.HomeScreen
@@ -60,6 +61,12 @@ fun BaseActivity.DroidLibsApp() {
 
         composable(Route.CenterSampleScreen.route) {
             CenterSampleScreen(
+                navController = navController
+            )
+        }
+
+        composable(Route.DrawingPadSampleScreen.route) {
+            DrawingPadSampleScreen(
                 navController = navController
             )
         }
