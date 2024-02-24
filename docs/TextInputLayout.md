@@ -124,6 +124,19 @@ val passwordInput = remember {
 TextInputLayout(state = passwordInput)
 ```
 
+PasswordVisualTransformation is applied by default i.e. password is unreadable. Also, visibility can be toggled using the default trailing icon :
+
+<img src="assets/TILPassword.gif" title="" alt="" width="376">
+
+You can hide this default trailing icon by passing `showPasswordVisibilityButton` as `false` :
+
+```kotlin
+TextInputLayout(
+    state = passwordInput,
+    showPasswordVisibilityButton = false
+)
+```
+
 ### Numerical input
 
 - For numerical inputs, we have the `number()` InputConfig :
