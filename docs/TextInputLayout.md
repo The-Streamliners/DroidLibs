@@ -4,7 +4,7 @@
 
 https://github.com/The-Streamliners/DroidLibs/assets/24524454/1d65edce-3c32-4888-99a9-a4874d7f37f7
 
-Edge cases handled :
+Features / Edge cases handled :
 
 - Start with no errors initially
 
@@ -12,7 +12,11 @@ Edge cases handled :
 
 - Optionally prevent further input after maxLength limit is reached
 
-- Hide "Required!" error as soon a input is added 
+- Hide "Required!" error as soon a input is added
+
+- Default IME Actions (Next, Done)
+
+- Visual Transformation & visibility toggle for Password inputs
 
 ## Basic usage
 
@@ -335,6 +339,32 @@ fun TextInputState.Companion.getErrors(
 ## Complete example
 
 Complete example can be found in the sample app [here](../app/src/main/java/com/streamliners/feature/compose/text_input_layout/TextInputLayoutSamples.kt).
+
+---
+
+## Default IME Actions
+
+`TextInputLayout` uses `ImeAction.Next` by-default or `ImeAction.Done` if you provide an doneAction lambda, which results in showing next or done button on the keyboard. It eases navigation on long forms.
+
+<img src="assets/TIL-IME-Actions.gif" title="" alt="" width="276">
+
+You can disable this behavior by passing in `imeAction` as `ImeAction.Default` :
+
+```kotlin
+TextInputLayout(
+    state = nameInput,
+    imeAction = ImeAction.Default
+)
+```
+
+On the last input, you can pass the `doneAction` lambda which will be executed on click of keyboard's done button. It will automatically hide the keyboard also :
+
+```kotlin
+TextInputLayout(
+    state = passwordInput,
+    doneAction = viewModel::submitForm
+)
+```
 
 ---
 

@@ -16,7 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
@@ -43,14 +45,17 @@ fun TextInputLayout(
     showLabel: Boolean = true,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     keyboardOptions: KeyboardOptions? = null,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    keyboardActions: KeyboardActions? = null,
     singleLine: Boolean = true,
-    imeAction: ImeAction = ImeAction.Default,
+    doneAction: (() -> Unit)? = null,
+    imeAction: ImeAction = doneAction?.let { ImeAction.Done } ?: ImeAction.Next,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     showPasswordVisibilityButton: Boolean = true,
     onTextChanged: () -> Unit = {}
 ) {
     Column(modifier = modifier) {
+
+        val localFocusManager = LocalFocusManager.current
 
         var passwordVisible by remember { mutableStateOf(false) }
 
@@ -120,7 +125,16 @@ fun TextInputLayout(
                 imeAction = imeAction
             ),
             singleLine = singleLine,
-            keyboardActions = keyboardActions,
+            keyboardActions = keyboardActions ?: doneAction?.let {
+                KeyboardActions(
+                    onDone = {
+                        localFocusManager.clearFocus()
+                        it()
+                    }
+                )
+            } ?: KeyboardActions(
+                onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
+            ),
             visualTransformation = if (state.value.inputConfig.keyboardType == KeyboardType.Password && !passwordVisible)
                 PasswordVisualTransformation()
             else

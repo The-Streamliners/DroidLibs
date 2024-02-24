@@ -127,7 +127,7 @@ fun TextInputLayoutSamples(
 
         TextInputLayout(state = panNoInput)
 
-        TextInputLayout(state = passwordInput)
+        TextInputLayout(state = passwordInput, doneAction = {})
 
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
