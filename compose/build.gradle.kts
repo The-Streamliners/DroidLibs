@@ -67,7 +67,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.github.The-Streamliners"
-            artifactId = "common"
+            artifactId = "compose"
             version = "1.0"
         }
     }
