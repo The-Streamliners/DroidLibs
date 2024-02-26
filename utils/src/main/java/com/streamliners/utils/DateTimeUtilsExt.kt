@@ -8,3 +8,10 @@ fun DateTimeUtils.Format.Companion.dateOnly(): List<DateTimeUtils.Format> {
         DateTimeUtils.Format.YEAR_MONTH_DATE
     )
 }
+
+fun DateTimeUtils.Format.Companion.timeOnly(): List<DateTimeUtils.Format> {
+    return listOf(
+        DateTimeUtils.Format.HOUR_MIN_12,
+        DateTimeUtils.Format.HOUR_MIN_24
+    )
+}

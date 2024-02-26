@@ -1,4 +1,4 @@
-package com.streamliners.feature.pickers_sample.date
+package com.streamliners.feature.pickers_sample.comp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,6 @@ import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.nullableValue
 import com.streamliners.compose.comp.textInput.state.update
-import com.streamliners.feature.pickers_sample.DateTimeFormatSelection
 import com.streamliners.pickers.date.DatePickerDialog
 import com.streamliners.pickers.date.ShowDatePicker
 import com.streamliners.pickers.date.ShowDateRangePicker

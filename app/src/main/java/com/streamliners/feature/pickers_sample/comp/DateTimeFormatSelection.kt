@@ -1,4 +1,4 @@
-package com.streamliners.feature.pickers_sample
+package com.streamliners.feature.pickers_sample.comp
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable

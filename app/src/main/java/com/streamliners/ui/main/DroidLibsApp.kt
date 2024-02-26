@@ -20,6 +20,7 @@ import com.streamliners.feature.task_state_sample.TaskStateSampleScreen
 import com.streamliners.pickers.date.showDatePickerDialog
 import com.streamliners.pickers.date.showDateRangePickerDialog
 import com.streamliners.pickers.date.showMultipleDatesPickerDialog
+import com.streamliners.pickers.time.showTimePicker
 
 @ExperimentalMaterial3Api
 @Composable
@@ -83,6 +84,7 @@ fun BaseActivity.DroidLibsApp() {
                 showDatePicker = ::showDatePickerDialog,
                 showMultipleDatesPicker = ::showMultipleDatesPickerDialog,
                 showDateRangePicker = ::showDateRangePickerDialog,
+                showTimePicker = ::showTimePicker,
                 showMessageDialog = ::showMessageDialog
             )
         }
