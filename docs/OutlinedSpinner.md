@@ -177,6 +177,8 @@ Button(
 }
 ```
 
+---
+
 ## Customizations
 
 ### Auto Complete
@@ -194,12 +196,6 @@ OutlinedSpinner(
     allowInput = true
 )
 ```
-
-#### Known Issue
-
-<img src="assets/OutlinedSpinnerIssue.gif" title="" alt="" width="308">
-
-The drop down hides abruptly as soon as the user starts typing. Spinner has to clicked to display the drop down again. This might be because of focusability. Initially, Spinner is in focus so drop down is shown. But when the user types, focus is lost so drop down hides. This issue is open & not yet fixed. Feel free to fix this!
 
 ### Leading Icon
 
