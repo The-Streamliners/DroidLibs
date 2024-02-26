@@ -1,7 +1,2 @@
 jdk:
   - openjdk17
-before_install:
-  - ./scripts/prepareJitpackEnvironment.sh
-install:
-  - FILE="-Dfile=DroidLibs.aar"
-  - mvn install:install-file $FILE -DgroupId=com.github.The-Streamliners -DartifactId=base -Dversion=1.1.4 -Dpackaging=aar -DgeneratePom=true

@@ -69,6 +69,10 @@ publishing {
             groupId = "com.github.The-Streamliners"
             artifactId = "compose"
             version = "1.0"
+
+            afterEvaluate {
+                from(components["release"])
+            }
         }
     }
 }
