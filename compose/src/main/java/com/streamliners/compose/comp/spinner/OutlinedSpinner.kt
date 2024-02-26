@@ -30,7 +30,7 @@ fun OutlinedSpinner(
     modifier: Modifier = Modifier,
     options: List<String>,
     state: MutableState<TextInputState>,
-    onStateChanged: (String) -> Unit = {},
+    onStateChanged: (previousValue: String?) -> Unit = {},
     allowInput: Boolean = false,
     leadingIcon: ImageVector? = null,
 ) {
@@ -58,7 +58,7 @@ fun <T> OutlinedSpinner(
     modifier: Modifier = Modifier,
     options: List<T>,
     state: SpinnerState<T>,
-    onStateChanged: (T) -> Unit = {  },
+    onStateChanged: (previousValue: T?) -> Unit = {  },
     allowInput: Boolean = false,
     leadingIcon: ImageVector? = null,
 ) {
@@ -116,7 +116,7 @@ fun <T> OutlinedSpinner(
                         val previousValue = state.value()
                         state.selection.value = it
                         if (previousValue != it) {
-                            onStateChanged(it)
+                            onStateChanged(previousValue)
                         }
                         expanded = false
                     },
