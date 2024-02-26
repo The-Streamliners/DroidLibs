@@ -14,6 +14,9 @@ sealed class Route(
 
     data object PickersSampleScreen: Route("pickers")
 
+    data object OfficialSamplesScreen: Route("official")
+    data object OfficialSearchBarSampleScreen: Route("official/searchBar")
+
     data object BaseSampleScreen: Route("base")
     data object TaskStateSampleScreen: Route("taskState")
 

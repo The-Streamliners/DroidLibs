@@ -15,6 +15,8 @@ import com.streamliners.feature.compose.DrawingPadSampleScreen
 import com.streamliners.feature.compose.search_bar.SearchBarSampleScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
 import com.streamliners.feature.home.HomeScreen
+import com.streamliners.feature.official_sample.OfficialSamplesScreen
+import com.streamliners.feature.official_sample.OfficialSearchBarSample
 import com.streamliners.feature.pickers_sample.PickersSampleScreen
 import com.streamliners.feature.task_state_sample.TaskStateSampleScreen
 import com.streamliners.pickers.date.showDatePickerDialog
@@ -29,7 +31,7 @@ fun BaseActivity.DroidLibsApp() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.PickersSampleScreen.route
+        startDestination = Route.HomeScreen.route
     ) {
 
         composable(Route.HomeScreen.route) {
@@ -87,6 +89,17 @@ fun BaseActivity.DroidLibsApp() {
                 showTimePicker = ::showTimePicker,
                 showMessageDialog = ::showMessageDialog
             )
+        }
+
+        composable(Route.OfficialSamplesScreen.route) {
+            OfficialSamplesScreen(
+                navController = navController,
+                showMessageDialog = ::showMessageDialog
+            )
+        }
+
+        composable(Route.OfficialSearchBarSampleScreen.route) {
+            OfficialSearchBarSample()
         }
     }
 }

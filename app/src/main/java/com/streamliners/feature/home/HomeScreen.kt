@@ -43,6 +43,14 @@ fun HomeScreen(
             ) {
                 Text(text = "Compose")
             }
+
+            Button(
+                onClick = {
+                    navController.navigate(Route.OfficialSamplesScreen.route)
+                }
+            ) {
+                Text(text = "AndroidX M3 Samples")
+            }
         }
     }
 }
