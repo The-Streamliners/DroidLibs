@@ -15,12 +15,14 @@ import com.streamliners.base.ext.execute
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.pickers_sample.date.DatePickerSample
 import com.streamliners.pickers.date.ShowDatePicker
+import com.streamliners.pickers.date.ShowDateRangePicker
 
 @Composable
 fun PickersSampleScreen(
     viewModel: PickersSampleViewModel,
     navController: NavController,
     showDatePicker: ShowDatePicker,
+    showDateRangePicker: ShowDateRangePicker,
     showMessageDialog: (String, String) -> Unit
 ) {
     TitleBarScaffold(
@@ -38,7 +40,17 @@ fun PickersSampleScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             DatePickerSample(
+                rangePicker = false,
                 showDatePicker = showDatePicker,
+                showDateRangePicker = showDateRangePicker,
+                showMessageDialog = showMessageDialog,
+                executeHandlingError = { viewModel.execute(lambda = { it() })}
+            )
+
+            DatePickerSample(
+                rangePicker = true,
+                showDatePicker = showDatePicker,
+                showDateRangePicker = showDateRangePicker,
                 showMessageDialog = showMessageDialog,
                 executeHandlingError = { viewModel.execute(lambda = { it() })}
             )
