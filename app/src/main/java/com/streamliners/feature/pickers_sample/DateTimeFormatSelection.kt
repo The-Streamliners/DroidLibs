@@ -1,4 +1,4 @@
-package com.streamliners.feature.pickers_sample.date
+package com.streamliners.feature.pickers_sample
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -12,7 +12,7 @@ import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.utils.DateTimeUtils
 
 @Composable
-fun FormatSelection(
+fun DateTimeFormatSelection(
     state: MutableState<DateTimeUtils.Format?>,
     options: List<DateTimeUtils.Format>,
     onStateChanged: (previousValue: DateTimeUtils.Format?) -> Unit

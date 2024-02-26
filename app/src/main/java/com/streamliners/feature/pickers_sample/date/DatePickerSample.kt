@@ -10,6 +10,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.nullableValue
 import com.streamliners.compose.comp.textInput.state.update
+import com.streamliners.feature.pickers_sample.DateTimeFormatSelection
 import com.streamliners.pickers.date.DatePickerDialog
 import com.streamliners.pickers.date.ShowDatePicker
 import com.streamliners.pickers.date.ShowDateRangePicker
@@ -60,44 +62,11 @@ fun DatePickerSample(
                 mutableStateOf(TextInputState("Max Date"))
             }
 
-            FormatSelection(
+            DateTimeFormatSelection(
                 options = DateTimeUtils.Format.dateOnly(),
                 state = format,
                 onStateChanged = { prevFormat ->
-                    prefill.nullableValue()?.let { value ->
-
-                        val newValue = value.split(",")
-                            .mapNotNull { date ->
-                                try {
-                                    DateTimeUtils.reformatTime(
-                                        time = date.trim(),
-                                        from = prevFormat ?: DATE_MONTH_YEAR_2,
-                                        to = format.value ?: DATE_MONTH_YEAR_2
-                                    )
-                                } catch (e: Exception) {
-                                    null
-                                }
-                            }
-                            .joinToString(", ")
-
-                        prefill.update(newValue)
-                    }
-
-                    listOf(minDate, maxDate).forEach { state ->
-                        state.nullableValue()?.let { date ->
-                            state.update(
-                                try {
-                                    DateTimeUtils.reformatTime(
-                                        time = date,
-                                        from = prevFormat ?: DATE_MONTH_YEAR_2,
-                                        to = format.value ?: DATE_MONTH_YEAR_2
-                                    )
-                                } catch (e: Exception) {
-                                    ""
-                                }
-                            )
-                        }
-                    }
+                    reformatInputDates(prevFormat, format, prefill, minDate, maxDate)
                 }
             )
 
@@ -146,6 +115,8 @@ fun DatePickerSample(
                                 prefill = prefill.nullableValue()
                                     ?.split(",")
                                     ?: emptyList(),
+                                minDate = minDate.nullableValue(),
+                                maxDate = maxDate.nullableValue(),
                                 onPicked = { dates ->
                                     prefill.update(
                                         dates.joinToString(", ")
@@ -187,6 +158,49 @@ fun DatePickerSample(
             ) {
                 Text(text = "Pick Date Range")
             }
+        }
+    }
+}
+
+private fun reformatInputDates(
+    prevFormat: DateTimeUtils.Format?,
+    format: MutableState<DateTimeUtils.Format?>,
+    prefill: MutableState<TextInputState>,
+    minDate: MutableState<TextInputState>,
+    maxDate: MutableState<TextInputState>
+) {
+    prefill.nullableValue()?.let { value ->
+
+        val newValue = value.split(",")
+            .mapNotNull { date ->
+                try {
+                    DateTimeUtils.reformatTime(
+                        time = date.trim(),
+                        from = prevFormat ?: DATE_MONTH_YEAR_2,
+                        to = format.value ?: DATE_MONTH_YEAR_2
+                    )
+                } catch (e: Exception) {
+                    null
+                }
+            }
+            .joinToString(", ")
+
+        prefill.update(newValue)
+    }
+
+    listOf(minDate, maxDate).forEach { state ->
+        state.nullableValue()?.let { date ->
+            state.update(
+                try {
+                    DateTimeUtils.reformatTime(
+                        time = date,
+                        from = prevFormat ?: DATE_MONTH_YEAR_2,
+                        to = format.value ?: DATE_MONTH_YEAR_2
+                    )
+                } catch (e: Exception) {
+                    ""
+                }
+            )
         }
     }
 }
