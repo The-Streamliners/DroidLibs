@@ -22,14 +22,15 @@ import com.streamliners.compose.comp.textInput.state.update
 import com.streamliners.pickers.date.DatePickerDialog
 import com.streamliners.pickers.date.ShowDatePicker
 import com.streamliners.pickers.date.ShowDateRangePicker
+import com.streamliners.pickers.date.ShowMultipleDatesPicker
 import com.streamliners.utils.DateTimeUtils
 import com.streamliners.utils.DateTimeUtils.Format.DATE_MONTH_YEAR_2
 import com.streamliners.utils.dateOnly
 
 @Composable
 fun DatePickerSample(
-    rangePicker: Boolean,
     showDatePicker: ShowDatePicker,
+    showMultipleDatesPicker: ShowMultipleDatesPicker,
     showDateRangePicker: ShowDateRangePicker,
     showMessageDialog: (String, String) -> Unit,
     executeHandlingError: (() -> Unit) -> Unit
@@ -42,7 +43,7 @@ fun DatePickerSample(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Date${if (rangePicker) " Range" else ""} Picker",
+                text = "Date Picker",
                 style = MaterialTheme.typography.titleLarge
             )
 
@@ -63,12 +64,31 @@ fun DatePickerSample(
                 options = DateTimeUtils.Format.dateOnly(),
                 state = format,
                 onStateChanged = { prevFormat ->
-                    listOf(prefill, minDate, maxDate).forEach { state ->
-                        state.nullableValue()?.let {
+                    prefill.nullableValue()?.let { value ->
+
+                        val newValue = value.split(",")
+                            .mapNotNull { date ->
+                                try {
+                                    DateTimeUtils.reformatTime(
+                                        time = date.trim(),
+                                        from = prevFormat ?: DATE_MONTH_YEAR_2,
+                                        to = format.value ?: DATE_MONTH_YEAR_2
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            }
+                            .joinToString(", ")
+
+                        prefill.update(newValue)
+                    }
+
+                    listOf(minDate, maxDate).forEach { state ->
+                        state.nullableValue()?.let { date ->
                             state.update(
                                 try {
                                     DateTimeUtils.reformatTime(
-                                        time = it,
+                                        time = date,
                                         from = prevFormat ?: DATE_MONTH_YEAR_2,
                                         to = format.value ?: DATE_MONTH_YEAR_2
                                     )
@@ -95,43 +115,77 @@ fun DatePickerSample(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 onClick = {
                     executeHandlingError {
-                        if (rangePicker) {
-                            showDateRangePicker(
-                                DatePickerDialog.RangePickerParams(
-                                    format = format.value ?: DATE_MONTH_YEAR_2,
-                                    prefill = prefill.nullableValue()
-                                        ?.split(",")
-                                        ?.let { it[0] to it[1] },
-                                    onPicked = { range ->
-                                        prefill.update("${range.first}, ${range.second}")
-                                        showMessageDialog(
-                                            "Result",
-                                            "You picked ( $range )"
-                                        )
-                                    }
-                                )
+                        showDatePicker(
+                            DatePickerDialog.Params(
+                                format = format.value ?: DATE_MONTH_YEAR_2,
+                                prefill = prefill.nullableValue(),
+                                minDate = minDate.nullableValue(),
+                                maxDate = maxDate.nullableValue(),
+                                onPicked = { date ->
+                                    prefill.update(date)
+                                    showMessageDialog(
+                                        "Result",
+                                        "You picked ( $date )"
+                                    )
+                                }
                             )
-                        } else {
-                            showDatePicker(
-                                DatePickerDialog.Params(
-                                    format = format.value ?: DATE_MONTH_YEAR_2,
-                                    prefill = prefill.nullableValue(),
-                                    minDate = minDate.nullableValue(),
-                                    maxDate = maxDate.nullableValue(),
-                                    onPicked = { date ->
-                                        prefill.update(date)
-                                        showMessageDialog(
-                                            "Result",
-                                            "You picked ( $date )"
-                                        )
-                                    }
-                                )
-                            )
-                        }
+                        )
                     }
                 }
             ) {
-                Text(text = "Show Date Picker")
+                Text(text = "Pick Single Date")
+            }
+
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = {
+                    executeHandlingError {
+                        showMultipleDatesPicker(
+                            DatePickerDialog.MultipleDatesPickerParams(
+                                format = format.value ?: DATE_MONTH_YEAR_2,
+                                prefill = prefill.nullableValue()
+                                    ?.split(",")
+                                    ?: emptyList(),
+                                onPicked = { dates ->
+                                    prefill.update(
+                                        dates.joinToString(", ")
+                                    )
+                                    showMessageDialog(
+                                        "Result",
+                                        "You picked $dates"
+                                    )
+                                }
+                            )
+                        )
+                    }
+                }
+            ) {
+                Text(text = "Pick Multiple Dates")
+            }
+
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = {
+                    executeHandlingError {
+                        showDateRangePicker(
+                            DatePickerDialog.RangePickerParams(
+                                format = format.value ?: DATE_MONTH_YEAR_2,
+                                prefill = prefill.nullableValue()
+                                    ?.split(",")
+                                    ?.let { it[0] to it[1] },
+                                onPicked = { range ->
+                                    prefill.update("${range.first}, ${range.second}")
+                                    showMessageDialog(
+                                        "Result",
+                                        "You picked $range"
+                                    )
+                                }
+                            )
+                        )
+                    }
+                }
+            ) {
+                Text(text = "Pick Date Range")
             }
         }
     }

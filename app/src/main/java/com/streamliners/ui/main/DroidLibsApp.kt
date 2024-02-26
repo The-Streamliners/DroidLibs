@@ -19,6 +19,7 @@ import com.streamliners.feature.pickers_sample.PickersSampleScreen
 import com.streamliners.feature.task_state_sample.TaskStateSampleScreen
 import com.streamliners.pickers.date.showDatePickerDialog
 import com.streamliners.pickers.date.showDateRangePickerDialog
+import com.streamliners.pickers.date.showMultipleDatesPickerDialog
 
 @ExperimentalMaterial3Api
 @Composable
@@ -80,6 +81,7 @@ fun BaseActivity.DroidLibsApp() {
                 viewModel = hiltBaseViewModel(),
                 navController = navController,
                 showDatePicker = ::showDatePickerDialog,
+                showMultipleDatesPicker = ::showMultipleDatesPickerDialog,
                 showDateRangePicker = ::showDateRangePickerDialog,
                 showMessageDialog = ::showMessageDialog
             )
