@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.hiltBaseViewModel
+import com.streamliners.base.ext.showMessageDialog
 import com.streamliners.feature.base_sample.BaseSampleScreen
 import com.streamliners.feature.compose.CenterSampleScreen
 import com.streamliners.feature.compose.ComposeScreen
@@ -14,7 +15,9 @@ import com.streamliners.feature.compose.DrawingPadSampleScreen
 import com.streamliners.feature.compose.search_bar.SearchBarSampleScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
 import com.streamliners.feature.home.HomeScreen
+import com.streamliners.feature.pickers_sample.PickersSampleScreen
 import com.streamliners.feature.task_state_sample.TaskStateSampleScreen
+import com.streamliners.pickers.date.showDatePickerDialog
 
 @ExperimentalMaterial3Api
 @Composable
@@ -23,7 +26,7 @@ fun BaseActivity.DroidLibsApp() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.ComposeScreen.route
+        startDestination = Route.PickersSampleScreen.route
     ) {
 
         composable(Route.HomeScreen.route) {
@@ -68,6 +71,15 @@ fun BaseActivity.DroidLibsApp() {
         composable(Route.DrawingPadSampleScreen.route) {
             DrawingPadSampleScreen(
                 navController = navController
+            )
+        }
+
+        composable(Route.PickersSampleScreen.route) {
+            PickersSampleScreen(
+                viewModel = hiltBaseViewModel(),
+                navController = navController,
+                showDatePicker = ::showDatePickerDialog,
+                showMessageDialog = ::showMessageDialog
             )
         }
     }

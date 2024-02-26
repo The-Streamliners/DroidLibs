@@ -12,6 +12,8 @@ sealed class Route(
     data object CenterSampleScreen: Route("compose/center")
     data object DrawingPadSampleScreen: Route("compose/drawingPad")
 
+    data object PickersSampleScreen: Route("pickers")
+
     data object BaseSampleScreen: Route("base")
     data object TaskStateSampleScreen: Route("taskState")
 

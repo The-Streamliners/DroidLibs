@@ -64,6 +64,8 @@ dependencies {
 
     implementation(project(":base"))
     implementation(project(":compose"))
+    implementation(project(":pickers"))
+    implementation(project(":utils"))
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven("https://jitpack.io")
     }
 }
 
@@ -17,3 +18,5 @@ rootProject.name = "DroidLibs"
 include(":app")
 include(":compose")
 include(":base")
+include(":pickers")
+include(":utils")
