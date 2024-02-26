@@ -23,7 +23,7 @@ fun DatePickerDialog.showMultipleDatesPicker(
 
     var picker: BaseRequestBuilder<PrimeDatePicker, MultipleDaysPickCallback> = PrimeDatePicker
         .dialogWith(
-            CivilCalendar()
+            initialDate = prefill.firstOrNull() ?: CivilCalendar()
         )
         .pickMultipleDays { days ->
             params.onPicked(

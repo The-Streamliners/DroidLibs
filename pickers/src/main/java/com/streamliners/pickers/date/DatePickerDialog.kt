@@ -31,6 +31,8 @@ object DatePickerDialog {
     class RangePickerParams(
         val format: DateTimeUtils.Format,
         val prefill: Pair<String, String>?,
+        val minDate: String? = null,
+        val maxDate: String? = null,
         val onPicked: (Pair<String, String>) -> Unit
     )
 

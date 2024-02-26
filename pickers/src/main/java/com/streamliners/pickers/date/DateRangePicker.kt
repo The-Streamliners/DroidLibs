@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentManager
 import com.aminography.primecalendar.PrimeCalendar
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
-import com.streamliners.utils.DateTimeUtils
+import com.aminography.primedatepicker.picker.builder.RangeDaysRequestBuilder
 
 fun DatePickerDialog.showRangePicker(
     fragmentManager: FragmentManager,
@@ -18,6 +18,13 @@ fun DatePickerDialog.showRangePicker(
         start to end
     }
 
+    val minDate = params.minDate?.let {
+        PrimeCalendar.fromFormattedDate(it, params.format)
+    }
+    val maxDate = params.maxDate?.let {
+        PrimeCalendar.fromFormattedDate(it, params.format)
+    }
+
     var picker = PrimeDatePicker
         .dialogWith(
             prefillRange?.first ?: CivilCalendar()
@@ -26,10 +33,17 @@ fun DatePickerDialog.showRangePicker(
             params.onPicked(
                 start.toFormat(params.format) to end.toFormat(params.format)
             )
+        }.run {
+            prefillRange?.let { (start, end) ->
+                initiallyPickedRangeDays(start, end)
+            } ?: this
         }
 
-    prefillRange?.let { (start, end) ->
-        picker = picker.initiallyPickedRangeDays(start, end)
+    minDate?.let {
+        picker = picker.minPossibleDate(it) as RangeDaysRequestBuilder<PrimeDatePicker>
+    }
+    maxDate?.let {
+        picker = picker.maxPossibleDate(it) as RangeDaysRequestBuilder<PrimeDatePicker>
     }
 
     picker
