@@ -63,7 +63,7 @@ fun DroidLibsTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = lightColorScheme(),
         typography = Typography,
         content = content
     )

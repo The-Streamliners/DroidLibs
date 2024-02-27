@@ -46,6 +46,14 @@ fun HomeScreen(
 
             Button(
                 onClick = {
+                    navController.navigate(Route.PickersSampleScreen.route)
+                }
+            ) {
+                Text(text = "Pickers")
+            }
+
+            Button(
+                onClick = {
                     navController.navigate(Route.OfficialSamplesScreen.route)
                 }
             ) {

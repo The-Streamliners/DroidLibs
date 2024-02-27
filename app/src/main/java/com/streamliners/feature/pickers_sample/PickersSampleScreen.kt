@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.streamliners.base.ext.execute
 import com.streamliners.compose.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.pickers_sample.comp.DatePickerSample
+import com.streamliners.feature.pickers_sample.comp.MediaPickerSample
 import com.streamliners.feature.pickers_sample.comp.TimePickerSample
 import com.streamliners.pickers.date.ShowDatePicker
 import com.streamliners.pickers.date.ShowDateRangePicker
@@ -44,6 +45,10 @@ fun PickersSampleScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            MediaPickerSample(
+                executeHandlingError = { viewModel.execute(lambda = { it() }) }
+            )
+
             DatePickerSample(
                 showDatePicker = showDatePicker,
                 showMultipleDatesPicker = showMultipleDatesPicker,
