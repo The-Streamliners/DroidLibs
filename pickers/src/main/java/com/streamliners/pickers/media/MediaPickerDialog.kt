@@ -2,6 +2,7 @@ package com.streamliners.pickers.media
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.provider.MediaStore
@@ -34,6 +35,9 @@ import com.streamliners.pickers.media.FromGalleryType.VisualMediaPicker
 import com.streamliners.pickers.media.MediaType.Image
 import com.streamliners.pickers.media.MediaType.Video
 import com.streamliners.pickers.media.comp.OptionButton
+import com.streamliners.pickers.media.util.VideoMetadataExtractor
+import com.streamliners.pickers.media.util.createFile
+import com.streamliners.pickers.media.util.getUri
 import com.streamliners.utils.safeLet
 
 enum class FromGalleryType {
@@ -122,7 +126,10 @@ fun FromCameraButton(
                 safeLet(filePath.value, fileUri.value) { path, uri ->
                     data.callback {
                         listOf(
-                            PickedMedia(uri, path)
+                            when (data.type) {
+                                Image -> PickedMedia.Image(uri, path)
+                                Video -> processVideo(context, uri, path)
+                            }
                         )
                     }
                 }
@@ -209,7 +216,10 @@ fun FromGalleryButton(
 
                 data.callback {
                     items.map { uri ->
-                        PickedMedia(uri = uri.toString())
+                        when (data.type) {
+                            Image -> PickedMedia.Image(uri.toString())
+                            Video -> processVideo(context, uri.toString())
+                        }
                     }
                 }
 
@@ -228,7 +238,10 @@ fun FromGalleryButton(
                 )
                 data.callback {
                     listOf(
-                        PickedMedia(uri = uri.toString())
+                        when (data.type) {
+                            Image -> PickedMedia.Image(uri.toString())
+                            Video -> processVideo(context, uri.toString())
+                        }
                     )
                 }
             }
@@ -240,13 +253,16 @@ fun FromGalleryButton(
         contract = ActivityResultContracts.PickMultipleVisualMedia(5) ,
         onResult = { uris ->
             data.callback {
-                uris.map {
+                uris.map { uri ->
                     context.contentResolver.takePersistableUriPermission(
-                        it,
+                        uri,
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
 
-                    PickedMedia(uri = it.toString())
+                    when (data.type) {
+                        Image -> PickedMedia.Image(uri.toString())
+                        Video -> processVideo(context, uri.toString())
+                    }
                 }
             }
             state.dismiss()
@@ -283,4 +299,17 @@ fun FromGalleryButton(
             )
         }
     }
+}
+
+suspend fun processVideo(
+    context: Context,
+    uri: String,
+    path: String? = null
+): PickedMedia.Video {
+    return PickedMedia.Video(
+        uri = uri,
+        filePath = path,
+        duration = VideoMetadataExtractor.getDuration(context, uri),
+        thumbnail = VideoMetadataExtractor.getThumbnailUri(context, uri)
+    )
 }

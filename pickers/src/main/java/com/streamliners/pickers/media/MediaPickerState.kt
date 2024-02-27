@@ -18,10 +18,22 @@ sealed class MediaPickerDialogState {
     }
 }
 
-data class PickedMedia(
+sealed class PickedMedia(
     val uri: String,
     val filePath: String? = null
-)
+) {
+    class Image(
+        uri: String,
+        filePath: String? = null
+    ): PickedMedia(uri, filePath)
+
+    class Video(
+        uri: String,
+        filePath: String? = null,
+        val duration: String,
+        val thumbnail: String
+    ): PickedMedia(uri, filePath)
+}
 
 enum class MediaType {
     Image, Video;

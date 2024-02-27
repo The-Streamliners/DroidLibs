@@ -1,4 +1,4 @@
-package com.streamliners.pickers.media
+package com.streamliners.pickers.media.util
 
 import android.content.Context
 import android.net.Uri
