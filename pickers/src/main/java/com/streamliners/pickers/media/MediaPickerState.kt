@@ -1,6 +1,9 @@
 package com.streamliners.pickers.media
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 sealed class MediaPickerDialogState {
 
@@ -9,6 +12,7 @@ sealed class MediaPickerDialogState {
     class Visible(
         val type: MediaType,
         val allowMultiple: Boolean,
+        val fromGalleryType: FromGalleryType,
         val callback: (suspend () -> List<PickedMedia>) -> Unit
     ): MediaPickerDialogState() {
 
@@ -57,6 +61,17 @@ enum class MediaType {
             Image -> "image/*"
             Video -> "video/*"
         }
+    }
+}
+
+enum class FromGalleryType {
+    DocumentPicker, VisualMediaPicker
+}
+
+@Composable
+fun rememberMediaPickerDialogState(): MutableState<MediaPickerDialogState> {
+    return remember {
+        mutableStateOf(MediaPickerDialogState.Hidden)
     }
 }
 

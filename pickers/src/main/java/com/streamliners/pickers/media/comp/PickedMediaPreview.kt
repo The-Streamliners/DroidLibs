@@ -53,7 +53,7 @@ fun PickedMediaPreview(
             modifier = Modifier
                 .padding(8.dp)
                 .size(size)
-                .clip(RoundedCornerShape(4.dp)),
+                .clip(RoundedCornerShape(8.dp)),
             data = media.thumbnailUri(),
             onClick = view,
             contentScale = ContentScale.Crop
@@ -64,7 +64,7 @@ fun PickedMediaPreview(
             icon = Icons.Default.Close,
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = Color(0xFFF16F25),
-                contentColor = Color.Black
+                contentColor = Color.White
             ),
             onClick = remove
         )
@@ -73,7 +73,7 @@ fun PickedMediaPreview(
             Icon(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.scrim)
                     .padding(horizontal = 4.dp)
@@ -86,10 +86,10 @@ fun PickedMediaPreview(
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.scrim)
-                    .padding(4.dp),
+                    .padding(horizontal = 4.dp),
                 text = media.duration,
                 style = MaterialTheme.typography.labelSmall.copy(
                     shadow = Shadow(blurRadius = 2f)

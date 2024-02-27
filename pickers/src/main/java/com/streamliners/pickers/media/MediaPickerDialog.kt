@@ -40,14 +40,9 @@ import com.streamliners.pickers.media.util.createFile
 import com.streamliners.pickers.media.util.getUri
 import com.streamliners.utils.safeLet
 
-enum class FromGalleryType {
-    DocumentPicker, VisualMediaPicker
-}
-
 @Composable
 fun MediaPickerDialog(
     state: MutableState<MediaPickerDialogState>,
-    fromGalleryType: FromGalleryType = VisualMediaPicker,
     authority: String
 ) {
     val data = state.value as? MediaPickerDialogState.Visible ?: return
@@ -89,7 +84,7 @@ fun MediaPickerDialog(
 
                     FromGalleryButton(
                         modifier = Modifier.weight(1f),
-                        state, data, fromGalleryType
+                        state, data
                     )
                 }
 
@@ -192,8 +187,7 @@ fun FromCameraButton(
 fun FromGalleryButton(
     modifier: Modifier,
     state: MutableState<MediaPickerDialogState>,
-    data: MediaPickerDialogState.Visible,
-    fromGalleryType: FromGalleryType
+    data: MediaPickerDialogState.Visible
 ) {
     val context = LocalContext.current
 
@@ -274,7 +268,7 @@ fun FromGalleryButton(
         icon = Icons.Default.Image,
         label = "Pick"
     ) {
-        if (fromGalleryType == VisualMediaPicker) {
+        if (data.fromGalleryType == VisualMediaPicker) {
             val request = PickVisualMediaRequest(
                 if (data.type == Image)
                     ActivityResultContracts.PickVisualMedia.ImageOnly
