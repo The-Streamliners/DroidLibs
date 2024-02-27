@@ -21,7 +21,8 @@ fun RadioGroup(
         title = title,
         selection = state.value,
         onSelectionChange = { state.value = it },
-        options = options
+        options = options,
+        labelExtractor = { it }
     )
 }
 
@@ -32,6 +33,43 @@ fun RadioGroup(
     selection: String?,
     onSelectionChange: (String) -> Unit,
     options: List<String>
+) {
+    RadioGroup(
+        modifier = modifier,
+        title = title,
+        selection = selection,
+        onSelectionChange = onSelectionChange,
+        options = options,
+        labelExtractor = { it }
+    )
+}
+
+@Composable
+fun <T> RadioGroup(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    state: MutableState<T?>,
+    options: List<T>,
+    labelExtractor: (T) -> String
+) {
+    RadioGroup(
+        modifier = modifier,
+        title = title,
+        selection = state.value,
+        onSelectionChange = { state.value = it },
+        options = options,
+        labelExtractor = labelExtractor
+    )
+}
+
+@Composable
+fun <T> RadioGroup(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    selection: T?,
+    onSelectionChange: (T) -> Unit,
+    options: List<T>,
+    labelExtractor: (T) -> String
 ) {
     Column(
         modifier = modifier
@@ -46,7 +84,7 @@ fun RadioGroup(
 
         options.forEach { option ->
             LabelledRadioButton(
-                label = option,
+                label = labelExtractor(option),
                 selected = selection == option,
                 onClick = { onSelectionChange(option) }
             )
