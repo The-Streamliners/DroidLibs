@@ -46,14 +46,12 @@ android {
 dependencies {
 
     implementation(project(":base"))
+    implementation(project(":compose"))
     implementation(project(":utils"))
 
     // Date Picker
     implementation("com.aminography:primedatepicker:3.6.1")
     implementation("com.aminography:primecalendar:1.7.0")
-
-    // Coil
-    implementation("io.coil-kt:coil-compose:2.2.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

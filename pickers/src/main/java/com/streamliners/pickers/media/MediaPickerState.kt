@@ -31,8 +31,22 @@ sealed class PickedMedia(
         uri: String,
         filePath: String? = null,
         val duration: String,
-        val thumbnail: String
+        val thumbnailUri: String
     ): PickedMedia(uri, filePath)
+
+    fun thumbnailUri(): String {
+        return when (this) {
+            is Image -> uri
+            is Video -> thumbnailUri
+        }
+    }
+
+    fun mime(): String {
+        return when (this) {
+            is Image -> "image/*"
+            is Video -> "video/*"
+        }
+    }
 }
 
 enum class MediaType {

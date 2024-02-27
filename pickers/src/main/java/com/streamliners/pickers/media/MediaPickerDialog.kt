@@ -310,6 +310,6 @@ suspend fun processVideo(
         uri = uri,
         filePath = path,
         duration = VideoMetadataExtractor.getDuration(context, uri),
-        thumbnail = VideoMetadataExtractor.getThumbnailUri(context, uri)
+        thumbnailUri = VideoMetadataExtractor.getThumbnailUri(context, uri)
     )
 }
