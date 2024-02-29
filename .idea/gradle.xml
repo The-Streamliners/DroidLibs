@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/compose" />
+            <option value="$PROJECT_DIR$/helpers" />
             <option value="$PROJECT_DIR$/pickers" />
             <option value="$PROJECT_DIR$/utils" />
           </set>
