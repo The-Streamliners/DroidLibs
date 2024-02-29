@@ -18,6 +18,15 @@ fun MutableState<TextInputState>.hasValidInput(): Boolean {
     return !value.hasError()
 }
 
+fun MutableState<TextInputState>.ifValidInput(
+    lambda: (String) -> Unit
+) {
+    validate()
+    if (!value.hasError()) {
+        lambda(value())
+    }
+}
+
 fun MutableState<TextInputState>.changeLabel(label: String) {
     value = value.copy(label = label)
 }
