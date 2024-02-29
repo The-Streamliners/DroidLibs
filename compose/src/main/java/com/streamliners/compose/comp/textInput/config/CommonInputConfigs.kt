@@ -7,6 +7,14 @@ fun InputConfig.Companion.text(
     customize: InputConfig.() -> Unit = {}
 ) = InputConfig(customize)
 
+fun InputConfig.Companion.longText(
+    customize: InputConfig.() -> Unit = {}
+) = InputConfig {
+    singleLine = false
+    maxLines = 10
+    customize(this)
+}
+
 fun InputConfig.Companion.password(
     customize: InputConfig.() -> Unit = {}
 ) = InputConfig {
@@ -15,7 +23,7 @@ fun InputConfig.Companion.password(
 }
 
 fun InputConfig.Companion.fixedLengthNumber(
-    length: Int = 10,
+    length: Int,
     customize: InputConfig.() -> Unit = {}
 ) = InputConfig {
     keyboardType = KeyboardType.Number

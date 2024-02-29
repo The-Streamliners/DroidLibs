@@ -15,6 +15,11 @@ class InputConfig(
     var maxLength = Int.MAX_VALUE
     var strictMaxLengthCheck = false
 
+    var singleLine: Boolean = true
+    var minLines: Int = 1
+    var maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE
+
+
     class RegexValidation(
         val regex: Regex,
         val errorMessage: String? = null

@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.hasError
 import com.streamliners.compose.comp.textInput.state.preValidateAndUpdate
-import com.streamliners.compose.ext.Visibility
-import com.streamliners.compose.ext.VisibilityOff
+import com.streamliners.compose.ext.icons.Visibility
+import com.streamliners.compose.ext.icons.VisibilityOff
 
 @Composable
 fun TextInputLayout(
@@ -46,7 +46,6 @@ fun TextInputLayout(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     keyboardOptions: KeyboardOptions? = null,
     keyboardActions: KeyboardActions? = null,
-    singleLine: Boolean = true,
     doneAction: (() -> Unit)? = null,
     imeAction: ImeAction = doneAction?.let { ImeAction.Done } ?: ImeAction.Next,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -119,9 +118,9 @@ fun TextInputLayout(
         isError = state.value.hasError(),
         keyboardOptions = (keyboardOptions ?: KeyboardOptions.Default).copy(
             keyboardType = state.value.inputConfig.keyboardType,
-            imeAction = imeAction
+            imeAction = if (!state.value.inputConfig.singleLine) ImeAction.Default else imeAction
         ),
-        singleLine = singleLine,
+        singleLine = state.value.inputConfig.singleLine,
         keyboardActions = keyboardActions ?: doneAction?.let {
             KeyboardActions(
                 onDone = {
@@ -136,7 +135,8 @@ fun TextInputLayout(
             PasswordVisualTransformation()
         else
             visualTransformation,
-        maxLines = if (singleLine) 1 else Int.MAX_VALUE,
+        minLines = state.value.inputConfig.minLines,
+        maxLines = state.value.inputConfig.maxLines,
         supportingText = state.value.error?.let {
             {
                 Text(
