@@ -20,4 +20,6 @@ sealed class Route(
     data object BaseSampleScreen: Route("base")
     data object TaskStateSampleScreen: Route("taskState")
 
+    data object HelpersSampleScreen: Route("helpers")
+
 }
