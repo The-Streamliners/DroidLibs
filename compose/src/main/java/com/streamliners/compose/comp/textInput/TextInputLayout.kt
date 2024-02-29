@@ -53,50 +53,46 @@ fun TextInputLayout(
     showPasswordVisibilityButton: Boolean = true,
     onTextChanged: () -> Unit = {}
 ) {
-    Column(modifier = modifier) {
+    val localFocusManager = LocalFocusManager.current
 
-        val localFocusManager = LocalFocusManager.current
+    var passwordVisible by remember { mutableStateOf(false) }
 
-        var passwordVisible by remember { mutableStateOf(false) }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            label = if (!showLabel) null else {
-                {
-                    Text(
-                        text = buildAnnotatedString {
-                            append(state.value.label)
-                            if (!state.value.inputConfig.optional) {
-                                withStyle(
-                                    SpanStyle(color = MaterialTheme.colorScheme.error)
-                                ) {
-                                    " *"
-                                }
+    OutlinedTextField(
+        modifier = modifier,
+        label = if (!showLabel) null else {
+            {
+                Text(
+                    text = buildAnnotatedString {
+                        append(state.value.label)
+                        if (!state.value.inputConfig.optional) {
+                            withStyle(
+                                SpanStyle(color = MaterialTheme.colorScheme.error)
+                            ) {
+                                " *"
                             }
                         }
-                    )
-                }
-            },
-            value = state.value.value,
-            onValueChange = {
-                state.preValidateAndUpdate(it)
-                onTextChanged()
-            },
-            leadingIcon = if (leadingIcon == null) null else {
-                {
+                    }
+                )
+            }
+        },
+        value = state.value.value,
+        onValueChange = {
+            state.preValidateAndUpdate(it)
+            onTextChanged()
+        },
+        leadingIcon = if (leadingIcon == null) null else {
+            {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = ""
+                )
+            }
+        },
+        trailingIcon = if (showPasswordVisibilityButton &&
+            state.value.inputConfig.keyboardType == KeyboardType.Password) {
+            {
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
-                        imageVector = leadingIcon,
-                        contentDescription = ""
-                    )
-                }
-            },
-            trailingIcon = if (showPasswordVisibilityButton &&
-                state.value.inputConfig.keyboardType == KeyboardType.Password) {
-                {
-                    Icon(
-                        modifier = Modifier.clickable {
-                            passwordVisible = !passwordVisible
-                        },
                         imageVector = if (passwordVisible)
                             Icons.Default.Visibility
                         else
@@ -104,52 +100,52 @@ fun TextInputLayout(
                         contentDescription = "Password"
                     )
                 }
-            } else if (trailingIcon == null && trailingIconButton == null) null else {
-                {
-                    if (trailingIconButton != null) {
-                        trailingIconButton()
-                    } else if (trailingIcon != null) {
-                        Icon(
-                            imageVector = trailingIcon,
-                            contentDescription = ""
-                        )
-                    }
+            }
+        } else if (trailingIcon == null && trailingIconButton == null) null else {
+            {
+                if (trailingIconButton != null) {
+                    trailingIconButton()
+                } else if (trailingIcon != null) {
+                    Icon(
+                        imageVector = trailingIcon,
+                        contentDescription = ""
+                    )
                 }
-            },
-            enabled = enabled,
-            readOnly = readOnly,
-            colors = colors,
-            isError = state.value.hasError(),
-            keyboardOptions = (keyboardOptions ?: KeyboardOptions.Default).copy(
-                keyboardType = state.value.inputConfig.keyboardType,
-                imeAction = imeAction
-            ),
-            singleLine = singleLine,
-            keyboardActions = keyboardActions ?: doneAction?.let {
-                KeyboardActions(
-                    onDone = {
-                        localFocusManager.clearFocus()
-                        it()
-                    }
-                )
-            } ?: KeyboardActions(
-                onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
-            ),
-            visualTransformation = if (state.value.inputConfig.keyboardType == KeyboardType.Password && !passwordVisible)
-                PasswordVisualTransformation()
-            else
-                visualTransformation,
-            maxLines = if (singleLine) 1 else Int.MAX_VALUE
-        )
-
-        state.value.error?.let {
-            Spacer(modifier = Modifier.size(4.dp))
-            Text(
-                text = it,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.labelMedium
+            }
+        },
+        enabled = enabled,
+        readOnly = readOnly,
+        colors = colors,
+        isError = state.value.hasError(),
+        keyboardOptions = (keyboardOptions ?: KeyboardOptions.Default).copy(
+            keyboardType = state.value.inputConfig.keyboardType,
+            imeAction = imeAction
+        ),
+        singleLine = singleLine,
+        keyboardActions = keyboardActions ?: doneAction?.let {
+            KeyboardActions(
+                onDone = {
+                    localFocusManager.clearFocus()
+                    it()
+                }
             )
+        } ?: KeyboardActions(
+            onNext = { localFocusManager.moveFocus(FocusDirection.Down) }
+        ),
+        visualTransformation = if (state.value.inputConfig.keyboardType == KeyboardType.Password && !passwordVisible)
+            PasswordVisualTransformation()
+        else
+            visualTransformation,
+        maxLines = if (singleLine) 1 else Int.MAX_VALUE,
+        supportingText = state.value.error?.let {
+            {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        } ?: state.value.supportingText?.let {
+            { Text(text = it) }
         }
-    }
-
+    )
 }

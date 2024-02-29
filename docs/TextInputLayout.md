@@ -65,6 +65,7 @@ The `TextInputState` class constructor takes in a `InputConfig` parameter, using
 ```kotlin
 data class TextInputState(
     val label: String,
+    val supportingText: String? = null,
     val value: String = "",
     val error: String? = null,
     val inputConfig: InputConfig = InputConfig.text() // Controls validation & input type
@@ -233,6 +234,24 @@ class RegexValidation(
 ```
 
 It defaults to `"Invalid input!"`.
+
+### Supporting Text
+
+Supporting Text can be displayed by passing it in TextInputState constructor :
+
+```kotlin
+val aadharNoInput = remember {
+    mutableStateOf(
+        TextInputState(
+            label = "Aadhar number",
+            supportingText = "12 digit number",
+            inputConfig = InputConfig.fixedLengthNumber(12)
+        )
+    )
+}
+```
+
+<img src="assets/TILSupportingText.png" title="" alt="" width="430">
 
 ### strictMaxLengthCheck
 

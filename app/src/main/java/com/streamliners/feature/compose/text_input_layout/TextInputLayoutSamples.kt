@@ -87,6 +87,7 @@ fun TextInputLayoutSamples(
         mutableStateOf(
             TextInputState(
                 label = "Aadhar number",
+                supportingText = "12 digit number",
                 inputConfig = InputConfig.fixedLengthNumber(12)
             )
         )

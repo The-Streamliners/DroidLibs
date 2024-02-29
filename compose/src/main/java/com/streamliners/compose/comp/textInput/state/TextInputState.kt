@@ -5,6 +5,7 @@ import com.streamliners.compose.comp.textInput.config.text
 
 data class TextInputState(
     val label: String,
+    val supportingText: String? = null,
     val value: String = "",
     val error: String? = null,
     val inputConfig: InputConfig = InputConfig.text()
