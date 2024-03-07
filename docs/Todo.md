@@ -1,5 +1,13 @@
 # Components
-- Android Helpers
+- Android Helpers :
+  - Location permissions
+  - Current location
+  - File write and Share
+  - Intents - open app notifications settings
+  - ObjectsDiff
+  - FirebasePhoneAuth
+  - Place Picker
+  - QR Code Generator
 
 
 # Docs
@@ -18,3 +26,6 @@
 - Media Picker compression support
 - Catalog type Sample app with GitHub doc links
 - SnackBar
+- Colored title Card
+- Collapsible card
+- TIL : URL Input config
