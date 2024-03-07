@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.showMessageDialog
-import com.streamliners.compose.comp.spinner.OutlinedSpinner
+import com.streamliners.compose.android.comp.spinner.OutlinedSpinner
 import com.streamliners.compose.comp.spinner.state.SpinnerState
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.hasValidInput
