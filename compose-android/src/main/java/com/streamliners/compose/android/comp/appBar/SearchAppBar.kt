@@ -1,4 +1,4 @@
-package com.streamliners.compose.comp.appBar
+package com.streamliners.compose.android.comp.appBar
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -18,10 +18,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -41,7 +39,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import com.streamliners.compose.comp.appBar.SearchAppBarState.*
+import com.streamliners.compose.android.comp.appBar.SearchAppBarState.*
 
 sealed class SearchAppBarState {
     data object Closed: SearchAppBarState()

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import com.streamliners.ui.main.Route
 
 @Composable
@@ -42,7 +42,7 @@ fun OfficialSamplesScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
-            
+
             OfficialDatePickerSample(
                 showMessageDialog = showMessageDialog
             )

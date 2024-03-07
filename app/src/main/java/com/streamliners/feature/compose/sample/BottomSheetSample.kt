@@ -9,7 +9,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.streamliners.compose.comp.BottomSheet
+import com.streamliners.compose.android.comp.BottomSheet
 
 @Composable
 fun BottomSheetSample(

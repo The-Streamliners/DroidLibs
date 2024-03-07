@@ -1,10 +1,13 @@
+import org.gradle.api.publish.maven.MavenPublication
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
 }
 
 android {
-    namespace = "com.streamliners.pickers"
+    namespace = "com.streamliners.compose.android"
     compileSdk = 34
 
     defaultConfig {
@@ -45,13 +48,12 @@ android {
 
 dependencies {
 
-    implementation(project(":base"))
-    implementation(project(":compose"))
-    implementation(project(":utils"))
+    api(project(":compose")) {
+        exclude("org.jetbrains.compose.material", "material-desktop")
+    }
 
-    // Date Picker
-    implementation("com.aminography:primedatepicker:3.6.1")
-    implementation("com.aminography:primecalendar:1.7.0")
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.2.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
@@ -60,14 +62,25 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material:material-icons-extended-android")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material")
-
-    implementation("com.google.android.material:material:1.11.0")
-    implementation(project(":compose-android"))
+//    implementation("androidx.compose.material:material")
+    implementation("org.jetbrains.compose.material:material-desktop:1.5.11")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.github.The-Streamliners"
+            artifactId = "compose-android"
+            version = "1.0"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }

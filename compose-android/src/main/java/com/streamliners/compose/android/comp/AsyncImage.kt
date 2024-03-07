@@ -1,4 +1,4 @@
-package com.streamliners.compose.comp
+package com.streamliners.compose.android.comp
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape

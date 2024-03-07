@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.showToast
-import com.streamliners.compose.comp.drawing_pad.DrawingPad
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
-import com.streamliners.compose.comp.drawing_pad.capture
-import com.streamliners.compose.comp.drawing_pad.rememberDrawingPadState
+import com.streamliners.compose.android.comp.drawing_pad.DrawingPad
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.drawing_pad.capture
+import com.streamliners.compose.android.comp.drawing_pad.rememberDrawingPadState
 
 @Composable
 fun BaseActivity.DrawingPadSampleScreen(

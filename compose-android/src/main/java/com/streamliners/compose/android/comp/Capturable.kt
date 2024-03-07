@@ -1,4 +1,4 @@
-package com.streamliners.compose.comp
+package com.streamliners.compose.android.comp
 
 import android.graphics.Bitmap
 import androidx.compose.runtime.Composable

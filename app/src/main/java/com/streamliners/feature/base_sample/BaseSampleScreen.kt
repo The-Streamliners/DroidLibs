@@ -19,7 +19,7 @@ import com.streamliners.base.ext.showConfirmationDialog
 import com.streamliners.base.ext.showLoader
 import com.streamliners.base.ext.showMessageDialog
 import com.streamliners.base.uiEvent.UiEvent
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import kotlinx.coroutines.delay
 
 @Composable

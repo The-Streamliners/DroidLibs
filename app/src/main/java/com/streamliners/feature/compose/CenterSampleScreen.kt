@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.streamliners.compose.comp.Center
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 
 @Composable
 fun CenterSampleScreen(

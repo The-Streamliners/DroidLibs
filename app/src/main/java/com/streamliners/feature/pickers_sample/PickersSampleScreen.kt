@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.streamliners.base.ext.execute
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.pickers_sample.comp.DatePickerSample
 import com.streamliners.feature.pickers_sample.comp.MediaPickerSample
 import com.streamliners.feature.pickers_sample.comp.TimePickerSample
@@ -54,7 +54,7 @@ fun PickersSampleScreen(
                 showMultipleDatesPicker = showMultipleDatesPicker,
                 showDateRangePicker = showDateRangePicker,
                 showMessageDialog = showMessageDialog,
-                executeHandlingError = { viewModel.execute(lambda = { it() })}
+                executeHandlingError = { viewModel.execute(lambda = { it() }) }
             )
 
             TimePickerSample(

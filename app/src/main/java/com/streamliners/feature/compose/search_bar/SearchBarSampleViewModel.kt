@@ -6,7 +6,7 @@ import com.streamliners.base.ext.execute
 import com.streamliners.base.taskState.loadingTaskStateOf
 import com.streamliners.base.taskState.update
 import com.streamliners.base.taskState.value
-import com.streamliners.compose.comp.appBar.searchAppBarState
+import com.streamliners.compose.android.comp.appBar.searchAppBarState
 import com.streamliners.data.CountryRepository
 import com.streamliners.data.CountryRepository.Country
 import dagger.hilt.android.lifecycle.HiltViewModel

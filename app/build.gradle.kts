@@ -63,7 +63,9 @@ tasks.withType(KotlinCompile::class.java) {
 dependencies {
 
     implementation(project(":base"))
-    implementation(project(":compose"))
+    implementation(project(":compose-android")) {
+        exclude("org.jetbrains.compose.material", "material-desktop")
+    }
     implementation(project(":pickers"))
     implementation(project(":utils"))
     implementation(project(":helpers"))
