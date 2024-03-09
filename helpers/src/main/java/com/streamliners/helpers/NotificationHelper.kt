@@ -83,8 +83,9 @@ class NotificationHelper(
         body: String,
         channelId: String = DEFAULT_CHANNEL,
         pendingIntentActivity: Class<Activity>,
+        modifyNotification: NotificationCompat.Builder.() -> Unit = {},
         modifyIntent: Intent.() -> Unit = {}
-    ) {
+    ): Int {
         if (!areNotificationsEnabled(context)) {
             error("PostNotification permission not granted!")
         }
@@ -104,10 +105,19 @@ class NotificationHelper(
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .apply(modifyNotification)
             .build()
 
         /* Post */
+        val id = Random().nextInt(30000) + 1000
         val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(Random().nextInt(30000) + 1000, notification)
+        notificationManager.notify(id, notification)
+        return id
+    }
+
+    fun hideNotification(
+        id: Int
+    ) {
+        NotificationManagerCompat.from(context).cancel(id)
     }
 }
