@@ -83,7 +83,7 @@ class NotificationHelper(
         title: String,
         body: String,
         channelId: String = DEFAULT_CHANNEL,
-        pendingIntentActivity: Class<Activity>,
+        pendingIntentActivity: Class<*>,
         modifyNotification: NotificationCompat.Builder.() -> Unit = {},
         modifyIntent: Intent.() -> Unit = {}
     ): Int {
@@ -108,7 +108,7 @@ class NotificationHelper(
         title: String,
         body: String,
         channelId: String = DEFAULT_CHANNEL,
-        pendingIntentActivity: Class<Activity>,
+        pendingIntentActivity: Class<*>,
         modifyNotification: NotificationCompat.Builder.() -> Unit = {},
         modifyIntent: Intent.() -> Unit = {}
     ): Notification {
