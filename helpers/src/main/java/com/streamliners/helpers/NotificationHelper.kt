@@ -2,6 +2,7 @@ package com.streamliners.helpers
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -92,12 +93,31 @@ class NotificationHelper(
 
         createNotificationChannel(channelId)
 
+        /* Post */
+        val id = Random().nextInt(30000) + 1000
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(
+            id,
+            buildNotification(title, body, channelId, pendingIntentActivity, modifyNotification, modifyIntent)
+        )
+        return id
+    }
+
+    @SuppressLint("MissingPermission")
+    fun buildNotification(
+        title: String,
+        body: String,
+        channelId: String = DEFAULT_CHANNEL,
+        pendingIntentActivity: Class<Activity>,
+        modifyNotification: NotificationCompat.Builder.() -> Unit = {},
+        modifyIntent: Intent.() -> Unit = {}
+    ): Notification {
         /* PendingIntent */
         val intent = Intent(context, pendingIntentActivity).apply { modifyIntent() }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT xor PendingIntent.FLAG_IMMUTABLE)
 
         /* Build */
-        val notification = NotificationCompat.Builder(context, channelId)
+        return NotificationCompat.Builder(context, channelId)
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
@@ -107,12 +127,6 @@ class NotificationHelper(
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .apply(modifyNotification)
             .build()
-
-        /* Post */
-        val id = Random().nextInt(30000) + 1000
-        val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(id, notification)
-        return id
     }
 
     fun hideNotification(
