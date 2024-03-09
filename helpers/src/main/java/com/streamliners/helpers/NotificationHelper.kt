@@ -94,7 +94,7 @@ class NotificationHelper(
         createNotificationChannel(channelId)
 
         /* Post */
-        val id = Random().nextInt(30000) + 1000
+        val id = randomId()
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(
             id,
@@ -128,6 +128,8 @@ class NotificationHelper(
             .apply(modifyNotification)
             .build()
     }
+
+    fun randomId(): Int = Random().nextInt(30000) + 1000
 
     fun hideNotification(
         id: Int
