@@ -58,7 +58,7 @@ class NotificationHelper(
         }
     }
 
-    private fun createNotificationChannel(
+    fun createNotificationChannel(
         id: String = DEFAULT_CHANNEL,
         name: String = "All Notifications",
         description: String = "Default channel for all notifications"
