@@ -25,10 +25,27 @@ DroidLibs is an Android Library consisting of several tools and ready to use UI 
    dependencies {
       // base module
       implementation("com.github.The-Streamliners.DroidLibs:base:<latest-version>")
-      // compose module
+   
+      // compose-android module (strictly for Android projects)
+      implementation("com.github.The-Streamliners.DroidLibs:compose-android:<latest-version>")
+   
+      // compose module (strictly for Compose Desktop projects)
       implementation("com.github.The-Streamliners.DroidLibs:compose:<latest-version>")
+   
+      // helpers module
+      implementation("com.github.The-Streamliners.DroidLibs:helpers:<latest-version>")
+   
+      // pickers module
+      implementation("com.github.The-Streamliners.DroidLibs:pickers:<latest-version>")
+   
+      // utils module
+      implementation("com.github.The-Streamliners.DroidLibs:utils:<latest-version>")
    }
    ```
+
+## Common issue when using compose-android module
+
+
 
 ---
 
