@@ -1,5 +1,7 @@
 # TitleBar
 
+<img title="" src="assets/android-only.png" alt="" width="150">
+
 <img src="assets/TitleBar.png" title="" alt="" width="400">
 
 `TitleBar` is a wrapper around `TopAppBar` and a short replacement for the following code which is often repeated all over the app :

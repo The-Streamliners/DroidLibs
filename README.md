@@ -43,9 +43,31 @@ DroidLibs is an Android Library consisting of several tools and ready to use UI 
    }
    ```
 
-## Common issue when using compose-android module
+## Additional step for compose-android module
 
+You might face a common issue while building an app that uses compose-android module i.e. checkDebugDuplicateClasses :
 
+![](docs/assets/compose-android-issue.png)
+
+To fix this issue, add this to your app's build.gradle.kts :
+
+```kotlin
+configurations {
+    "implementation" {
+        exclude("org.jetbrains.compose.material", "material-desktop")
+    }
+}
+```
+
+Or if you're using Groovy gradle :
+
+```groovy
+configurations {
+    api {
+        exclude group: 'org.jetbrains.compose.material', module: 'material-desktop'
+    }
+}
+```
 
 ---
 
@@ -251,6 +273,8 @@ https://github.com/The-Streamliners/DroidLibs/assets/24524454/1d65edce-3c32-4888
 
 ### [TextInputDialog](docs/TextInputDialog.md)
 
+<img title="" src="docs/assets/android-only.png" alt="" width="150">
+
 A dialog to input some text with strong validation mechanism.
 
 https://github.com/The-Streamliners/DroidLibs/assets/24524454/e69729af-b6d3-44af-b584-4856d4b2b315
@@ -302,6 +326,8 @@ OutlinedSpinner(
 
 ### [SearchAppBar](docs/SearchAppBar.md)
 
+<img title="" src="docs/assets/android-only.png" alt="" width="150">
+
 Integrate Search functionality on your screen with minimal effort :
 
 ![](docs/assets/SearchAppBarDemo.gif)
@@ -330,6 +356,8 @@ fun filter(query: String) {
 
 ### [Capturable](docs/Capturable.md)
 
+<img title="" src="docs/assets/android-only.png" alt="" width="150">
+
 `Capturable` is a composable that allows you to (capture / take snapshot of / take screenshot of) any composable.
 
 <img src="docs/assets/CapturableSample.gif" title="" alt="" width="270">
@@ -357,6 +385,8 @@ Button(
 ---
 
 ### [DrawingPad](docs/DrawingPad.md)
+
+<img title="" src="docs/assets/android-only.png" alt="" width="150">
 
 DrawingPad is a composable that allows user to draw on it.
 
@@ -389,6 +419,8 @@ FloatingActionButton(
 ---
 
 ### [TitleBar](docs/TitleBar.md)
+
+<img title="" src="docs/assets/android-only.png" alt="" width="150">
 
 <img src="docs/assets/TitleBar.png" title="" alt="" width="400">
 
@@ -459,6 +491,8 @@ LabelledRadioButton(
 ---
 
 ### [BottomSheet](docs/BottomSheet.md)
+
+<img title="" src="docs/assets/android-only.png" alt="" width="150">
 
 <img src="docs/assets/BottomSheet.png" title="" alt="" width="420">
 

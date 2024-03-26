@@ -1,5 +1,7 @@
 # BottomSheet
 
+<img title="" src="assets/android-only.png" alt="" width="150">
+
 <img src="assets/BottomSheet.png" title="" alt="" width="420">
 
 BottomSheet is wrapper around the Material UI's `ModalBottomSheet` with following additional features :

@@ -1,5 +1,7 @@
 # DrawingPad
 
+<img title="" src="assets/android-only.png" alt="" width="150">
+
 DrawingPad is a composable that allows user to draw on it. Common use cases include taking a signature input. It has built-in support for capturing the input as a Bitmap using our Capturable composable.
 
 <img src="assets/DrawingPadSample.gif" title="" alt="" width="250">

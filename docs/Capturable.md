@@ -1,5 +1,7 @@
 # Capturable
 
+<img title="" src="assets/android-only.png" alt="" width="150">
+
 `Capturable` is a composable that allows you to (capture / take snapshot of / take screenshot of) any composable.
 
 <img src="assets/CapturableSample.gif" title="" alt="" width="270">

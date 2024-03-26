@@ -1,5 +1,7 @@
 # SearchAppBar
 
+<img title="" src="assets/android-only.png" alt="" width="150">
+
 `SearchAppBar` is an `AppBar` with search functionality. It is in the `Closed` state by default, when only title, actions and an optional up navigation button are displayed. A Search action button is also displayed which when clicked, displays the Search widget.
 
 ![](assets/SearchAppBarDemo.gif)
