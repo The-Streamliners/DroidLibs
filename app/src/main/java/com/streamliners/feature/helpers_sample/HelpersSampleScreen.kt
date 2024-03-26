@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.helpers_sample.comp.IntentsHelperSample
 
 @Composable

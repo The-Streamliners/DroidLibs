@@ -1,4 +1,4 @@
-package com.streamliners.compose.comp.drawing_pad
+package com.streamliners.compose.android.comp.drawing_pad
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.streamliners.compose.comp.Capturable
+import com.streamliners.compose.android.comp.Capturable
 
 @Composable
 fun DrawingPad(

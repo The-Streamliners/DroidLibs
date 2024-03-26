@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.streamliners.base.BaseActivity
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.compose.sample.BottomSheetSample
 import com.streamliners.feature.compose.sample.CapturableSample
 import com.streamliners.feature.compose.sample.FilledIconButtonSmallSample

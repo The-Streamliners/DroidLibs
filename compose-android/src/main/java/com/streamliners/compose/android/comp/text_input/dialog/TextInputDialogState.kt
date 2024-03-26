@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.lifecycle.ViewModel
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.dialog.TextInputDialogState.Hidden
 
@@ -23,8 +22,4 @@ fun rememberTextInputDialogState(): MutableState<TextInputDialogState> {
     return remember {
         mutableStateOf(Hidden)
     }
-}
-
-fun ViewModel.textInputDialogState(): MutableState<TextInputDialogState> {
-    return mutableStateOf(Hidden)
 }

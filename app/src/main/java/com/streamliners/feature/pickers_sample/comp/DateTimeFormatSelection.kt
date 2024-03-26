@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.streamliners.compose.comp.spinner.OutlinedSpinner
+import com.streamliners.compose.android.comp.spinner.OutlinedSpinner
 import com.streamliners.compose.comp.spinner.state.SpinnerState
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.utils.DateTimeUtils

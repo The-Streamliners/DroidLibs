@@ -6,25 +6,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.streamliners.base.ext.execute
-import com.streamliners.base.ext.hideLoader
-import com.streamliners.base.ext.showConfirmationDialog
-import com.streamliners.base.ext.showLoader
-import com.streamliners.base.ext.showMessageDialog
-import com.streamliners.base.uiEvent.UiEvent
-import com.streamliners.base.uiEvent.UiEvent.DialogButton
-import com.streamliners.compose.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import com.streamliners.feature.task_state_sample.comp.FactFetcherComp
 import com.streamliners.feature.task_state_sample.comp.FactFetcherStandaloneComp
 import com.streamliners.feature.task_state_sample.comp.FactFetcherWithLoadingButtonComp
-import kotlinx.coroutines.delay
 
 @Composable
 fun TaskStateSampleScreen(

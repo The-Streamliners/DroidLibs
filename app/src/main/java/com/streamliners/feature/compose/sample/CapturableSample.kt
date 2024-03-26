@@ -13,10 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.streamliners.base.BaseActivity
-import com.streamliners.compose.comp.Capturable
-import com.streamliners.compose.comp.capture
-import com.streamliners.compose.comp.drawing_pad.capture
-import com.streamliners.compose.comp.rememberCaptureState
+import com.streamliners.compose.android.comp.Capturable
+import com.streamliners.compose.android.comp.capture
+import com.streamliners.compose.android.comp.rememberCaptureState
 import com.streamliners.data.CountryRepository.Country
 import com.streamliners.feature.compose.saveAndShareImage
 import com.streamliners.feature.compose.search_bar.CountryCard

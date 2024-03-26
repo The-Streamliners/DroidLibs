@@ -7,8 +7,6 @@ import com.streamliners.base.BaseActivity
 import com.streamliners.base.uiEvent.comp.MessageDialog
 import com.streamliners.base.uiEvent.comp.LoadingDialog
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
 @Composable
 fun BaseActivity.UiEventDialogs() {
     loadingDialogState.value?.let {

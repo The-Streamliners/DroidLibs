@@ -28,8 +28,6 @@ import com.streamliners.base.BaseActivity
 //import com.airbnb.lottie.compose.rememberLottieComposition
 import com.streamliners.base.uiEvent.UiEvent
 
-@ExperimentalComposeUiApi
-@ExperimentalMaterial3Api
 @Composable
 fun BaseActivity.LoadingDialog(
     state: UiEvent.ShowLoadingDialog,

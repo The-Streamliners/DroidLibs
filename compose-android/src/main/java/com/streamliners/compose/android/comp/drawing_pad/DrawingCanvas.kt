@@ -1,4 +1,4 @@
-package com.streamliners.compose.comp.drawing_pad
+package com.streamliners.compose.android.comp.drawing_pad
 
 import android.view.MotionEvent
 import androidx.compose.foundation.Canvas

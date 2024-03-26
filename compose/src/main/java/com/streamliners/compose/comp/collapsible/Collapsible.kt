@@ -2,7 +2,6 @@ package com.streamliners.compose.comp.collapsible
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,7 +47,7 @@ fun Collapsible(
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .rotate(rotation.value),
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                imageVector = Icons.Filled.KeyboardArrowRight,
                 contentDescription = "Expand"
             )
 

@@ -19,8 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.streamliners.base.uiEvent.UiEvent
 
-@ExperimentalComposeUiApi
-@ExperimentalMaterial3Api
 @Composable
 fun MessageDialog(
     state: UiEvent.ShowMessageDialog,

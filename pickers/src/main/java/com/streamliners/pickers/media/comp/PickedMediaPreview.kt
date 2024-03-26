@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,10 +23,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.streamliners.compose.comp.AsyncImage
 import com.streamliners.compose.comp.FilledIconButtonSmall
 import com.streamliners.pickers.media.PickedMedia
 import com.streamliners.pickers.media.util.viewMediaFile
+import com.streamliners.compose.android.comp.AsyncImage
 
 @Composable
 fun PickedMediaPreview(
