@@ -47,7 +47,7 @@ android {
 }
 
 configurations {
-    "implementation" {
+    "api" {
         exclude("org.jetbrains.compose.material", "material-desktop")
     }
 }
