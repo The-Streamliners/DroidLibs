@@ -54,6 +54,14 @@ fun HomeScreen(
 
             Button(
                 onClick = {
+                    navController.navigate(Route.HelpersSampleScreen.route)
+                }
+            ) {
+                Text(text = "Helpers")
+            }
+
+            Button(
+                onClick = {
                     navController.navigate(Route.OfficialSamplesScreen.route)
                 }
             ) {
