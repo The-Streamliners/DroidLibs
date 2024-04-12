@@ -19,6 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import com.streamliners.compose.comp.collapsible.Collapsible
 import com.streamliners.compose.comp.textInput.TextInputLayout
@@ -27,6 +29,7 @@ import com.streamliners.compose.comp.textInput.config.text
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.ifValidInput
 import com.streamliners.helpers.IntentsHelper
+import com.streamliners.ui.theme.Purple40
 
 @Composable
 fun BrowseURLSample(intentsHelper: IntentsHelper) {
@@ -85,7 +88,7 @@ private fun Content(intentsHelper: IntentsHelper) {
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                url.ifValidInput { intentsHelper.browseUsingCustomTab(it) }
+                url.ifValidInput { intentsHelper.browseUsingCustomTab(it, Purple40.toArgb()) }
             }
         ) {
             Text(text = "Browse using Custom Tab")

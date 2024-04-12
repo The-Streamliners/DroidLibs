@@ -89,11 +89,11 @@ class IntentsHelper(private val context: Context) {
         }
     }
 
-    fun browseUsingCustomTab(url: String) {
+    fun browseUsingCustomTab(url: String, color: Int) {
         CustomTabsIntent.Builder()
             .setDefaultColorSchemeParams(
                 CustomTabColorSchemeParams.Builder()
-                    .setToolbarColor(0xFFD30430.toInt())
+                    .setToolbarColor(color)
                     .build()
             )
             .setShowTitle(true)
