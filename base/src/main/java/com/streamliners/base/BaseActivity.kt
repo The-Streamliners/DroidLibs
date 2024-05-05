@@ -46,7 +46,6 @@ abstract class BaseActivity: FragmentActivity() {
 
     private fun handleException(e: Throwable) {
         if (debugMode) e.printStackTrace()
-        onExceptionOccurred(e)
 
         handleUiEvent(
             UiEvent.forException(
