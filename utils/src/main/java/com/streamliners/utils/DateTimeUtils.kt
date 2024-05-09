@@ -8,17 +8,17 @@ import java.util.TimeZone
 
 object DateTimeUtils {
 
-    enum class Format(val pattern: String) {
-        MONTH_DATE_DAY("MM/dd E"),
-        DATE_MONTH_YEAR_1("dd MMM yyyy"),
-        DATE_MONTH_YEAR_2("dd/MM/yy"),
-        YEAR_MONTH_DATE("yyyy-MM-dd"),
-        MONTH_YEAR("MMM yyyy"),
-        HOUR_MIN_12("hh:mm aa"),
-        HOUR_MIN_24("HH:mm"),
-        TIME_DATE("hh:mm aa, dd MMM, yyyy"),
-        DATE_DAY_TIME("dd MMM yyyy, E, hh:mm aa"),
-        UTC("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    sealed class Format(val pattern: String) {
+        data object MONTH_DATE_DAY: Format("MM/dd E")
+        data object DATE_MONTH_YEAR_1: Format("dd MMM yyyy")
+        data object DATE_MONTH_YEAR_2: Format("dd/MM/yy")
+        data object YEAR_MONTH_DATE: Format("yyyy-MM-dd")
+        data object MONTH_YEAR: Format("MMM yyyy")
+        data object HOUR_MIN_12: Format("hh:mm aa")
+        data object HOUR_MIN_24: Format("HH:mm")
+        data object TIME_DATE: Format("hh:mm aa, dd MMM, yyyy")
+        data object DATE_DAY_TIME: Format("dd MMM yyyy, E, hh:mm aa")
+        data object UTC: Format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
         companion object
     }
