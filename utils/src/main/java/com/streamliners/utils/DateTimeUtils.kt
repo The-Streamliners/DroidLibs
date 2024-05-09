@@ -8,19 +8,19 @@ import java.util.TimeZone
 
 object DateTimeUtils {
 
-    sealed class Format(val pattern: String) {
-        data object MONTH_DATE_DAY: Format("MM/dd E")
-        data object DATE_MONTH_YEAR_1: Format("dd MMM yyyy")
-        data object DATE_MONTH_YEAR_2: Format("dd/MM/yy")
-        data object YEAR_MONTH_DATE: Format("yyyy-MM-dd")
-        data object MONTH_YEAR: Format("MMM yyyy")
-        data object HOUR_MIN_12: Format("hh:mm aa")
-        data object HOUR_MIN_24: Format("HH:mm")
-        data object TIME_DATE: Format("hh:mm aa, dd MMM, yyyy")
-        data object DATE_DAY_TIME: Format("dd MMM yyyy, E, hh:mm aa")
-        data object UTC: Format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-
-        companion object
+    open class Format(val pattern: String) {
+        companion object {
+            val MONTH_DATE_DAY = Format("MM/dd E")
+            val DATE_MONTH_YEAR_1 = Format("dd MMM yyyy")
+            val DATE_MONTH_YEAR_2 = Format("dd/MM/yy")
+            val YEAR_MONTH_DATE = Format("yyyy-MM-dd")
+            val MONTH_YEAR = Format("MMM yyyy")
+            val HOUR_MIN_12 = Format("hh:mm aa")
+            val HOUR_MIN_24 = Format("HH:mm")
+            val TIME_DATE = Format("hh:mm aa, dd MMM, yyyy")
+            val DATE_DAY_TIME = Format("dd MMM yyyy, E, hh:mm aa")
+            val UTC = Format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        }
     }
 
     fun formatTime(
