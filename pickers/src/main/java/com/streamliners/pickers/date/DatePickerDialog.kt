@@ -7,7 +7,7 @@ import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.builder.BaseRequestBuilder
 import com.aminography.primedatepicker.picker.callback.SingleDayPickCallback
 import com.streamliners.utils.DateTimeUtils
-import com.streamliners.utils.DateTimeUtils.Format.YEAR_MONTH_DATE
+import com.streamliners.utils.DateTimeUtils.Format.Companion.YEAR_MONTH_DATE
 import com.streamliners.utils.DateTimeUtils.reformatTime
 
 object DatePickerDialog {
