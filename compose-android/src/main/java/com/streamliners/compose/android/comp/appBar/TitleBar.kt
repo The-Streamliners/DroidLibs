@@ -1,5 +1,7 @@
 package com.streamliners.compose.android.comp.appBar
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,7 +40,7 @@ fun TitleBarScaffold(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun TitleBar(
     title: String,
@@ -48,7 +50,11 @@ fun TitleBar(
 ) {
     TopAppBar(
         title = {
-            Text(title)
+            Text(
+                modifier = Modifier.basicMarquee(),
+                text = title,
+                maxLines = 1
+            )
         },
         navigationIcon = {
             navigationIcon?.invoke() ?:
