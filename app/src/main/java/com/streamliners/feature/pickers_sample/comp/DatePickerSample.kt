@@ -25,7 +25,7 @@ import com.streamliners.pickers.date.ShowDatePicker
 import com.streamliners.pickers.date.ShowDateRangePicker
 import com.streamliners.pickers.date.ShowMultipleDatesPicker
 import com.streamliners.utils.DateTimeUtils
-import com.streamliners.utils.DateTimeUtils.Format.DATE_MONTH_YEAR_2
+import com.streamliners.utils.DateTimeUtils.Format.Companion.DATE_MONTH_YEAR_2
 import com.streamliners.utils.dateOnly
 
 @Composable

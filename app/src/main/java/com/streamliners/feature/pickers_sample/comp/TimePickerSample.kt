@@ -23,7 +23,7 @@ import com.streamliners.compose.comp.textInput.state.update
 import com.streamliners.pickers.time.ShowTimePicker
 import com.streamliners.pickers.time.TimePickerDialog
 import com.streamliners.utils.DateTimeUtils
-import com.streamliners.utils.DateTimeUtils.Format.HOUR_MIN_24
+import com.streamliners.utils.DateTimeUtils.Format.Companion.HOUR_MIN_24
 import com.streamliners.utils.timeOnly
 
 @Composable

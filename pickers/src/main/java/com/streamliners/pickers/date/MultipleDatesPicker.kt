@@ -6,7 +6,7 @@ import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.builder.BaseRequestBuilder
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
-import com.streamliners.utils.DateTimeUtils.Format.YEAR_MONTH_DATE
+import com.streamliners.utils.DateTimeUtils.Format.Companion.YEAR_MONTH_DATE
 import com.streamliners.utils.DateTimeUtils.reformatTime
 
 fun DatePickerDialog.showMultipleDatesPicker(
