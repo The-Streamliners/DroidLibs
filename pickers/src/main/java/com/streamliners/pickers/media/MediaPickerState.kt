@@ -23,12 +23,12 @@ sealed class MediaPickerDialogState {
 }
 
 sealed class PickedMedia(
-    val uri: String,
-    val filePath: String? = null
+    open val uri: String,
+    open val filePath: String? = null
 ) {
-    class Image(
-        uri: String,
-        filePath: String? = null
+    data class Image(
+        override val uri: String,
+        override val filePath: String? = null
     ): PickedMedia(uri, filePath)
 
     class Video(

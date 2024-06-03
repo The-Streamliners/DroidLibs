@@ -1,13 +1,13 @@
 package com.streamliners.feature.pickers_sample.comp
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +18,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import com.mr0xf00.easycrop.AspectRatio
+import com.mr0xf00.easycrop.CropError
+import com.mr0xf00.easycrop.CropResult
+import com.mr0xf00.easycrop.CropperStyle
+import com.mr0xf00.easycrop.crop
+import com.mr0xf00.easycrop.rememberImageCropper
+import com.mr0xf00.easycrop.ui.ImageCropperDialog
 import com.streamliners.compose.comp.select.LabelledCheckBox
 import com.streamliners.compose.comp.select.RadioGroup
 import com.streamliners.pickers.media.FromGalleryType
@@ -28,6 +39,9 @@ import com.streamliners.pickers.media.MediaType
 import com.streamliners.pickers.media.PickedMedia
 import com.streamliners.pickers.media.comp.PickedMediaPreviewList
 import com.streamliners.pickers.media.rememberMediaPickerDialogState
+import com.streamliners.pickers.media.util.createFile
+import com.streamliners.pickers.media.util.getUri
+import java.io.FileOutputStream
 
 @Composable
 fun MediaPickerSample(
@@ -35,6 +49,8 @@ fun MediaPickerSample(
 ) {
 
     val mediaPickerDialogState = rememberMediaPickerDialogState()
+
+    val imageCropper = rememberImageCropper()
 
     ElevatedCard(
         modifier = Modifier.fillMaxWidth()
@@ -80,6 +96,8 @@ fun MediaPickerSample(
                 mutableStateListOf<PickedMedia>()
             }
 
+            val context = LocalContext.current
+
             Button(
                 modifier = Modifier.align(CenterHorizontally),
                 enabled = type.value != null && fromGalleryType.value != null,
@@ -91,6 +109,25 @@ fun MediaPickerSample(
                         callback = { getResult ->
                             executeHandlingError {
                                 pickedMediaList.addAll(getResult())
+
+                                val firstMedia = pickedMediaList.firstOrNull() ?: error("no media picked")
+                                if (firstMedia is PickedMedia.Image) {
+
+                                    val result = imageCropper.crop(firstMedia.uri.toUri(), context)
+                                    when (result) {
+                                        CropResult.Cancelled -> {
+
+                                        }
+                                        is CropError -> {
+                                            error("Crop error")
+                                        }
+                                        is CropResult.Success -> {
+                                            val croppedImageUri = saveBitmapToFile(context, result.bitmap)
+                                            pickedMediaList.remove(firstMedia)
+                                            pickedMediaList.add(firstMedia.copy(uri = croppedImageUri.toString()))
+                                        }
+                                    }
+                                }
                             }
                         }
                     )
@@ -112,4 +149,27 @@ fun MediaPickerSample(
         state = mediaPickerDialogState,
         authority = "com.streamliners.fileprovider"
     )
+
+    imageCropper.cropState?.let {
+
+        ImageCropperDialog(
+            state = it,
+            style = CropperStyle(
+                autoZoom = false,
+                guidelines = null
+            ),
+            showAspectRatioSelectionButton = false,
+            showShapeCropButton = false,
+            lockAspectRatio = AspectRatio(1, 1)
+        )
+    }
 }
+
+fun saveBitmapToFile(context: Context, bitmap: ImageBitmap): Uri {
+    val file = createFile(context, "${System.currentTimeMillis()}.png", "capture")
+    val fileOutputStream = FileOutputStream(file)
+    bitmap.asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
+    fileOutputStream.flush()
+    return file.getUri(context, "com.streamliners.fileprovider")
+}
+
