@@ -65,7 +65,24 @@ fun MediaPickerDialog(
     state: MutableState<MediaPickerDialogState>,
     authority: String
 ) {
-    val data = state.value as? MediaPickerDialogState.Visible ?: return
+    val data = state.value as? MediaPickerDialogState.Visible
+    val imageCropper = rememberImageCropper()
+
+    imageCropper.cropState?.let {
+
+        ImageCropperDialog(
+            state = it,
+            style = CropperStyle(
+                autoZoom = false,
+                guidelines = null
+            ),
+            showAspectRatioSelectionButton = (data?.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
+            showShapeCropButton = (data?.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
+            lockAspectRatio = (data?.cropParams as? MediaPickerCropParams.Enabled)?.lockAspectRatio
+        )
+    }
+
+    if (data == null) return
 
     LaunchedEffect(key1 = Unit) {
         if (data.cropParams is MediaPickerCropParams.Enabled) {
@@ -81,8 +98,6 @@ fun MediaPickerDialog(
             context, Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
     }
-
-    val imageCropper = rememberImageCropper()
 
     AlertDialog(
         modifier = Modifier
@@ -128,20 +143,6 @@ fun MediaPickerDialog(
             }
         }
     )
-
-    imageCropper.cropState?.let {
-
-        ImageCropperDialog(
-            state = it,
-            style = CropperStyle(
-                autoZoom = false,
-                guidelines = null
-            ),
-            showAspectRatioSelectionButton = (data.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
-            showShapeCropButton = (data.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
-            lockAspectRatio = (data.cropParams as? MediaPickerCropParams.Enabled)?.lockAspectRatio
-        )
-    }
 }
 
 @Composable
