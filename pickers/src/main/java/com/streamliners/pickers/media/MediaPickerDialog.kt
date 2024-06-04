@@ -5,6 +5,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -23,14 +26,26 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import com.mr0xf00.easycrop.CropError
+import com.mr0xf00.easycrop.CropResult
+import com.mr0xf00.easycrop.CropperStyle
+import com.mr0xf00.easycrop.ImageCropper
+import com.mr0xf00.easycrop.crop
+import com.mr0xf00.easycrop.rememberImageCropper
+import com.mr0xf00.easycrop.ui.ImageCropperDialog
 import com.streamliners.pickers.media.FromGalleryType.VisualMediaPicker
 import com.streamliners.pickers.media.MediaType.Image
 import com.streamliners.pickers.media.MediaType.Video
@@ -38,7 +53,12 @@ import com.streamliners.pickers.media.comp.OptionButton
 import com.streamliners.pickers.media.util.VideoMetadataExtractor
 import com.streamliners.pickers.media.util.createFile
 import com.streamliners.pickers.media.util.getUri
+import com.streamliners.pickers.media.util.saveBitmapToFile
 import com.streamliners.utils.safeLet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import java.io.File
+
 
 @Composable
 fun MediaPickerDialog(
@@ -47,6 +67,13 @@ fun MediaPickerDialog(
 ) {
     val data = state.value as? MediaPickerDialogState.Visible ?: return
 
+    LaunchedEffect(key1 = Unit) {
+        if (data.cropParams is MediaPickerCropParams.Enabled) {
+            if (data.type == Video) error("cropParams are not allowed for MediaType.Video")
+            if (data.allowMultiple) error("cropParams are not allowed when allowMultiple = true")
+        }
+    }
+
     val context = LocalContext.current
 
     val cameraPermissionIsGranted = {
@@ -54,6 +81,8 @@ fun MediaPickerDialog(
             context, Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
     }
+
+    val imageCropper = rememberImageCropper()
 
     AlertDialog(
         modifier = Modifier
@@ -79,12 +108,12 @@ fun MediaPickerDialog(
                 ) {
                     FromCameraButton(
                         modifier = Modifier.weight(1f),
-                        state, data, authority, cameraPermissionIsGranted
+                        state, data, authority, cameraPermissionIsGranted, imageCropper
                     )
 
                     FromGalleryButton(
                         modifier = Modifier.weight(1f),
-                        state, data
+                        state, data, imageCropper, authority
                     )
                 }
 
@@ -99,6 +128,20 @@ fun MediaPickerDialog(
             }
         }
     )
+
+    imageCropper.cropState?.let {
+
+        ImageCropperDialog(
+            state = it,
+            style = CropperStyle(
+                autoZoom = false,
+                guidelines = null
+            ),
+            showAspectRatioSelectionButton = (data.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
+            showShapeCropButton = (data.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
+            lockAspectRatio = (data.cropParams as? MediaPickerCropParams.Enabled)?.lockAspectRatio
+        )
+    }
 }
 
 @Composable
@@ -107,25 +150,41 @@ fun FromCameraButton(
     state: MutableState<MediaPickerDialogState>,
     data: MediaPickerDialogState.Visible,
     authority: String,
-    cameraPermissionIsGranted: () -> Boolean
+    cameraPermissionIsGranted: () -> Boolean,
+    imageCropper: ImageCropper
 ) {
     val context = LocalContext.current
 
     val filePath = remember { mutableStateOf<String?>(null) }
     val fileUri = remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
         onResult = { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 safeLet(filePath.value, fileUri.value) { path, uri ->
-                    data.callback {
-                        listOf(
-                            when (data.type) {
-                                Image -> PickedMedia.Image(uri, path)
-                                Video -> processVideo(context, uri, path)
+
+                    when (data.type) {
+                        Image -> {
+                            showImageCropperIfRequired(
+                                data,
+                                PickedMedia.Image(uri, path),
+                                imageCropper,
+                                context,
+                                scope,
+                                authority
+                            ) {
+                                data.callback { listOf(it) }
                             }
-                        )
+                        }
+                        Video -> {
+                            data.callback {
+                                listOf(
+                                    processVideo(context, uri, path)
+                                )
+                            }
+                        }
                     }
                 }
                 state.dismiss()
@@ -187,9 +246,13 @@ fun FromCameraButton(
 fun FromGalleryButton(
     modifier: Modifier,
     state: MutableState<MediaPickerDialogState>,
-    data: MediaPickerDialogState.Visible
+    data: MediaPickerDialogState.Visible,
+    imageCropper: ImageCropper,
+    authority: String
 ) {
     val context = LocalContext.current
+
+    val scope = rememberCoroutineScope()
 
     val documentPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
@@ -208,11 +271,32 @@ fun FromGalleryButton(
                     }
                 }.filterNotNull()
 
-                data.callback {
-                    items.map { uri ->
-                        when (data.type) {
-                            Image -> PickedMedia.Image(uri.toString())
-                            Video -> processVideo(context, uri.toString())
+                when (data.type) {
+                    Image -> {
+                        if (data.allowMultiple) {
+                            data.callback {
+                                items.map { uri ->
+                                    PickedMedia.Image(uri.toString())
+                                }
+                            }
+                        } else {
+                            showImageCropperIfRequired(
+                                data,
+                                PickedMedia.Image(items.first().toString()),
+                                imageCropper,
+                                context,
+                                scope,
+                                authority
+                            ) {
+                                data.callback { listOf(it) }
+                            }
+                        }
+                    }
+                    Video -> {
+                        data.callback {
+                            items.map { uri ->
+                                processVideo(context, uri.toString())
+                            }
                         }
                     }
                 }
@@ -230,13 +314,27 @@ fun FromGalleryButton(
                     uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
                 )
-                data.callback {
-                    listOf(
-                        when (data.type) {
-                            Image -> PickedMedia.Image(uri.toString())
-                            Video -> processVideo(context, uri.toString())
+
+                when (data.type) {
+                    Image -> {
+                        showImageCropperIfRequired(
+                            data,
+                            PickedMedia.Image(uri.toString()),
+                            imageCropper,
+                            context,
+                            scope,
+                            authority
+                        ) {
+                            data.callback { listOf(it) }
                         }
-                    )
+                    }
+                    Video -> {
+                        data.callback {
+                            listOf(
+                                processVideo(context, uri.toString())
+                            )
+                        }
+                    }
                 }
             }
             state.dismiss()
@@ -306,4 +404,40 @@ suspend fun processVideo(
         duration = VideoMetadataExtractor.getDuration(context, uri),
         thumbnailUri = VideoMetadataExtractor.getThumbnailUri(context, uri)
     )
+}
+
+fun showImageCropperIfRequired(
+    data: MediaPickerDialogState.Visible,
+    image: PickedMedia.Image,
+    imageCropper: ImageCropper,
+    context: Context,
+    scope: CoroutineScope,
+    authority: String,
+    onReady: (PickedMedia.Image) -> Unit
+) {
+    data.cropParams as? MediaPickerCropParams.Enabled ?: run {
+        onReady(image)
+        return
+    }
+
+    scope.launch {
+
+//        val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, Uri.parse(image.uri))
+
+        when (
+//            val result = imageCropper.crop(bmp = bitmap.asImageBitmap())
+            val result = imageCropper.crop(image.uri.toUri(), context, cacheBeforeUse = false)
+        ) {
+            CropResult.Cancelled -> {
+                error("Crop cancelled")
+            }
+            is CropError -> {
+                error("Crop error : ${result.name}")
+            }
+            is CropResult.Success -> {
+                val croppedImageUri = saveBitmapToFile(context, result.bitmap, authority)
+                onReady(PickedMedia.Image(croppedImageUri.toString()))
+            }
+        }
+    }
 }

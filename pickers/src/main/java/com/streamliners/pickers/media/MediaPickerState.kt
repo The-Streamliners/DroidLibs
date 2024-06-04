@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.mr0xf00.easycrop.AspectRatio
 
 sealed class MediaPickerDialogState {
 
@@ -13,6 +14,7 @@ sealed class MediaPickerDialogState {
         val type: MediaType,
         val allowMultiple: Boolean,
         val fromGalleryType: FromGalleryType,
+        val cropParams: MediaPickerCropParams = MediaPickerCropParams.Disabled,
         val callback: (suspend () -> List<PickedMedia>) -> Unit
     ): MediaPickerDialogState() {
 
@@ -66,6 +68,18 @@ enum class MediaType {
 
 enum class FromGalleryType {
     DocumentPicker, VisualMediaPicker
+}
+
+sealed class MediaPickerCropParams {
+
+    data object Disabled: MediaPickerCropParams()
+
+    data class Enabled(
+        val showAspectRatioSelectionButton: Boolean = true,
+        val showShapeCropButton: Boolean = true,
+        val lockAspectRatio: AspectRatio? = null
+    ): MediaPickerCropParams()
+
 }
 
 @Composable

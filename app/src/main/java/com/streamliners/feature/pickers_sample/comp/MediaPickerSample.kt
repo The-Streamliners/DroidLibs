@@ -33,6 +33,7 @@ import com.mr0xf00.easycrop.ui.ImageCropperDialog
 import com.streamliners.compose.comp.select.LabelledCheckBox
 import com.streamliners.compose.comp.select.RadioGroup
 import com.streamliners.pickers.media.FromGalleryType
+import com.streamliners.pickers.media.MediaPickerCropParams
 import com.streamliners.pickers.media.MediaPickerDialog
 import com.streamliners.pickers.media.MediaPickerDialogState
 import com.streamliners.pickers.media.MediaType
@@ -106,28 +107,14 @@ fun MediaPickerSample(
                         type = type.value!!,
                         allowMultiple = allowMultiple.value,
                         fromGalleryType = fromGalleryType.value!!,
+                        cropParams = MediaPickerCropParams.Enabled(
+                            showAspectRatioSelectionButton = false,
+                            showShapeCropButton = false,
+                            lockAspectRatio = AspectRatio(1, 1)
+                        ),
                         callback = { getResult ->
                             executeHandlingError {
                                 pickedMediaList.addAll(getResult())
-
-                                val firstMedia = pickedMediaList.firstOrNull() ?: error("no media picked")
-                                if (firstMedia is PickedMedia.Image) {
-
-                                    val result = imageCropper.crop(firstMedia.uri.toUri(), context)
-                                    when (result) {
-                                        CropResult.Cancelled -> {
-
-                                        }
-                                        is CropError -> {
-                                            error("Crop error")
-                                        }
-                                        is CropResult.Success -> {
-                                            val croppedImageUri = saveBitmapToFile(context, result.bitmap)
-                                            pickedMediaList.remove(firstMedia)
-                                            pickedMediaList.add(firstMedia.copy(uri = croppedImageUri.toString()))
-                                        }
-                                    }
-                                }
                             }
                         }
                     )
@@ -149,27 +136,4 @@ fun MediaPickerSample(
         state = mediaPickerDialogState,
         authority = "com.streamliners.fileprovider"
     )
-
-    imageCropper.cropState?.let {
-
-        ImageCropperDialog(
-            state = it,
-            style = CropperStyle(
-                autoZoom = false,
-                guidelines = null
-            ),
-            showAspectRatioSelectionButton = false,
-            showShapeCropButton = false,
-            lockAspectRatio = AspectRatio(1, 1)
-        )
-    }
 }
-
-fun saveBitmapToFile(context: Context, bitmap: ImageBitmap): Uri {
-    val file = createFile(context, "${System.currentTimeMillis()}.png", "capture")
-    val fileOutputStream = FileOutputStream(file)
-    bitmap.asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
-    fileOutputStream.flush()
-    return file.getUri(context, "com.streamliners.fileprovider")
-}
-
