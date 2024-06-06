@@ -1,8 +1,5 @@
 package com.streamliners.feature.pickers_sample.comp
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,18 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.mr0xf00.easycrop.AspectRatio
-import com.mr0xf00.easycrop.CropError
-import com.mr0xf00.easycrop.CropResult
-import com.mr0xf00.easycrop.CropperStyle
-import com.mr0xf00.easycrop.crop
 import com.mr0xf00.easycrop.rememberImageCropper
-import com.mr0xf00.easycrop.ui.ImageCropperDialog
 import com.streamliners.compose.comp.select.LabelledCheckBox
 import com.streamliners.compose.comp.select.RadioGroup
 import com.streamliners.pickers.media.FromGalleryType
@@ -40,9 +29,6 @@ import com.streamliners.pickers.media.MediaType
 import com.streamliners.pickers.media.PickedMedia
 import com.streamliners.pickers.media.comp.PickedMediaPreviewList
 import com.streamliners.pickers.media.rememberMediaPickerDialogState
-import com.streamliners.pickers.media.util.createFile
-import com.streamliners.pickers.media.util.getUri
-import java.io.FileOutputStream
 
 @Composable
 fun MediaPickerSample(
@@ -75,6 +61,8 @@ fun MediaPickerSample(
 
             val allowMultiple = remember { mutableStateOf(false) }
 
+            val cropEnable = remember { mutableStateOf(false) }
+
             RadioGroup(
                 state = type,
                 options = MediaType.entries.toList(),
@@ -93,6 +81,8 @@ fun MediaPickerSample(
 
             LabelledCheckBox(state = allowMultiple, label = "Allow multiple")
 
+            LabelledCheckBox(state = cropEnable, label = "Enable Crop")
+
             val pickedMediaList = remember {
                 mutableStateListOf<PickedMedia>()
             }
@@ -103,15 +93,17 @@ fun MediaPickerSample(
                 modifier = Modifier.align(CenterHorizontally),
                 enabled = type.value != null && fromGalleryType.value != null,
                 onClick = {
-                    mediaPickerDialogState.value = MediaPickerDialogState.Visible(
+                    mediaPickerDialogState.value = MediaPickerDialogState.ShowMediaPicker(
                         type = type.value!!,
                         allowMultiple = allowMultiple.value,
                         fromGalleryType = fromGalleryType.value!!,
-                        cropParams = MediaPickerCropParams.Enabled(
-                            showAspectRatioSelectionButton = false,
-                            showShapeCropButton = false,
-                            lockAspectRatio = AspectRatio(1, 1)
-                        ),
+                        cropParams = if (cropEnable.value) {
+                            MediaPickerCropParams.Enabled(
+                                showAspectRatioSelectionButton = false,
+                                showShapeCropButton = false,
+                                lockAspectRatio = AspectRatio(1, 1)
+                            )
+                        } else MediaPickerCropParams.Disabled,
                         callback = { getResult ->
                             executeHandlingError {
                                 pickedMediaList.addAll(getResult())

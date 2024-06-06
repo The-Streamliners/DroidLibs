@@ -10,7 +10,7 @@ sealed class MediaPickerDialogState {
 
     data object Hidden: MediaPickerDialogState()
 
-    class Visible(
+    class ShowMediaPicker(
         val type: MediaType,
         val allowMultiple: Boolean,
         val fromGalleryType: FromGalleryType,
@@ -22,6 +22,10 @@ sealed class MediaPickerDialogState {
             return "Attach ${type.name}${if (allowMultiple) "s" else ""}"
         }
     }
+
+    class ShowImageCropper(
+        val cropParams: MediaPickerCropParams = MediaPickerCropParams.Disabled
+    ): MediaPickerDialogState()
 }
 
 sealed class PickedMedia(
@@ -91,4 +95,10 @@ fun rememberMediaPickerDialogState(): MutableState<MediaPickerDialogState> {
 
 fun MutableState<MediaPickerDialogState>.dismiss() {
     value = MediaPickerDialogState.Hidden
+}
+
+fun MutableState<MediaPickerDialogState>.showImageCropper(
+    params: MediaPickerCropParams
+) {
+    value = MediaPickerDialogState.ShowImageCropper(params)
 }

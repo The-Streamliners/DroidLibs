@@ -5,9 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -32,8 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
@@ -57,7 +52,6 @@ import com.streamliners.pickers.media.util.saveBitmapToFile
 import com.streamliners.utils.safeLet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.io.File
 
 
 @Composable
@@ -65,24 +59,27 @@ fun MediaPickerDialog(
     state: MutableState<MediaPickerDialogState>,
     authority: String
 ) {
-    val data = state.value as? MediaPickerDialogState.Visible
     val imageCropper = rememberImageCropper()
+    val scope = rememberCoroutineScope()
 
-    imageCropper.cropState?.let {
+    (state.value as? MediaPickerDialogState.ShowImageCropper)?.let { data ->
 
-        ImageCropperDialog(
-            state = it,
-            style = CropperStyle(
-                autoZoom = false,
-                guidelines = null
-            ),
-            showAspectRatioSelectionButton = (data?.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
-            showShapeCropButton = (data?.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
-            lockAspectRatio = (data?.cropParams as? MediaPickerCropParams.Enabled)?.lockAspectRatio
-        )
+        imageCropper.cropState?.let {
+
+            ImageCropperDialog(
+                state = it,
+                style = CropperStyle(
+                    autoZoom = false,
+                    guidelines = null
+                ),
+                showAspectRatioSelectionButton = (data.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
+                showShapeCropButton = (data.cropParams as? MediaPickerCropParams.Enabled)?.showAspectRatioSelectionButton ?: true,
+                lockAspectRatio = (data.cropParams as? MediaPickerCropParams.Enabled)?.lockAspectRatio
+            )
+        }
     }
 
-    if (data == null) return
+    val data = state.value as? MediaPickerDialogState.ShowMediaPicker ?: return
 
     LaunchedEffect(key1 = Unit) {
         if (data.cropParams is MediaPickerCropParams.Enabled) {
@@ -128,7 +125,7 @@ fun MediaPickerDialog(
 
                     FromGalleryButton(
                         modifier = Modifier.weight(1f),
-                        state, data, imageCropper, authority
+                        state, data, imageCropper, authority, scope
                     )
                 }
 
@@ -149,7 +146,7 @@ fun MediaPickerDialog(
 fun FromCameraButton(
     modifier: Modifier,
     state: MutableState<MediaPickerDialogState>,
-    data: MediaPickerDialogState.Visible,
+    data: MediaPickerDialogState.ShowMediaPicker,
     authority: String,
     cameraPermissionIsGranted: () -> Boolean,
     imageCropper: ImageCropper
@@ -169,6 +166,7 @@ fun FromCameraButton(
                     when (data.type) {
                         Image -> {
                             showImageCropperIfRequired(
+                                state,
                                 data,
                                 PickedMedia.Image(uri, path),
                                 imageCropper,
@@ -185,10 +183,11 @@ fun FromCameraButton(
                                     processVideo(context, uri, path)
                                 )
                             }
+                            state.dismiss()
                         }
                     }
                 }
-                state.dismiss()
+
             }
         }
     )
@@ -247,13 +246,12 @@ fun FromCameraButton(
 fun FromGalleryButton(
     modifier: Modifier,
     state: MutableState<MediaPickerDialogState>,
-    data: MediaPickerDialogState.Visible,
+    data: MediaPickerDialogState.ShowMediaPicker,
     imageCropper: ImageCropper,
-    authority: String
+    authority: String,
+    scope: CoroutineScope
 ) {
     val context = LocalContext.current
-
-    val scope = rememberCoroutineScope()
 
     val documentPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
@@ -280,8 +278,10 @@ fun FromGalleryButton(
                                     PickedMedia.Image(uri.toString())
                                 }
                             }
+                            state.dismiss()
                         } else {
                             showImageCropperIfRequired(
+                                state,
                                 data,
                                 PickedMedia.Image(items.first().toString()),
                                 imageCropper,
@@ -299,10 +299,9 @@ fun FromGalleryButton(
                                 processVideo(context, uri.toString())
                             }
                         }
+                        state.dismiss()
                     }
                 }
-
-                state.dismiss()
             }
         }
     )
@@ -319,6 +318,7 @@ fun FromGalleryButton(
                 when (data.type) {
                     Image -> {
                         showImageCropperIfRequired(
+                            state,
                             data,
                             PickedMedia.Image(uri.toString()),
                             imageCropper,
@@ -335,10 +335,10 @@ fun FromGalleryButton(
                                 processVideo(context, uri.toString())
                             )
                         }
+                        state.dismiss()
                     }
                 }
             }
-            state.dismiss()
         }
     )
 
@@ -408,7 +408,8 @@ suspend fun processVideo(
 }
 
 fun showImageCropperIfRequired(
-    data: MediaPickerDialogState.Visible,
+    state: MutableState<MediaPickerDialogState>,
+    data: MediaPickerDialogState.ShowMediaPicker,
     image: PickedMedia.Image,
     imageCropper: ImageCropper,
     context: Context,
@@ -418,8 +419,11 @@ fun showImageCropperIfRequired(
 ) {
     data.cropParams as? MediaPickerCropParams.Enabled ?: run {
         onReady(image)
+        state.dismiss()
         return
     }
+
+    state.showImageCropper(data.cropParams)
 
     scope.launch {
 
