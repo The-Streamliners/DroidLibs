@@ -67,7 +67,7 @@ fun TextInputLayout(
                             withStyle(
                                 SpanStyle(color = MaterialTheme.colorScheme.error)
                             ) {
-                                " *"
+                                append(" *")
                             }
                         }
                     }
