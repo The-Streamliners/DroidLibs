@@ -4,6 +4,11 @@ RadioGroup composable displays a title and multiple RadioButtons, one for each o
 
 ![](assets/RadioGroupSample.gif)
 
+#### Features :
+- It's Generic
+- Add a title
+- Customize the layout as Row or Column
+
 There are two ways to use the RadioGroup :
 
 ### 1. Pass the MutableState directly
@@ -14,7 +19,8 @@ fun RadioGroup(
     modifier: Modifier = Modifier,
     title: String? = null,
     state: MutableState<String?>,
-    options: List<String>
+    options: List<String>,
+    layout: Layout = Layout.Column
 )
 ```
 
@@ -30,7 +36,44 @@ RadioGroup(
 )
 ```
 
-### 2. Control the MutableState yourself
+### 2. Yo! It's Generic
+
+```kotlin
+@Composable
+fun <T> RadioGroup(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    state: MutableState<T?>,
+    options: List<T>,
+    labelExtractor: (T) -> String,
+    enabled: Boolean = true,
+    layout: Layout = Layout.Column
+)
+```
+
+Example :
+
+```kotlin
+data class TouristDestination(
+    val id: String,
+    val name: String,
+    val duration: String,
+    val cost: Int
+)
+
+// User will directly select a TouristDestination only!
+val selection = remember {
+    mutableStateOf<TouristDestination?>(null)
+}
+
+RadioGroup(
+    state = selection,
+    options = listOf(/* your list of amazing destinations! */),
+    labelExtractor = { "${it.name} ${it.duration}" }
+)                                                        
+```
+
+### 3. Control the MutableState yourself
 
 ```kotlin
 @Composable
