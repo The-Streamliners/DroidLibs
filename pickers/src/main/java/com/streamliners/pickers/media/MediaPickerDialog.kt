@@ -120,7 +120,7 @@ fun MediaPickerDialog(
                 ) {
                     FromCameraButton(
                         modifier = Modifier.weight(1f),
-                        state, data, authority, cameraPermissionIsGranted, imageCropper
+                        state, data, authority, cameraPermissionIsGranted, imageCropper, scope
                     )
 
                     FromGalleryButton(
@@ -149,13 +149,13 @@ fun FromCameraButton(
     data: MediaPickerDialogState.ShowMediaPicker,
     authority: String,
     cameraPermissionIsGranted: () -> Boolean,
-    imageCropper: ImageCropper
+    imageCropper: ImageCropper,
+    scope: CoroutineScope
 ) {
     val context = LocalContext.current
 
     val filePath = remember { mutableStateOf<String?>(null) }
     val fileUri = remember { mutableStateOf<String?>(null) }
-    val scope = rememberCoroutineScope()
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
