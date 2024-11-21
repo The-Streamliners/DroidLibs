@@ -61,7 +61,6 @@ dependencies {
     // DI Nav for BVM factory
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
     implementation("io.insert-koin:koin-androidx-compose-navigation:3.5.3")
-    implementation(project(":compose-android"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

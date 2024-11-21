@@ -26,7 +26,7 @@ open class BaseViewModel : ViewModel() {
 
     open fun init() { }
 
-     fun handleException(throwable: Throwable) {
+    fun handleException(throwable: Throwable) {
         viewModelScope.launch {
             throwable.printStackTrace()
 
