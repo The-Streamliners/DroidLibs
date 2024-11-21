@@ -1,4 +1,6 @@
 # Components
+- Firebase :
+  - SignInWithGoogle
 - Android Helpers :
   - Location permissions
   - Current location
@@ -11,7 +13,8 @@
 
 
 # Docs
-
+- Pickers
+- Utils
 
 # Issues
 - Way to invoke UI event functions from Composables
