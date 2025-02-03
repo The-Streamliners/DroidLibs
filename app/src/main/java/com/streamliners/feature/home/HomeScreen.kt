@@ -62,6 +62,14 @@ fun HomeScreen(
 
             Button(
                 onClick = {
+                    navController.navigate(Route.DialogsSampleScreen.route)
+                }
+            ) {
+                Text(text = "Dialogs")
+            }
+
+            Button(
+                onClick = {
                     navController.navigate(Route.OfficialSamplesScreen.route)
                 }
             ) {

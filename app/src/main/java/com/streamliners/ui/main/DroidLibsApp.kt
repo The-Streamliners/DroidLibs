@@ -14,6 +14,7 @@ import com.streamliners.feature.compose.ComposeScreen
 import com.streamliners.feature.compose.DrawingPadSampleScreen
 import com.streamliners.feature.compose.search_bar.SearchBarSampleScreen
 import com.streamliners.feature.compose.text_input_layout.TextInputLayoutScreen
+import com.streamliners.feature.dialogs_sample.DialogsSampleScreen
 import com.streamliners.feature.helpers_sample.HelpersSampleScreen
 import com.streamliners.feature.home.HomeScreen
 import com.streamliners.feature.official_sample.OfficialSamplesScreen
@@ -105,6 +106,10 @@ fun BaseActivity.DroidLibsApp() {
 
         composable(Route.HelpersSampleScreen.route) {
             HelpersSampleScreen(navController = navController)
+        }
+
+        composable(Route.DialogsSampleScreen.route) {
+            DialogsSampleScreen(navController = navController)
         }
     }
 }

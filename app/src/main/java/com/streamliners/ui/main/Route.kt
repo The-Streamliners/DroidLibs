@@ -21,5 +21,6 @@ sealed class Route(
     data object TaskStateSampleScreen: Route("taskState")
 
     data object HelpersSampleScreen: Route("helpers")
+    data object DialogsSampleScreen: Route("dialogs")
 
 }
