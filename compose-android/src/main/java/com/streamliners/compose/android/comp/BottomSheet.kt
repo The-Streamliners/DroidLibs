@@ -28,11 +28,26 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.streamliners.compose.comp.FilledIconButtonSmall
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheet(
     title: String,
     state: MutableState<Boolean>,
+    content: @Composable () -> Unit
+) {
+    BottomSheet(
+        title = title,
+        visible = state.value,
+        onCloseRequest = { state.value = false },
+        content = content
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun BottomSheet(
+    title: String,
+    visible: Boolean,
+    onCloseRequest: () -> Unit,
     content: @Composable () -> Unit
 ) {
     val bottomSheetState =
@@ -40,27 +55,27 @@ fun BottomSheet(
             initialValue = ModalBottomSheetValue.Hidden,
             confirmValueChange = {
                 if(it == ModalBottomSheetValue.Hidden)
-                    state.value = false
+                    onCloseRequest()
                 true
             }
         )
 
-    LaunchedEffect(key1 = state.value) {
-        if (state.value) {
+    LaunchedEffect(key1 = visible) {
+        if (visible) {
             bottomSheetState.show()
         } else {
             bottomSheetState.hide()
         }
     }
 
-    BackHandler(enabled = state.value) { state.value = false }
+    BackHandler(enabled = visible) { onCloseRequest() }
 
     ModalBottomSheetLayout(
         modifier = Modifier.fillMaxWidth(),
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         sheetState = bottomSheetState,
         sheetContent = {
-            Content(title, state, content)
+            Content(title, visible, onCloseRequest, content)
         },
         content = { },
     )
@@ -70,7 +85,8 @@ fun BottomSheet(
 @Composable
 private fun Content(
     title: String,
-    state: MutableState<Boolean>,
+    visible: Boolean,
+    onCloseRequest: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     Surface(
@@ -101,7 +117,7 @@ private fun Content(
                 val controller = LocalSoftwareKeyboardController.current
                 FilledIconButtonSmall(
                     onClick = {
-                        state.value = false
+                        onCloseRequest()
                         controller?.hide()
                     },
                     icon = Icons.Default.Close,
