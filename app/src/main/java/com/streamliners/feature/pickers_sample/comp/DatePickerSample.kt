@@ -143,6 +143,8 @@ fun DatePickerSample(
                                 prefill = prefill.nullableValue()
                                     ?.split(",")
                                     ?.let { it[0] to it[1] },
+                                minDate = minDate.nullableValue(),
+                                maxDate = maxDate.nullableValue(),
                                 onPicked = { range ->
                                     prefill.update("${range.first}, ${range.second}")
                                     showMessageDialog(
