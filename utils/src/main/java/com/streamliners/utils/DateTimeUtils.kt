@@ -57,6 +57,10 @@ object DateTimeUtils {
         )
     }
 
+    fun parse(format: Format, time: String, lenient: Boolean = false): Date {
+        return parseFormattedTime(format, time, lenient).time
+    }
+
     fun parseFormattedTime(format: Format, time: String, lenient: Boolean = false): Calendar {
         val date = SimpleDateFormat(format.pattern, Locale.getDefault())
             .run { isLenient = lenient; this }
