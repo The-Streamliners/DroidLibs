@@ -107,7 +107,13 @@ fun <T> RadioGroup(
     val content: @Composable () -> Unit = {
         title?.let {
             Text(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.run {
+                    if (layout == Layout.Column) {
+                        padding(bottom = 8.dp)
+                    } else {
+                        padding(end = 8.dp)
+                    }
+                },
                 text = it,
                 style = MaterialTheme.typography.titleLarge
             )
