@@ -34,17 +34,22 @@ fun MutableState<TextInputState>.preValidateAndUpdate(newValue: String) {
 
 fun MutableState<TextInputState>.validate() {
     value = with(value) {
-        if (!inputConfig.optional && value.isBlank()) {
-            return@with copy(
-                error = "Required!"
-            )
+        if (value.isBlank()) {
+            return@with if (inputConfig.optional) {
+                this
+            } else {
+                copy(
+                    error = "Required!"
+                )
+            }
         }
 
         if (value.length < inputConfig.minLength) {
-            val type = if (inputConfig.keyboardType in listOf(KeyboardType.Number, KeyboardType.Decimal))
-                "digits"
-            else
-                "characters"
+            val type =
+                if (inputConfig.keyboardType in listOf(KeyboardType.Number, KeyboardType.Decimal))
+                    "digits"
+                else
+                    "characters"
             return@with copy(
                 error = "Minimum length is ${inputConfig.minLength} $type!"
             )
