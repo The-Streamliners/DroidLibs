@@ -31,8 +31,8 @@ fun MessageDialog(
             .wrapContentHeight(),
         properties = DialogProperties(
             usePlatformDefaultWidth = false,
-            dismissOnClickOutside = false,
-            dismissOnBackPress = false
+            dismissOnClickOutside = state.isCancellable,
+            dismissOnBackPress = state.isCancellable
         ),
         onDismissRequest = dismiss,
         title = {
