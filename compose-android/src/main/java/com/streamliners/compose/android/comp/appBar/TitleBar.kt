@@ -36,6 +36,12 @@ fun TitleBarScaffold(
     snackbarHostState: SnackbarHostState? = null,
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
+    topAppBarColors: TopAppBarColors = topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        navigationIconContentColor = Color.White,
+        titleContentColor = Color.White,
+        actionIconContentColor = Color.White
+    ),
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
@@ -45,7 +51,7 @@ fun TitleBarScaffold(
         contentColor = contentColor,
         topBar = {
             TitleBar(
-                title, navigationIcon, navigateUp, actions = actions
+                title, navigationIcon, navigateUp, colors = topAppBarColors, actions = actions
             )
         },
         snackbarHost = {
