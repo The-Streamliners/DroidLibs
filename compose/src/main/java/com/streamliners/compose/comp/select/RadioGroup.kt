@@ -50,6 +50,27 @@ fun RadioGroup(
 }
 
 @Composable
+fun RadioGroupStrict(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    state: MutableState<String>,
+    options: List<String>,
+    enabled: Boolean = true,
+    layout: Layout = Layout.Column
+) {
+    RadioGroup(
+        modifier = modifier,
+        title = title,
+        selection = state.value,
+        onSelectionChange = { state.value = it },
+        options = options,
+        labelExtractor = { it },
+        enabled = enabled,
+        layout = layout
+    )
+}
+
+@Composable
 fun RadioGroup(
     modifier: Modifier = Modifier,
     title: String? = null,
@@ -72,10 +93,54 @@ fun RadioGroup(
 }
 
 @Composable
+fun RadioGroupStrict(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    selection: String,
+    onSelectionChange: (String) -> Unit,
+    options: List<String>,
+    enabled: Boolean = true,
+    layout: Layout = Layout.Column
+) {
+    RadioGroup(
+        modifier = modifier,
+        title = title,
+        selection = selection,
+        onSelectionChange = onSelectionChange,
+        options = options,
+        labelExtractor = { it },
+        enabled = enabled,
+        layout = layout
+    )
+}
+
+@Composable
 fun <T> RadioGroup(
     modifier: Modifier = Modifier,
     title: String? = null,
     state: MutableState<T?>,
+    options: List<T>,
+    labelExtractor: (T) -> String,
+    enabled: Boolean = true,
+    layout: Layout = Layout.Column
+) {
+    RadioGroup(
+        modifier = modifier,
+        title = title,
+        selection = state.value,
+        onSelectionChange = { state.value = it },
+        options = options,
+        labelExtractor = labelExtractor,
+        enabled = enabled,
+        layout = layout
+    )
+}
+
+@Composable
+fun <T> RadioGroupStrict(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    state: MutableState<T>,
     options: List<T>,
     labelExtractor: (T) -> String,
     enabled: Boolean = true,
@@ -134,6 +199,22 @@ fun <T> RadioGroup(
     } else {
         Row(modifier, content = { content() })
     }
+}
+
+@Composable
+fun <T> RadioGroupStrict(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    selection: T,
+    onSelectionChange: (T) -> Unit,
+    options: List<T>,
+    labelExtractor: (T) -> String,
+    enabled: Boolean = true,
+    layout: Layout = Layout.Column
+) {
+    RadioGroup(
+        modifier, title, selection, onSelectionChange, options, labelExtractor, enabled, layout
+    )
 }
 
 @Composable
