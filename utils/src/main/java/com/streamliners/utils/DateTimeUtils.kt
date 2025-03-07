@@ -48,8 +48,8 @@ object DateTimeUtils {
         return formatTime(format, cal.timeInMillis)
     }
 
-    fun parseAsDateMonthAndYearInts(time: String, format: Format): List<Int> {
-        val cal = parseFormattedTime(format, time)
+    fun parseAsDateMonthAndYearInts(time: String, format: Format, lenient: Boolean = false): List<Int> {
+        val cal = parseFormattedTime(format, time, lenient)
         return listOf(
             cal.get(Calendar.DAY_OF_MONTH),
             cal.get(Calendar.MONTH),
@@ -57,8 +57,9 @@ object DateTimeUtils {
         )
     }
 
-    fun parseFormattedTime(format: Format, time: String): Calendar {
+    fun parseFormattedTime(format: Format, time: String, lenient: Boolean = false): Calendar {
         val date = SimpleDateFormat(format.pattern, Locale.getDefault())
+            .run { isLenient = lenient; this }
             .parse(time) ?: error("Unable to parse date")
         val today = Calendar.getInstance();
         return today.apply {
@@ -71,15 +72,15 @@ object DateTimeUtils {
         }
     }
 
-    fun reformatTime(time: String, from: Format, to: Format): String {
+    fun reformatTime(time: String, from: Format, to: Format, lenient: Boolean = false): String {
         return formatTime(
             format = to,
-            timestamp = parseFormattedTime(from, time).time.time
+            timestamp = parseFormattedTime(from, time, lenient).time.time
         )
     }
 
-    fun parseTimeAsHourAndMinuteInts(format: Format, time: String): Pair<Int, Int> {
-        val cal = parseFormattedTime(format, time)
+    fun parseTimeAsHourAndMinuteInts(format: Format, time: String, lenient: Boolean = false): Pair<Int, Int> {
+        val cal = parseFormattedTime(format, time, lenient)
         return cal.get(Calendar.HOUR_OF_DAY) to cal.get(Calendar.MINUTE)
     }
 
@@ -109,10 +110,11 @@ object DateTimeUtils {
         dateFormat: Format,
         time: String,
         timeFormat: Format,
-        outputFormat: Format
+        outputFormat: Format,
+        lenient: Boolean = false
     ): String {
         return parseFormattedTime(dateFormat, date).run {
-            val (hour, min) = parseTimeAsHourAndMinuteInts(timeFormat, time)
+            val (hour, min) = parseTimeAsHourAndMinuteInts(timeFormat, time, lenient)
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, min)
             set(Calendar.SECOND, 0)
@@ -181,8 +183,9 @@ object DateTimeUtils {
         set(Calendar.SECOND, 0)
     }
 
-    fun parseUTCTime(time: String): Long {
+    fun parseUTCTime(time: String, lenient: Boolean = false): Long {
         val dateFormat = SimpleDateFormat(Format.UTC.pattern, Locale.getDefault())
+            .run { isLenient = lenient; this }
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
         return dateFormat.parse(time)?.time ?: error("Unable to parse")
     }
