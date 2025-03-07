@@ -9,17 +9,20 @@ import java.util.TimeZone
 object DateTimeUtils {
 
     open class Format(val pattern: String) {
+        /**
+         * [Format Reference](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html)
+         */
         companion object {
-            val MONTH_DATE_DAY = Format("MM/dd E")
-            val DATE_MONTH_YEAR_1 = Format("dd MMM yyyy")
-            val DATE_MONTH_YEAR_2 = Format("dd/MM/yy")
-            val YEAR_MONTH_DATE = Format("yyyy-MM-dd")
-            val MONTH_YEAR = Format("MMM yyyy")
-            val HOUR_MIN_12 = Format("hh:mm aa")
-            val HOUR_MIN_24 = Format("HH:mm")
-            val TIME_DATE = Format("hh:mm aa, dd MMM, yyyy")
-            val DATE_DAY_TIME = Format("dd MMM yyyy, E, hh:mm aa")
-            val UTC = Format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            val DATE_MONTH_YEAR_1 = Format("dd MMM yyyy") // Eg. - 31 Dec 2025
+            val DATE_MONTH_YEAR_2 = Format("dd/MM/yy") // Eg. - 31/12/25
+            val YEAR_MONTH_DATE = Format("yyyy-MM-dd") // Eg. - 2025-12-19
+            val HOUR_MIN_12 = Format("hh:mm aa") // Eg. - 12:59 PM
+            val HOUR_MIN_24 = Format("HH:mm") // Eg. - 23:59
+            val TIME_DATE = Format("hh:mm aa, dd MMM, yyyy") // Eg. - 12:59 PM, 31 Dec, 2025
+            val DATE_DAY_TIME = Format("dd MMM yyyy, E, hh:mm aa") // Eg. - 31 Dec 2025, Mon, 12:59 PM
+            val MONTH_DATE_DAY = Format("MM/dd E") // Eg. - 12/31 Mon
+            val MONTH_YEAR = Format("MMM yyyy") // Eg. - Dec 2025
+            val UTC = Format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") // Eg. - 2025-12-19'T'23:59:59.999'Z'
         }
     }
 
