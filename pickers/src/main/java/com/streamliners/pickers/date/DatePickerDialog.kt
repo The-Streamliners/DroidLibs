@@ -50,7 +50,7 @@ object DatePickerDialog {
 
         var picker: BaseRequestBuilder<PrimeDatePicker, SingleDayPickCallback> = PrimeDatePicker
             .dialogWith(
-                prefill ?: CivilCalendar()
+                prefill ?: maxDate ?: CivilCalendar()
             )
             .pickSingleDay { day ->
                 params.onPicked(
